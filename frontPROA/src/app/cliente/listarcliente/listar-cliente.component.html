@@ -1,0 +1,48 @@
+<h2 class="text-center">Clientes Cadastrados</h2>
+<div class="container">
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let cliente of Clientes">
+                <td>{{cliente.id}}</td>
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.cpfcnpj}}</td>
+
+
+
+                <td>
+                    <button (click)="consultarCliente(cliente.id)" class="btn btn-primary"
+                        style="margin: 10px;">Consultar</button>
+                    <button (click)="alterarCliente(cliente.id)" class="btn btn-secondary"
+                        style="margin: 10px;">Alterar</button>
+                    <button (click)="excluirCliente(cliente.id)" class="btn btn-danger"
+                        style="margin: 10px;">Excluir</button>
+
+
+                </td>
+
+
+            </tr>
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button (click)="cadastrarCliente()" class="btn btn-info" style="margin: 10px;">Cadastrar Novo
+        Cliente</button>
+
+
+
+</div>

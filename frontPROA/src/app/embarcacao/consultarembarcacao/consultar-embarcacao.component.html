@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Embarcação</title>
+    <link rel="stylesheet" href="consultar-embarcacao.component.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Detalhes da Embarcação</h3>
+        <br>
+        <div><label><b>ID:</b></label> {{ embarcacao.id }}</div>
+        <div><label><b>Nome:</b></label> {{ embarcacao.nomeEmbarcacao }}</div>
+        <div><label><b>Número do Casco:</b></label> {{ embarcacao.numCasco }}</div>
+        <div><label><b>Número da Inscrição:</b></label> {{ embarcacao.numInscricao }}</div>
+        <div><label><b>Tipo Embarcação:</b></label> {{ embarcacao.tipoEmbarcacao }}</div>
+        <div><label><b>Tipo de Atividade:</b></label> {{ embarcacao.tipoAtividade }}</div>
+        <div><label><b>Area de Navegação:</b></label> {{ embarcacao.areaNavegacao }}</div>
+        <div><label><b>Data de Construção:</b></label> {{ embarcacao.dtConstrucao | date:'dd/MM/yyyy' }}</div>
+        <div><label><b>Data da Inscrição:</b></label> {{ embarcacao.dtInscricao | date:'dd/MM/yyyy' }}</div>
+        <div><label><b>Capacidade Armazenamento:</b></label> {{ embarcacao.capArmazenamento }}</div>
+        <div><label><b>Material do Casco:</b></label> {{ embarcacao.matCasco }}</div>
+        <div><label><b>Quantidade de Tripulantes:</b></label> {{ embarcacao.qtdTripulantes }}</div>
+        <div><label><b>Lotação:</b></label> {{ embarcacao.lotacao }}</div>
+        <div><label><b>Tipo de Propulsão:</b></label> {{ embarcacao.tipoPropulsao }}</div>
+        <div><label><b>Quantidade de Motores:</b></label> {{ embarcacao.qtdMotores }}</div>
+        <div><label><b>Potencia do Motor:</b></label> {{ embarcacao.potenciaMotor }}</div>
+        <div><label><b>Material da Superestrutura:</b></label> {{ embarcacao.matSuperestrutura }}</div>
+        <div><label><b>Construtor:</b></label> {{ embarcacao.construtor }}</div>
+        <div><label><b>Cor Predominante:</b></label> {{ embarcacao.corPredominante }}</div>
+        <br>
+        <label>
+            <h4>Medidas</h4>
+        </label>
+        <br>
+        <div><label><b>Comprimento Total:</b></label> {{ embarcacao.compTotal }}</div>
+        <div><label><b>Comprimento Perpendicular:</b></label> {{ embarcacao.compPerpendicular }}</div>
+        <div><label><b>Arqueação Bruta:</b></label> {{ embarcacao.arqueacaoBruta }}</div>
+        <div><label><b>Arqueação Liquida:</b></label> {{ embarcacao.id }}</div>
+        <div><label><b>Boca Moldada:</b></label> {{ embarcacao.bocaMoldada }}</div>
+        <div><label><b>Contorno:</b></label> {{ embarcacao.contorno }}</div>
+        <div><label><b>Porte Bruto:</b></label> {{ embarcacao.porteBruto }}</div>
+        <div><label><b>Calado:</b></label> {{ embarcacao.calado }}</div>
+        <div><label><b>Pontal Moldado:</b></label> {{ embarcacao.pontalMoldado }}</div>
+
+        <br>
+        <label>
+            <h4>Endereço</h4>
+        </label>
+        <br>
+        <div><label><b>CEP:</b></label> {{ embarcacao.cep }}</div>
+        <div><label><b>Logradouro:</b></label> {{ embarcacao.logradouro }}</div>
+        <div><label><b>Bairro:</b></label> {{ embarcacao.bairro }}</div>
+        <div><label><b>Número:</b></label> {{ embarcacao.numero }}</div>
+        <div><label><b>Complemento:</b></label> {{ embarcacao.complemento }}</div>
+        <div><label><b>UF (Estado):</b></label> {{ embarcacao.uf }}</div>
+        <div><label><b>Cidade:</b></label> {{ embarcacao.cidade }}</div>
+        <br><br>
+
+    </div>
+    <div>
+        <button (click)="retornar()" class="btn btn-success" style="margin-left: 10px;">Voltar</button>
+    </div>
+</body>
+
+</html>

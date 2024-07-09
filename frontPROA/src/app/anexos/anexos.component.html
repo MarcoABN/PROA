@@ -1,0 +1,74 @@
+<div class="container" style="height: 80vh; overflow-y: auto;">
+    <h1>Consultar Anexo</h1>
+    <form (ngSubmit)="consultarAnexo()">
+        <div class="form-group">
+            <label for="cliente">Cliente (CPF ou CNPJ)</label>
+            <input type="text" class="form-control" id="cliente" [(ngModel)]="cpfcnpjCliente" name="cliente" required>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+        </div>
+        <div class="form-group">
+            <label for="embarcacao">Embarcação</label>
+            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
+                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}</option>
+            </select>
+        </div>     
+        
+    </form>
+    <br>
+    <h4>Resultados da Pesquisa</h4>
+    <div class="form-group">
+        <label for="nomeCliente">Nome do Cliente</label>
+        <input type="text" class="form-control" id="nomeCliente" [(ngModel)]="cliente.nome" name="nomeCliente" disabled>
+    </div>
+    <br><br>
+    <div class="button-container">
+        <button type="button" class="btn btn-secondary" (click)="openModal()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2D</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="naturezaModal" tabindex="-1" aria-labelledby="naturezaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="naturezaModalLabel">Selecionar Natureza</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Natureza</label>
+                    <div>
+                        <input type="radio" id="naturezaInscricao" name="natureza" value="Inscrição" [(ngModel)]="natureza" required>
+                        <label for="naturezaInscricao">Inscrição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaCancelamento" name="natureza" value="Cancelamento" [(ngModel)]="natureza">
+                        <label for="naturezaCancelamento">Cancelamento</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaTransfProprietario" name="natureza" value="Transf. Propriedade" [(ngModel)]="natureza">
+                        <label for="naturezaTransfProprietario">Transf. Propriedade</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza" value="Transf. Jurisdição" [(ngModel)]="natureza">
+                        <label for="naturezaTransfJurisdicao">Transf. Jurisdição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaAtualizacao" name="natureza" value="Atualização de Dados" [(ngModel)]="natureza">
+                        <label for="naturezaAtualizacao">Atualização de Dados</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaEmissao" name="natureza" value="Emissão de Certidão" [(ngModel)]="natureza">
+                        <label for="naturezaEmissao">Emissão de Certidão</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmarNatureza()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

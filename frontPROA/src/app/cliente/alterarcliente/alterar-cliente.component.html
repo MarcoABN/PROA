@@ -1,0 +1,89 @@
+<div class="container" style="height: 80vh; overflow-y: auto;">
+    <h1>Alterar Cliente</h1>
+    <form (ngSubmit)="onSubmit()">
+        <br>
+        <h4>Detalhes do Cliente</h4>
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" [(ngModel)]="cliente.nome" name="nome" required>
+        </div>
+        <div class="form-group">
+            <label for="rg">RG</label>
+            <input type="text" class="form-control" id="rg" [(ngModel)]="cliente.rg" name="rg" required>
+        </div>
+        <div class="form-group">
+            <label for="orgEmissor">Órgão Emissor</label>
+            <input type="text" class="form-control" id="orgEmissor" [(ngModel)]="cliente.orgEmissor" name="orgEmissor" required>
+        </div>
+        <div class="form-group">
+            <label for="dtEmissao">Data de Emissão</label>
+            <input type="date" class="form-control" id="dtEmissao" [(ngModel)]="cliente.dtEmissao" name="dtEmissao" required>
+        </div>
+        <div class="form-group">
+            <label for="cpfcnpj">CPF/CNPJ</label>
+            <input type="text" class="form-control" id="cpfcnpj" [(ngModel)]="cliente.cpfcnpj" name="cpfcnpj" required>
+        </div>
+        <div class="form-group">
+            <label for="dtNasc">Data de Nascimento</label>
+            <input type="date" class="form-control" id="dtNasc" [(ngModel)]="cliente.dataNasc" name="dtNasc" required>
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" class="form-control" id="telefone" [(ngModel)]="cliente.telefone" name="telefone" required>
+        </div>
+        <div class="form-group">
+            <label for="celular">Celular</label>
+            <input type="text" class="form-control" id="celular" [(ngModel)]="cliente.celular" name="celular" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="cliente.email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" class="form-control" id="senha" [(ngModel)]="cliente.senha" name="senha" required>
+        </div>
+
+        <br>
+        <h4>Endereço</h4>
+        <div class="form-group">
+            <label for="CEP">CEP</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="CEP" [(ngModel)]="cliente.cep" name="CEP" required>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" (click)="buscarEndereco()">Buscar</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="logradouro">Logradouro</label>
+            <input type="text" class="form-control" id="logradouro" [(ngModel)]="cliente.logradouro" name="logradouro" required>
+        </div>
+        <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" class="form-control" id="numero" [(ngModel)]="cliente.numero" name="numero" required>
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" class="form-control" id="complemento" [(ngModel)]="cliente.complemento" name="complemento">
+        </div>
+        <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" class="form-control" id="bairro" [(ngModel)]="cliente.bairro" name="bairro" required>
+        </div>
+        <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" class="form-control" id="cidade" [(ngModel)]="cliente.cidade" name="cidade" required>
+        </div>
+        <div class="form-group">
+            <label for="UF">UF</label>
+            <input type="text" class="form-control" id="UF" [(ngModel)]="cliente.uf" name="UF" required>
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <button type="button" class="btn btn-secondary" (click)="retornar()">Cancelar</button>
+        </div>
+
+    </form>
+</div>

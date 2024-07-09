@@ -1,0 +1,46 @@
+<h2 class="text-center">Embarcações Cadastradas</h2>
+<div class="container">
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let emb of embarcacoes">
+                <td>{{emb.id}}</td>
+                <td>{{emb.nomeEmbarcacao}}</td>
+
+
+
+                <td>
+                    <button (click)="consultarEmbarcacao(emb.id)" class="btn btn-primary"
+                        style="margin: 10px;">Consultar</button>
+                    <button (click)="alterarEmbarcacao(emb.id)" class="btn btn-secondary"
+                        style="margin: 10px;">Alterar</button>
+                    <button (click)="excluirEmbarcacao(emb.id)" class="btn btn-danger"
+                        style="margin: 10px;">Excluir</button>
+
+
+                </td>
+
+
+            </tr>
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button (click)="cadastrarEmbarcacao()" class="btn btn-info" style="margin: 10px;">Cadastrar Nova
+        Embarcacao</button>
+
+
+
+</div>

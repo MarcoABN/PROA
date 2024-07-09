@@ -1,0 +1,118 @@
+/* Global settings */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff; /* White background */
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 87.5vh;
+}
+
+.flex-container {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.title {
+    color: #01579b; /* Navy Blue */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.login-container {
+    width: 100%;
+    background-color: #e0f7fa; /* Light blue background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.promotional-image {
+    width: 100%;
+    max-width: 600px;
+    background: url('../../assets/barco.jpg') center center no-repeat;
+    background-size: contain;
+    margin-left: 20px; /* Space between image and login container */
+    flex-grow: 1;
+}
+
+/* Login Form Styling */
+mat-card {
+    width: 100%;
+    background-color: transparent; /* Transparent background for mat-card */
+    box-shadow: none; /* Remove box-shadow from mat-card */
+}
+
+h2 {
+    color: #01579b; /* Navy Blue */
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.mat-icon-button {
+    margin-left: 10px;
+}
+
+button[mat-raised-button] {
+    width: 100%;
+    background-color: #0277bd; /* Maritime Blue */
+    color: #ffffff; /* White */
+    font-weight: bold;
+}
+
+button[mat-raised-button]:disabled {
+    background-color: #81d4fa; /* Light Blue for disabled state */
+    color: #ffffff; /* White */
+}
+
+mat-error {
+    color: #d32f2f; /* Red for errors */
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .promotional-image {
+        margin-left: 0;
+        height: 300px;
+        width: 100%;
+    }
+
+    .login-wrapper {
+        max-width: 100%;
+    }
+}

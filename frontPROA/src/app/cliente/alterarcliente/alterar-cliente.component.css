@@ -1,0 +1,15 @@
+.form-check-input {
+    margin-left: 10px; /* Adicione a quantidade de espaçamento desejada aqui */
+    border: 1px solid #000;
+}
+.custom-input {
+    background-color: #e9e5e5; /* Substitua pela cor desejada */
+}
+.button-container {
+    text-align: center;
+    position: fixed;
+    bottom: 120px; /* Distância do fundo da tela */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* Para garantir que os botões estejam acima do conteúdo */
+  }
