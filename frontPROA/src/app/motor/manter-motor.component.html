@@ -1,0 +1,58 @@
+<div class="container">
+  <h2 class="text-center">Motores vinculados a Embarcação</h2>
+  
+  <div class="form-group">
+      <label for="cliente">Nome do Cliente:</label>
+      <input type="text" id="cliente" class="form-control" [(ngModel)]="cliente.nome" readonly>
+  </div>
+  
+  <div class="form-group">
+      <label for="embarcacao">Nome da Embarcação:</label>
+      <input type="text" id="embarcacao" class="form-control" [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
+  </div>
+  
+  <br>
+  <h3>Motores</h3>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Marca</th>
+              <th>Número de Série</th>
+              <th>Potência</th>
+              <th>Ações</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let motor of motores">
+              <td>{{ motor.id }}</td>
+              <td>{{ motor.marca }}</td>
+              <td>{{ motor.numSerie }}</td>
+              <td>{{ motor.potencia }}</td>
+              <td>
+                  <button type="button" class="btn btn-danger" (click)="excluirMotor(motor.id)">Excluir</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  
+  <br>
+  <h3>Adicionar Motor</h3>
+  
+  <div class="form-group">
+      <label for="marca">Marca:</label>
+      <input type="text" id="marca" class="form-control" [(ngModel)]="novoMotor.marca">
+  </div>
+  
+  <div class="form-group">
+      <label for="numSerie">Número de Série:</label>
+      <input type="text" id="numSerie" class="form-control" [(ngModel)]="novoMotor.numSerie">
+  </div>
+  
+  <div class="form-group">
+      <label for="potencia">Potência:</label>
+      <input type="number" id="potencia" class="form-control" [(ngModel)]="novoMotor.potencia">
+  </div>
+  
+  <button type="button" class="btn btn-success" (click)="adicionarMotor()">Adicionar Motor</button>
+</div>

@@ -1,46 +1,53 @@
 <h2 class="text-center">Embarcações Cadastradas</h2>
 <div class="container">
+    <form (ngSubmit)="pesquisarPorCPF()">
+        <div class="form-group">
+            <label for="cliente">Cliente (CPF ou CNPJ)</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="cliente" 
+                   [(ngModel)]="cpf" 
+                   name="cliente" 
+                   mask="000.000.000-00 || 00.000.000/0000-00"
+                   [dropSpecialCharacters]="false"
+                   required
+                   style="width: 200px; display: inline-block; margin-right: 10px;">
+            <input type="text" 
+                   class="form-control" 
+                   [(ngModel)]="nomeCliente" 
+                   name="nomeCliente" 
+                   readonly
+                   style="width: 400px; display: inline-block;">
+        </div>
+        <br>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+        </div>
+        <br><br>
+    </form>
 
-    <table class="table table-striped">
-
+    <table class="table table-striped" *ngIf="embarcacoes.length > 0">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
-
             </tr>
         </thead>
 
         <tbody>
-
             <tr *ngFor="let emb of embarcacoes">
                 <td>{{emb.id}}</td>
                 <td>{{emb.nomeEmbarcacao}}</td>
-
-
-
                 <td>
-                    <button (click)="consultarEmbarcacao(emb.id)" class="btn btn-primary"
-                        style="margin: 10px;">Consultar</button>
-                    <button (click)="alterarEmbarcacao(emb.id)" class="btn btn-secondary"
-                        style="margin: 10px;">Alterar</button>
-                    <button (click)="excluirEmbarcacao(emb.id)" class="btn btn-danger"
-                        style="margin: 10px;">Excluir</button>
-
-
+                    <button (click)="consultarEmbarcacao(emb.id)" class="btn btn-primary" style="margin: 10px;">Consultar</button>
+                    <button (click)="alterarEmbarcacao(emb.id)" class="btn btn-secondary" style="margin: 10px;">Alterar</button>
+                    <button (click)="excluirEmbarcacao(emb.id)" class="btn btn-danger" style="margin: 10px;">Excluir</button>
+                    <button (click)="manterMotor(emb.id)" class="btn btn-info" style="margin: 10px;">Motores</button>
                 </td>
-
-
             </tr>
         </tbody>
-
     </table>
 
     <br>
-
-    <button (click)="cadastrarEmbarcacao()" class="btn btn-info" style="margin: 10px;">Cadastrar Nova
-        Embarcacao</button>
-
-
-
+    <button (click)="cadastrarEmbarcacao()" class="btn btn-info" style="margin: 10px;">Cadastrar Nova Embarcacao</button>
 </div>

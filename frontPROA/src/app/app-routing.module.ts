@@ -12,6 +12,7 @@ import { AlterarClienteComponent } from './cliente/alterarcliente/alterar-client
 import { AnexosComponent } from './anexos/anexos.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './services/autenticacao/auth.guard'; // Importe o AuthGuard
+import { ManterMotorComponent } from './motor/manter-motor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login/login', pathMatch: 'full' },
@@ -26,6 +27,8 @@ const routes: Routes = [
   { path: 'cliente/alterar-cliente/:id', component: AlterarClienteComponent, canActivate: [AuthGuard] },
   { path: 'anexos/anexos', component: AnexosComponent, canActivate: [AuthGuard] },
   { path: 'login/login', component: LoginComponent },
+  { path: 'motor/manter-motor/:id', component: ManterMotorComponent },
+  
 ];
 
 @NgModule({

@@ -212,6 +212,30 @@
             <input type="text" id="cidade" class="form-control" [(ngModel)]="embarcacao.cidade" name="cidade" required>
         </div>
 
+        <br>
+    <h4>Dados dos Motores</h4>
+    <div *ngFor="let motor of motores; let i = index" [formGroupName]="i">
+        <div class="form-group">
+            <label for="fabricante{{i}}">Marca:</label>
+            <input type="text" id="marca{{i}}" class="form-control" [(ngModel)]="motor.marca" name="marca{{i}}">
+        </div>
+
+        <div class="form-group">
+            <label for="numSerie{{i}}">Número de Série:</label>
+            <input type="text" id="numSerie{{i}}" class="form-control" [(ngModel)]="motor.numSerie" name="numSerie{{i}}">
+        </div>
+
+        <div class="form-group">
+            <label for="combustivel{{i}}">Potencia:</label>
+            <input type="number" id="potencia{{i}}" class="form-control" [(ngModel)]="motor.potencia" name="potencia{{i}}">
+        </div>
+
+        <button type="button" class="btn btn-danger" (click)="removerMotor(i)">Remover Motor</button>
+        <hr>
+    </div>
+
+    <button type="button" class="btn btn-success" (click)="adicionarMotor()" [disabled]="motores.length >= 3">Adicionar Motor</button>
+
         <div class="button-container">
             <button type="submit" class="btn btn-primary">Salvar</button>
             <button type="button" class="btn btn-secondary" (click)="retornar()">Cancelar</button>

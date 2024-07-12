@@ -4,15 +4,11 @@ import { Embarcacao } from '../../model/embarcacao';
 import { Cliente } from 'src/app/model/cliente';
 import { DatePipe } from '@angular/common';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AnexosService {
-
-  constructor() {}
-
-  
+  constructor(private datePipe: DatePipe) {}
 
   async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string): Promise<void> {
     try {
@@ -28,9 +24,10 @@ export class AnexosService {
 
       const form = pdfDoc.getForm();
 
-      //const formattedDate = this.datePipe.transform(embarcacao.dtConstrucao.toString(), 'dd-MM-yyyy');
+      //Formatação das datas:
+      const formattedDtConstrucao = this.datePipe.transform(embarcacao.dtConstrucao, 'dd/MM/yyyy') || '';
+      const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
 
-      //form.getTextField('nomeDoCampoNoPDF').setText(Objeto+campo Em String);
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('inscricao').setText(embarcacao.numInscricao);
       form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta.toString());
@@ -39,7 +36,7 @@ export class AnexosService {
       form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida.toString());
       form.getTextField('comprimento').setText(embarcacao.compTotal.toString());
       form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString());
-      form.getTextField('anoconstrucao').setText(embarcacao.dtConstrucao.toString());
+      form.getTextField('anoconstrucao').setText(formattedDtConstrucao);
       form.getTextField('boca').setText(embarcacao.bocaMoldada.toString());
       form.getTextField('passageiros').setText(embarcacao.lotacao.toString());
       form.getTextField('numcasco').setText(embarcacao.numCasco);
@@ -68,7 +65,7 @@ export class AnexosService {
       form.getTextField('cep').setText(cliente.cep);
       form.getTextField('rg').setText(cliente.rg);
       form.getTextField('orgemissor').setText(cliente.orgEmissor);
-      form.getTextField('dtemissao').setText(cliente.dtEmissao.toString());
+      form.getTextField('dtemissao').setText(formattedDtEmissao);
       form.getTextField('cpfcnpj').setText(cliente.cpfcnpj);
       form.getTextField('telefone').setText(cliente.telefone);
       form.getTextField('celular').setText(cliente.celular);

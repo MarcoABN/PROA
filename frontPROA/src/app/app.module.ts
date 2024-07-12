@@ -21,6 +21,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { ManterMotorComponent } from './motor/manter-motor.component';
+
+
 
 
 @NgModule({
@@ -39,6 +44,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
     AnexosComponent,
     LoginComponent,
+
+    ManterMotorComponent,
+ 
     
   ],
   imports: [
@@ -50,6 +58,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatIconModule,
     MaterialModule,
+
+    NgxMaskDirective, 
+    NgxMaskPipe,
 
     AngularFireModule.initializeApp(
       {
@@ -63,7 +74,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       }),
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [DatePipe, provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,13 +4,10 @@ import { Embarcacao } from "./embarcacao";
 
 export class Motor {
 
-    idMotor!: number;
-    fabricante!: string;
-    modelo!: string;
+    id!: number;
+    marca!: string;
     numSerie!: string;
-    tipo!: boolean;
-    combustivel!: number;
-    dtFabMot!: Date;
+    potencia!: number;
 
     embarcacao!: Embarcacao;
 }

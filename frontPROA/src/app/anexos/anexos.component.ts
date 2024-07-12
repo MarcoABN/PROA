@@ -17,6 +17,7 @@ export class AnexosComponent implements AfterViewInit {
     cpfcnpjCliente!: string;
     embarcacao!: Embarcacao;
     cliente!: Cliente;
+    nomeCliente: string = '';
     natureza!: string;
     naturezaModal: any;
     embarcacoes: Embarcacao[] = [];
@@ -39,9 +40,25 @@ export class AnexosComponent implements AfterViewInit {
     }
 
     consultarAnexo() {
-        this.clienteService.consultarClienteCPFCNPJ(this.cpfcnpjCliente).subscribe(data => {
-            this.cliente = data;
-            this.listarEmbarcacoesPorCliente(this.cliente.id);
+        if (!this.cpfcnpjCliente.trim()) {
+            this.limparDados();
+            return;
+        }
+
+        const cpfCnpjSemMascara = this.cpfcnpjCliente.replace(/[^\d]+/g, '');
+        this.clienteService.consultarClienteCPFCNPJ(cpfCnpjSemMascara).subscribe(cliente => {
+            if (cliente) {
+                this.cliente = cliente;
+                this.nomeCliente = cliente.nome;
+                this.listarEmbarcacoesPorCliente(cliente.id);
+            } else {
+                alert('Cliente não encontrado!');
+                this.limparDados();
+            }
+        }, error => {
+            console.error(error);
+            alert('Erro ao consultar cliente!');
+            this.limparDados();
         });
     }
 
@@ -50,8 +67,6 @@ export class AnexosComponent implements AfterViewInit {
             this.embarcacoes = data;
             if (this.embarcacoes.length > 0) {
                 this.idEmbarcacao = this.embarcacoes[0].id;
-                //console.log('Embarcações listadas:', this.embarcacoes);
-                //console.log('ID da embarcação selecionada inicialmente:', this.idEmbarcacao);
             }
         });
     }
@@ -59,7 +74,6 @@ export class AnexosComponent implements AfterViewInit {
     onEmbarcacaoChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;
         this.idEmbarcacao = Number(selectElement.value);
-        //console.log('ID da embarcação alterada:', this.idEmbarcacao);
     }
 
     retornar() {
@@ -89,10 +103,15 @@ export class AnexosComponent implements AfterViewInit {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
             this.anexosService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza);
-            //console.log('Embarcação selecionada para gerar PDF:', selectedEmbarcacao);
-            //console.log('Natureza selecionada:', this.natureza);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
+    }
+
+    limparDados() {
+        this.nomeCliente = '';
+        this.embarcacoes = [];
+        this.idEmbarcacao = undefined!;
+        this.cliente = undefined!;
     }
 }

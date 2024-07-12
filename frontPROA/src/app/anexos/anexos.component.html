@@ -1,27 +1,38 @@
 <div class="container" style="height: 80vh; overflow-y: auto;">
-    <h1>Consultar Anexo</h1>
+    <h2 class="text-center">Anexos</h2>
     <form (ngSubmit)="consultarAnexo()">
         <div class="form-group">
-            <label for="cliente">Cliente (CPF ou CNPJ)</label>
-            <input type="text" class="form-control" id="cliente" [(ngModel)]="cpfcnpjCliente" name="cliente" required>
+            <label for="cliente">Cliente (CPF ou CNPJ)</label> 
+            <input type="text" 
+                   class="form-control" 
+                   id="cliente" 
+                   [(ngModel)]="cpfcnpjCliente" 
+                   name="cliente" 
+                   mask="000.000.000-00 || 00.000.000/0000-00"
+                   [dropSpecialCharacters]="false"
+                   required
+                   style="width: 200px; display: inline-block; margin-right: 10px;">
+            <input type="text" 
+                   class="form-control" 
+                   [(ngModel)]="nomeCliente" 
+                   name="nomeCliente" 
+                   readonly
+                   style="width: 400px; display: inline-block;">
         </div>
+        <br>
         <div class="button-container">
             <button type="submit" class="btn btn-primary">Pesquisar</button>
         </div>
+        <br><br>
         <div class="form-group">
             <label for="embarcacao">Embarcação</label>
             <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
                 <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}</option>
             </select>
         </div>     
-        
     </form>
     <br>
-    <h4>Resultados da Pesquisa</h4>
-    <div class="form-group">
-        <label for="nomeCliente">Nome do Cliente</label>
-        <input type="text" class="form-control" id="nomeCliente" [(ngModel)]="cliente.nome" name="nomeCliente" disabled>
-    </div>
+    
     <br><br>
     <div class="button-container">
         <button type="button" class="btn btn-secondary" (click)="openModal()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2D</button>

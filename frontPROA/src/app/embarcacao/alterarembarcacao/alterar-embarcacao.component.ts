@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
-import { CepService } from 'src/app/services/cep.service'; // Importando o serviço de CEP
 import { Embarcacao } from 'src/app/model/embarcacao';
+import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
+import { CepService } from 'src/app/services/cep.service';
 
 @Component({
   selector: 'app-alterar-embarcacao',
@@ -16,7 +16,7 @@ export class AlterarEmbarcacaoComponent implements OnInit {
 
   constructor(
     private embarcacaoService: FrontEmbarcacaoService, 
-    private cepService: CepService, // Injetando o serviço de CEP
+    private cepService: CepService,
     private router: Router, 
     private route: ActivatedRoute
   ) {}
@@ -31,13 +31,6 @@ export class AlterarEmbarcacaoComponent implements OnInit {
 
   retornar() {
     this.router.navigate(['/embarcacao/listarembarcacao']);
-  }
-
-  onSubmit() {
-    this.embarcacaoService.alterarEmbarcacao(this.idEmbarcacao, this.embarcacao).subscribe(data => {
-      console.log('TESTE: ',this.embarcacao.cep, this.embarcacao.uf);
-      this.retornar();
-    });
   }
 
   buscarEndereco() {
@@ -57,5 +50,16 @@ export class AlterarEmbarcacaoComponent implements OnInit {
       );
     }
   }
-  
+
+  onSubmit() {
+    this.embarcacaoService.alterarEmbarcacao(this.idEmbarcacao, this.embarcacao).subscribe(
+      data => {
+        console.log('Embarcação alterada com sucesso!', data);
+        this.router.navigate(['/embarcacao/listarembarcacao']);
+      },
+      error => {
+        console.error('Erro ao alterar embarcação', error);
+      }
+    );
+  }
 }

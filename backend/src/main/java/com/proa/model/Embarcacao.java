@@ -1,7 +1,7 @@
 package com.proa.model;
 
 import java.sql.Date;
-
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +19,10 @@ public class Embarcacao {
 
 	
 	//Declaração de relacionamento "Um para muitos" com entidades OrgMilitar, Empresa e Cliente
+	
+	// Relacionamento com Motor
+    @OneToMany(mappedBy = "embarcacao")
+    private List<Motor> motores;
 
 	@ManyToOne
 	@JoinColumn(name = "orgmilitar_id")

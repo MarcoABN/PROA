@@ -9,12 +9,18 @@ import { Motor } from '../model/motor';
 export class FrontMotorService {
 
   private url = "http://localhost:8080/cmotor/motor";
+  private url2 = "http://localhost:8080/cmotor/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 
   //Listar Embarcacoes a partir do metodo API REST que tem na URL acima
   listarMotor(): Observable<Motor[]>{
     return this.httpClient.get<Motor[]>(`${this.url}`)
+  }
+
+  listarMotorPorEmbarcacao(idEmbarcacao: number): Observable<Motor[]>{
+    console.log('AQUIIIIIIII', this.httpClient.get<Motor[]>(`${this.url2}/${idEmbarcacao}`));
+    return this.httpClient.get<Motor[]>(`${this.url2}/${idEmbarcacao}`)
   }
 
   //Serviço para consulta da Motor

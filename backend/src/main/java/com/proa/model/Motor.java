@@ -42,7 +42,7 @@ public class Motor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Long id;
 	
 	@Column (name = "potencia")
 	private String potencia;
@@ -55,7 +55,7 @@ public class Motor {
 
 	public Motor(Long iD, String potencia, String marca, String numSerie) {
 		super();
-		ID = iD;
+		id = iD;
 		this.potencia = potencia;
 		this.marca = marca;
 		this.numSerie = numSerie;
@@ -66,11 +66,11 @@ public class Motor {
 	}
 
 	public Long getID() {
-		return ID;
+		return id;
 	}
 
 	public void setID(Long iD) {
-		ID = iD;
+		id = iD;
 	}
 
 	public String getPotencia() {

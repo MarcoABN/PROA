@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proa.exception.ResourceNotFoundException;
+import com.proa.model.Embarcacao;
 import com.proa.model.Motor;
 import com.proa.repository.MotorRepository;
 
@@ -37,7 +38,22 @@ public class MotorController {
 		return this.motorRep.findAll();
 
 	}
+	
 
+    @GetMapping("/embarcacao/{idEmbarcacao}")
+    public ResponseEntity<List<Motor>> listarPorEmbarcacao(@PathVariable Long idEmbarcacao) {
+		List<Motor> motores = this.motorRep.findByEmbarcacaoId(idEmbarcacao);
+        if (motores.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhuma embarcação encontrada para o cliente: " + idEmbarcacao);
+        }
+        return ResponseEntity.ok(motores);
+    }
+    
+    
+    
+    
+    
+    
 	//Metodo para consultar Motor
 	@GetMapping("/motor/{idMotor}")
 	public ResponseEntity<Motor> consultar (@PathVariable Long idMotor) {
