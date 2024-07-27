@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ManterMotorComponent } from './motor/manter-motor.component';
+import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 
 
 
@@ -46,6 +47,7 @@ import { ManterMotorComponent } from './motor/manter-motor.component';
     LoginComponent,
 
     ManterMotorComponent,
+     NotafiscalComponent,
  
     
   ],

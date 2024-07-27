@@ -19,7 +19,7 @@ export class FrontMotorService {
   }
 
   listarMotorPorEmbarcacao(idEmbarcacao: number): Observable<Motor[]>{
-    console.log('AQUIIIIIIII', this.httpClient.get<Motor[]>(`${this.url2}/${idEmbarcacao}`));
+    //console.log('AQUIIIIIIII', this.httpClient.get<Motor[]>(`${this.url2}/${idEmbarcacao}`));
     return this.httpClient.get<Motor[]>(`${this.url2}/${idEmbarcacao}`)
   }
 

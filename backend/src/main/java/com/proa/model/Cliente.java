@@ -50,6 +50,12 @@ public class Cliente {
 	@Column (name="cpfcnpj")
 	private String CPFCNPJ;
 	
+	@Column (name="nacionalidade")
+	private String nacionalidade;
+	
+	@Column (name="naturalidade")
+	private String naturalidade;
+	
 	@Column (name="datanasc")
 	private Date dataNasc;
 	
@@ -90,19 +96,21 @@ public class Cliente {
 
 
 
-	public Cliente(OrgMilitar orgmilitar, Empresa empresa, Long iD, String nome, String rG, String orgEmissor,
-			Date dtEmissao, String cPFCNPJ, Date dataNasc, String telefone, String celular, String email,
+	
+
+	public Cliente(Long id, String nome, String rG, String orgEmissor, Date dtEmissao, String cPFCNPJ,
+			String nacionalidade, String naturalidade, Date dataNasc, String telefone, String celular, String email,
 			String senha, String cep, String logradouro, String numero, String complemento, String bairro,
 			String cidade, String uF) {
 		super();
-		this.orgmilitar = orgmilitar;
-		this.empresa = empresa;
-		id = iD;
+		this.id = id;
 		this.nome = nome;
 		RG = rG;
 		this.orgEmissor = orgEmissor;
 		this.dtEmissao = dtEmissao;
 		CPFCNPJ = cPFCNPJ;
+		this.nacionalidade = nacionalidade;
+		this.naturalidade = naturalidade;
 		this.dataNasc = dataNasc;
 		this.telefone = telefone;
 		this.celular = celular;
@@ -283,7 +291,22 @@ public class Cliente {
 	public void setOrgmilitar(OrgMilitar orgmilitar) {
 		this.orgmilitar = orgmilitar;
 	}
+	
+	public String getNaturalidade() {
+		return naturalidade;
+	}
 
+	public void setNaturalidade(String naturalidade) {
+		this.naturalidade = naturalidade;
+	}
+
+	public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
+	}
 
 	
 

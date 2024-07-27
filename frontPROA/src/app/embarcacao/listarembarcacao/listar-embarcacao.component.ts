@@ -82,4 +82,9 @@ export class ListarEmbarcacaoComponent implements OnInit {
     console.log('teste', idEmbarcacao);
   }
 
+  notafiscal(idEmbarcacao: number) {
+    this.router.navigate(['notafiscal/notafiscal', idEmbarcacao]);
+    console.log('teste', idEmbarcacao);
+  }
+
 }

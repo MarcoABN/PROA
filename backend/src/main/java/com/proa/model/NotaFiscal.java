@@ -24,7 +24,7 @@ public class NotaFiscal {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Long id;
 	
 	@Column (name = "CNPJvendedor")
 	private String CNPJVendedor;
@@ -48,7 +48,7 @@ public class NotaFiscal {
 			String local, String numeroNotaFiscal) {
 		super();
 		this.embarcacao = embarcacao;
-		ID = iD;
+		id = iD;
 		CNPJVendedor = cNPJVendedor;
 		this.razaoSocial = razaoSocial;
 		this.dtVenda = dtVenda;
@@ -62,11 +62,11 @@ public class NotaFiscal {
 	}
 
 	public Long getID() {
-		return ID;
+		return id;
 	}
 
 	public void setID(Long iD) {
-		ID = iD;
+		id = iD;
 	}
 
 	public String getCNPJVendedor() {
@@ -82,7 +82,7 @@ public class NotaFiscal {
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+		this.razaoSocial = razaoSocial.toUpperCase();
 	}
 
 	public Date getDtVenda() {
@@ -98,7 +98,7 @@ public class NotaFiscal {
 	}
 
 	public void setLocal(String local) {
-		Local = local;
+		Local = local.toUpperCase();
 	}
 
 	public String getNumeroNotaFiscal() {

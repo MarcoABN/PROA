@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proa.exception.ResourceNotFoundException;
+import com.proa.model.Motor;
 import com.proa.model.NotaFiscal;
 import com.proa.repository.NotaFiscalRepository;
 
@@ -42,6 +43,18 @@ public class NotaFiscalController {
             new ResourceNotFoundException("NotaFiscal não encontrado: " + idNotaFiscal));
         return ResponseEntity.ok(prest);
     }
+    
+    
+    @GetMapping("/embarcacao/{idEmbarcacao}")
+    public ResponseEntity<List<NotaFiscal>> listarPorEmbarcacao(@PathVariable Long idEmbarcacao) {
+		List<NotaFiscal> notaFiscal = this.notaFiscalRep.findByEmbarcacaoId(idEmbarcacao);
+        if (notaFiscal.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhuma embarcação encontrada para o cliente: " + idEmbarcacao);
+        }
+        return ResponseEntity.ok(notaFiscal);
+    }
+    
+    
 
     //Metodo para inserir
     @PostMapping("/notafiscal")

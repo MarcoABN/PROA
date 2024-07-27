@@ -44,7 +44,7 @@ export class ManterMotorComponent implements OnInit {
   carregarMotores() {
     this.motorService.listarMotorPorEmbarcacao(this.idEmbarcacao).subscribe(motores => {
       this.motores = motores;
-      console.log('TESTE MOTOR', this.motores[0].id, this.motores[0].marca);
+      //console.log('TESTE MOTOR', this.motores[0].id, this.motores[0].marca);
     }, error => {
       console.error('Erro ao carregar motores', error);
       alert('Erro ao carregar motores');

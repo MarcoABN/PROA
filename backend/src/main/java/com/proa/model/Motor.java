@@ -19,21 +19,7 @@ public class Motor {
     @JoinColumn(name = "embarcacao_id")
     private Embarcacao embarcacao;
 	
-	public Embarcacao getEmbarcacao() {
-		return embarcacao;
-	}
-
-	public void setEmbarcacao(Embarcacao embarcacao) {
-		this.embarcacao = embarcacao;
-	}
-
-	public NotaFiscal getNotaFiscal() {
-		return notaFiscal;
-	}
-
-	public void setNotaFiscal(NotaFiscal notaFiscal) {
-		this.notaFiscal = notaFiscal;
-	}
+	
 
 	@ManyToOne
     @JoinColumn(name = "notafiscal_id")
@@ -86,7 +72,7 @@ public class Motor {
 	}
 
 	public void setMarca(String marca) {
-		this.marca = marca;
+		this.marca = marca.toUpperCase();
 	}
 
 	public String getNumSerie() {
@@ -95,6 +81,22 @@ public class Motor {
 
 	public void setNumSerie(String numSerie) {
 		this.numSerie = numSerie;
+	}
+	
+	public Embarcacao getEmbarcacao() {
+		return embarcacao;
+	}
+
+	public void setEmbarcacao(Embarcacao embarcacao) {
+		this.embarcacao = embarcacao;
+	}
+
+	public NotaFiscal getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
 
 	

@@ -78,6 +78,8 @@ public class ClienteController {
 		clientetLocalizado.setDtEmissao(cliente.getDtEmissao());
 		clientetLocalizado.setDataNasc(cliente.getDataNasc());
 		clientetLocalizado.setCPFCNPJ(cliente.getCPFCNPJ());
+		clientetLocalizado.setNacionalidade(cliente.getNacionalidade());
+		clientetLocalizado.setNaturalidade(cliente.getNaturalidade());
 		clientetLocalizado.setTelefone(cliente.getTelefone());
 		clientetLocalizado.setCelular(cliente.getCelular());
 		clientetLocalizado.setEmail(cliente.getEmail());

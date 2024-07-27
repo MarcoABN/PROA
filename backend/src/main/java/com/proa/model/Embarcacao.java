@@ -21,8 +21,8 @@ public class Embarcacao {
 	//Declaração de relacionamento "Um para muitos" com entidades OrgMilitar, Empresa e Cliente
 	
 	// Relacionamento com Motor
-    @OneToMany(mappedBy = "embarcacao")
-    private List<Motor> motores;
+	//@OneToMany(mappedBy = "embarcacao")
+    //private List<Motor> motores;
 
 	@ManyToOne
 	@JoinColumn(name = "orgmilitar_id")
@@ -246,7 +246,7 @@ public class Embarcacao {
 	}
 
 	public void setAreaNavegacao(String areaNavegacao) {
-		this.areaNavegacao = areaNavegacao;
+		this.areaNavegacao = areaNavegacao.toUpperCase();
 	}
 
 	public float getCompPerpendicular() {
@@ -286,7 +286,7 @@ public class Embarcacao {
 	}
 
 	public void setMatCasco(String matCasco) {
-		this.matCasco = matCasco;
+		this.matCasco = matCasco.toUpperCase();
 	}
 
 	public int getQtdTripulantes() {
@@ -326,7 +326,7 @@ public class Embarcacao {
 	}
 
 	public void setTipoPropulsao(String tipoPropulsao) {
-		this.tipoPropulsao = tipoPropulsao;
+		this.tipoPropulsao = tipoPropulsao.toUpperCase();
 	}
 
 	public String getMatSuperestrutura() {
@@ -334,7 +334,7 @@ public class Embarcacao {
 	}
 
 	public void setMatSuperestrutura(String matSuperestrutura) {
-		this.matSuperestrutura = matSuperestrutura;
+		this.matSuperestrutura = matSuperestrutura.toUpperCase();
 	}
 
 	public float getPontalMoldado() {
@@ -350,7 +350,7 @@ public class Embarcacao {
 	}
 
 	public void setConstrutor(String construtor) {
-		this.construtor = construtor;
+		this.construtor = construtor.toUpperCase();
 	}
 
 	public float getArqueacaoBruta() {
@@ -366,7 +366,7 @@ public class Embarcacao {
 	}
 
 	public void setTipoEmbarcacao(String tipoEmbarcacao) {
-		this.tipoEmbarcacao = tipoEmbarcacao;
+		this.tipoEmbarcacao = tipoEmbarcacao.toUpperCase();
 	}
 
 	public String getNomeEmbarcacao() {
@@ -374,7 +374,7 @@ public class Embarcacao {
 	}
 
 	public void setNomeEmbarcacao(String nomeEmbarcacao) {
-		this.nomeEmbarcacao = nomeEmbarcacao;
+		this.nomeEmbarcacao = nomeEmbarcacao.toUpperCase();
 	}
 
 	public String getCorPredominante() {
@@ -382,7 +382,7 @@ public class Embarcacao {
 	}
 
 	public void setCorPredominante(String corPredominante) {
-		this.corPredominante = corPredominante;
+		this.corPredominante = corPredominante.toUpperCase();
 	}
 
 	public String getPorteBruto() {
@@ -414,7 +414,7 @@ public class Embarcacao {
 	}
 
 	public void setCalado(String calado) {
-		this.calado = calado;
+		this.calado = calado.toUpperCase();
 	}
 
 	public String getNumInscricao() {
@@ -422,7 +422,7 @@ public class Embarcacao {
 	}
 
 	public void setNumInscricao(String numInscricao) {
-		this.numInscricao = numInscricao;
+		this.numInscricao = numInscricao.toUpperCase();
 	}
 
 	public String getTipoAtividade() {
@@ -430,7 +430,7 @@ public class Embarcacao {
 	}
 
 	public void setTipoAtividade(String tipoAtividade) {
-		this.tipoAtividade = tipoAtividade;
+		this.tipoAtividade = tipoAtividade.toUpperCase();
 	}
 
 	public String getLogradouro() {
@@ -438,7 +438,7 @@ public class Embarcacao {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+		this.logradouro = logradouro.toUpperCase();
 	}
 
 	public String getBairro() {
@@ -446,7 +446,7 @@ public class Embarcacao {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = bairro.toUpperCase();
 	}
 
 	public String getNumero() {
@@ -462,7 +462,7 @@ public class Embarcacao {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+		this.complemento = complemento.toUpperCase();
 	}
 
 	public String getUF() {
@@ -470,7 +470,7 @@ public class Embarcacao {
 	}
 
 	public void setUF(String uF) {
-		UF = uF;
+		UF = uF.toUpperCase();
 	}
 
 	public String getCidade() {
@@ -478,7 +478,7 @@ public class Embarcacao {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = cidade.toUpperCase();
 	}
 
 	public String getCEP() {
@@ -524,6 +524,7 @@ public class Embarcacao {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
 	
 	
 	

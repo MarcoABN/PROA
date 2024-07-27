@@ -8,7 +8,8 @@ export class Cliente {
     orgEmissor!: string;
     dtEmissao!: Date;
     cpfcnpj!: string;
-    //corrigir
+    nacionalidade!: string;
+    naturalidade!: string;
     dataNasc!: Date;
     telefone!: string;
     celular!: string;

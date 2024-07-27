@@ -1,0 +1,73 @@
+<div class="container">
+  <h2 class="text-center">Nota Fiscal da Embarcação</h2>
+  
+  <div class="form-group">
+      <label for="cliente">Nome do Cliente:</label>
+      <input type="text" id="cliente" class="form-control" [(ngModel)]="embarcacao.cliente.nome" readonly>
+  </div>
+  
+  <div class="form-group">
+      <label for="embarcacao">Nome da Embarcação:</label>
+      <input type="text" id="embarcacao" class="form-control" [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
+  </div>
+
+  <div *ngIf="notaFiscal; else cadastrarNotaFiscal">
+    <h3>Nota Fiscal</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>CNPJ Vendedor</th>
+          <th>Razão Social</th>
+          <th>Data de Venda</th>
+          <th>Local</th>
+          <th>Número da Nota Fiscal</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ notaFiscal.id }}</td>
+          <td>{{ notaFiscal.cnpjvendedor }}</td>
+          <td>{{ notaFiscal.razaoSocial }}</td>
+          <td>{{ notaFiscal.dtVenda | date:'dd/MM/yyyy'}}</td>
+          <td>{{ notaFiscal.local }}</td>
+          <td>{{ notaFiscal.numeroNotaFiscal }}</td>
+          <td>
+            <button (click)="excluirNotaFiscal()" class="btn btn-danger">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #cadastrarNotaFiscal>
+    <h3 class="text-center">Cadastrar Nova Nota Fiscal</h3>
+    <form (ngSubmit)="salvarNotaFiscal()">
+      <div class="form-group">
+        <label for="CNPJVendedor">CNPJ Vendedor:</label>
+        <input type="text" id="CNPJVendedor" class="form-control" [(ngModel)]="novaNotaFiscal.cnpjvendedor" name="CNPJVendedor" required>
+      </div>
+      <div class="form-group">
+        <label for="razaoSocial">Razão Social:</label>
+        <input type="text" id="razaoSocial" class="form-control" [(ngModel)]="novaNotaFiscal.razaoSocial" name="razaoSocial" required>
+      </div>
+      <div class="form-group">
+        <label for="dtVenda">Data de Venda:</label>
+        <input type="date" id="dtVenda" class="form-control" [(ngModel)]="novaNotaFiscal.dtVenda" name="dtVenda" required>
+      </div>
+      <div class="form-group">
+        <label for="Local">Local:</label>
+        <input type="text" id="Local" class="form-control" [(ngModel)]="novaNotaFiscal.local" name="Local" required>
+      </div>
+      <div class="form-group">
+        <label for="numeroNotaFiscal">Número da Nota Fiscal:</label>
+        <input type="text" id="numeroNotaFiscal" class="form-control" [(ngModel)]="novaNotaFiscal.numeroNotaFiscal" name="numeroNotaFiscal" required>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" style="margin: 10px;">Salvar</button>
+        <button type="button" (click)="cancelar()" class="btn btn-secondary" style="margin: 10px;">Cancelar</button>
+      </div>
+    </form>
+  </ng-template>
+</div>

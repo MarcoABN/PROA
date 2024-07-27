@@ -12,5 +12,6 @@ import com.proa.model.Embarcacao;
 public interface EmbarcacaoRepository extends JpaRepository<Embarcacao, Long> {
 	
 	List<Embarcacao> findByClienteId(Long id);
+	
 
 }

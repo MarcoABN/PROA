@@ -3,30 +3,40 @@ import { PDFDocument } from 'pdf-lib';
 import { Embarcacao } from '../../model/embarcacao';
 import { Cliente } from 'src/app/model/cliente';
 import { DatePipe } from '@angular/common';
+import { Motor } from 'src/app/model/motor';
+import { FrontMotorService } from '../front-motor.service';
+import { Notafiscal } from 'src/app/model/notafiscal';
+import { FrontNotafiscalService } from '../front-notafiscal.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnexosService {
-  constructor(private datePipe: DatePipe) {}
+  motores: Motor[] = [];
+  notaFiscal!: Notafiscal;
+
+  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) {}
 
   async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string): Promise<void> {
+
+    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
+      this.motores = motores;
+    });
+
+    this.notaFiscalService.listarNotaFiscalPorEmbarcacao(embarcacao.id).subscribe(notasFiscais => {
+      this.notaFiscal = notasFiscais[0];
+    });
+
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2D-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
-
-      // Modify doc, fill out the form
-      const fieldNames = pdfDoc
-        .getForm()
-        .getFields()
-        .map((f) => f.getName());
-      console.log({ fieldNames });
 
       const form = pdfDoc.getForm();
 
       //Formatação das datas:
       const formattedDtConstrucao = this.datePipe.transform(embarcacao.dtConstrucao, 'dd/MM/yyyy') || '';
       const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
+      
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('inscricao').setText(embarcacao.numInscricao);
@@ -70,11 +80,49 @@ export class AnexosService {
       form.getTextField('telefone').setText(cliente.telefone);
       form.getTextField('celular').setText(cliente.celular);
       form.getTextField('email').setText(cliente.email);
-    
+
+      if (this.motores.length === 1) {
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
+        }
+        
+      if (this.motores.length === 2) {
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
+        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString());
+        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString());
+        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString());
+        }
+        
+      if (this.motores.length === 3) {
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
+        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString());
+        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString());
+        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString());
+        form.getTextField('marcamotor3').setText(this.motores[2].marca.toString());
+        form.getTextField('potmotor3').setText(this.motores[2].potencia.toString());
+        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString());
+        }
+
+        if (this.notaFiscal){
+        const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
+        form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString());
+        form.getTextField('dtvenda').setText(formattedDtvenda);
+        form.getTextField('local').setText(this.notaFiscal.local.toString());
+        form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString());
+        form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString());
+        }
+
+      
+
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
         //Chamada para função: Exibir ou baixar o PDF
-      this.openPdfInNewTab(modifiedPdfBytes);
+      this.abrirPDFemJanela(modifiedPdfBytes);
       //this.downloadPdf(modifiedPdfBytes, 'output.pdf');
 
       console.log('PDF Criado!');
@@ -96,9 +144,10 @@ export class AnexosService {
     document.body.removeChild(a);
   }
 
-  private openPdfInNewTab(data: Uint8Array): void {
+  private abrirPDFemJanela(data: Uint8Array): void {
     const blob = new Blob([data], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
+
 }
