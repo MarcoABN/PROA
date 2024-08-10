@@ -15,7 +15,7 @@ export class AnexosService {
   motores: Motor[] = [];
   notaFiscal!: Notafiscal;
 
-  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) {}
+  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) { }
 
   async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string): Promise<void> {
 
@@ -36,7 +36,7 @@ export class AnexosService {
       //Formatação das datas:
       const formattedDtConstrucao = this.datePipe.transform(embarcacao.dtConstrucao, 'dd/MM/yyyy') || '';
       const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
-      
+
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('inscricao').setText(embarcacao.numInscricao);
@@ -53,25 +53,25 @@ export class AnexosService {
       form.getTextField('contorno').setText(embarcacao.contorno.toString());
       form.getTextField('pontal').setText(embarcacao.pontalMoldado.toString());
       form.getTextField('matcasco').setText(embarcacao.matCasco);
-           
-      if (natureza === 'Inscrição'){
+
+      if (natureza === 'Inscrição') {
         form.getCheckBox('check_inscricao').check();
-      }else if (natureza === 'Cancelamento'){
+      } else if (natureza === 'Cancelamento') {
         form.getCheckBox('check_cancelamento').check();
-      }else if (natureza === 'Transf. Propriedade'){
+      } else if (natureza === 'Transf. Propriedade') {
         form.getCheckBox('check_transfproprietario').check();
-      }else if (natureza === 'Transf. Jurisdição'){
+      } else if (natureza === 'Transf. Jurisdição') {
         form.getCheckBox('check_transfjurisdicao').check();
-      }else if (natureza === 'Atualização de Dados'){
+      } else if (natureza === 'Atualização de Dados') {
         form.getCheckBox('check_atualizacaodados').check();
-      }else if (natureza === 'Emissão de Certidão'){
+      } else if (natureza === 'Emissão de Certidão') {
         form.getCheckBox('check_emissaocertidao').check();
       };
 
       form.getTextField('nomeproprietario').setText(cliente.nome);
       form.getTextField('endereco').setText(`${cliente.logradouro}, ${cliente.numero} - ${cliente.complemento}`);
       form.getTextField('cidade').setText(cliente.cidade);
-      form.getTextField('bairro').setText(cliente.bairro);      
+      form.getTextField('bairro').setText(cliente.bairro);
       form.getTextField('cep').setText(cliente.cep);
       form.getTextField('rg').setText(cliente.rg);
       form.getTextField('orgemissor').setText(cliente.orgEmissor);
@@ -85,8 +85,8 @@ export class AnexosService {
         form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
         form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
         form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
-        }
-        
+      }
+
       if (this.motores.length === 2) {
         form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
         form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
@@ -94,8 +94,8 @@ export class AnexosService {
         form.getTextField('marcamotor2').setText(this.motores[1].marca.toString());
         form.getTextField('potmotor2').setText(this.motores[1].potencia.toString());
         form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString());
-        }
-        
+      }
+
       if (this.motores.length === 3) {
         form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
         form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
@@ -106,22 +106,29 @@ export class AnexosService {
         form.getTextField('marcamotor3').setText(this.motores[2].marca.toString());
         form.getTextField('potmotor3').setText(this.motores[2].potencia.toString());
         form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString());
-        }
+      }
 
-        if (this.notaFiscal){
+      if (this.notaFiscal) {
         const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
         form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString());
         form.getTextField('dtvenda').setText(formattedDtvenda);
         form.getTextField('local').setText(this.notaFiscal.local.toString());
         form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString());
         form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString());
-        }
+      }
 
+      const hoje = new Date();
+      const dia = hoje.getDate().toString().padStart(2, '0');
+      const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
+      const ano = hoje.getFullYear().toString();
+      form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
       
+
+
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-        //Chamada para função: Exibir ou baixar o PDF
+      //Chamada para função: Exibir ou baixar o PDF
       this.abrirPDFemJanela(modifiedPdfBytes);
       //this.downloadPdf(modifiedPdfBytes, 'output.pdf');
 

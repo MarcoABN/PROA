@@ -7,15 +7,15 @@ import { Embarcacao } from 'src/app/model/embarcacao';
 @Injectable({
   providedIn: 'root'
 })
-export class Anexo5HService {
+export class Anexo3AService {
   texto: string[] = [];
   constructor(private datePipe: DatePipe) { }
 
-  async anexo5H(solicitacao: string, campotexto1: string, embarcacao?: Embarcacao, cliente?: Cliente): Promise<void> {
+  async anexo3A(solicitacao: string, campotexto1: string, embarcacao?: Embarcacao, cliente?: Cliente): Promise<void> {
 
     try {
 
-      const pdfBytes = await fetch('assets/pdfanexos/Anexo5H-N211.pdf').then(res => res.arrayBuffer());
+      const pdfBytes = await fetch('assets/pdfanexos/Anexo3A-N212.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
       const form = pdfDoc.getForm();
@@ -32,6 +32,10 @@ export class Anexo5HService {
           case "3":
             form.getCheckBox('servico3').check();
             break;
+          case "3a":
+            form.getCheckBox('servico3').check();
+            form.getCheckBox('servico3a').check();
+            break;
           case "4":
             form.getCheckBox('servico4').check();
             break;
@@ -41,7 +45,23 @@ export class Anexo5HService {
           case "6":
             form.getCheckBox('servico6').check();
             break;
+          case "6a":
+            form.getCheckBox('servico6a').check();
+            form.getCheckBox('servico6').check();
+            break;
+          case "6b":
+            form.getCheckBox('servico6b').check();
+            form.getCheckBox('servico6').check();
+            break;
           case "7":
+            form.getCheckBox('servico7').check();
+            break;
+          case "7a":
+            form.getCheckBox('servico7a').check();
+            form.getCheckBox('servico7').check();
+            break;
+          case "7b":
+            form.getCheckBox('servico7b').check();
             form.getCheckBox('servico7').check();
             break;
           case "8":
@@ -50,24 +70,7 @@ export class Anexo5HService {
           case "9":
             form.getCheckBox('servico9').check();
             break;
-          case "10a":
-            form.getCheckBox('servico10').check();
-            form.getCheckBox('servico10_a').check();
-            break;
-          case "10b":
-            form.getCheckBox('servico10').check();
-            form.getCheckBox('servico10_b').check();
-            break;
-          case "10c":
-            form.getCheckBox('servico10').check();
-            form.getCheckBox('servico10_c').check();
-            break;
-          case "11":
-            form.getCheckBox('servico11').check();
-            break;
-          case "12":
-            form.getCheckBox('servico12').check();
-            break;
+
           default:
             console.log(`Solicitação ${valor} não reconhecida.`);
         }
@@ -127,11 +130,6 @@ export class Anexo5HService {
       form.getTextField('descricao1').setText(this.texto[0]);
       form.getTextField('descricao2').setText(this.texto[1]);
       form.getTextField('descricao3').setText(this.texto[2]);
-      form.getTextField('descricao4').setText(this.texto[3]);
-      form.getTextField('descricao5').setText(this.texto[4]);
-      form.getTextField('descricao6').setText(this.texto[5]);
-      form.getTextField('descricao7').setText(this.texto[6]);
-
 
 
 
@@ -156,8 +154,8 @@ export class Anexo5HService {
   }
 
   divideString(texto: string): string[] {
-    const limiteDescricao1 = 60;
-    const limiteOutros = 80;
+    const limiteDescricao1 = 40;
+    const limiteOutros = 60;
     const result: string[] = [];
 
     // Função auxiliar para dividir um trecho de texto com limite de caracteres sem quebrar palavras

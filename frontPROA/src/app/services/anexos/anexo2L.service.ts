@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PDFDocument } from 'pdf-lib';
+import { Cliente } from 'src/app/model/cliente';
 import { Embarcacao } from 'src/app/model/embarcacao';
 
 @Injectable({
@@ -7,35 +8,53 @@ import { Embarcacao } from 'src/app/model/embarcacao';
 })
 export class Anexo2LService {
 
-
   constructor() { }
 
-  async anexo2L (embarcacao: Embarcacao){
-
+  async anexo2L (embarcacao?: Embarcacao, cliente?: Cliente){
+    
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2L-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
       const form = pdfDoc.getForm();
-
-      form.getTextField('nome').setText(embarcacao.cliente.nome);
+  
+      if (cliente){
+      form.getTextField('nome').setText(cliente.nome);
+      form.getTextField('nacionalidade').setText(cliente.nacionalidade.toUpperCase());
+      form.getTextField('naturalidade').setText(cliente.naturalidade.toUpperCase());
+      form.getTextField('cpf').setText(cliente.cpfcnpj);
+      form.getTextField('telefone').setText(cliente.telefone);
+      form.getTextField('celular').setText(cliente.celular);
+      form.getTextField('email').setText(cliente.email);
+      const endereco = 
+        cliente.logradouro 
+        + ', ' +cliente.complemento
+        + ', ' +cliente.bairro
+        + ', ' +cliente.cidade
+        + ', CEP: ' +cliente.cep;
+      const [part1, part2] = this.divideString(endereco, 35);
+      form.getTextField('endereco1').setText(part1.toUpperCase());
+      form.getTextField('endereco2').setText(part2.toUpperCase());
+      } else if (embarcacao){
+        form.getTextField('nome').setText(embarcacao.cliente.nome);
       form.getTextField('nacionalidade').setText(embarcacao.cliente.nacionalidade.toUpperCase());
       form.getTextField('naturalidade').setText(embarcacao.cliente.naturalidade.toUpperCase());
       form.getTextField('cpf').setText(embarcacao.cliente.cpfcnpj);
       form.getTextField('telefone').setText(embarcacao.cliente.telefone);
       form.getTextField('celular').setText(embarcacao.cliente.celular);
       form.getTextField('email').setText(embarcacao.cliente.email);
-
       const endereco = 
-        embarcacao.cliente.logradouro 
+      embarcacao.cliente.logradouro 
         + ', ' +embarcacao.cliente.complemento
         + ', ' +embarcacao.cliente.bairro
         + ', ' +embarcacao.cliente.cidade
         + ', CEP: ' +embarcacao.cliente.cep;
-
       const [part1, part2] = this.divideString(endereco, 35);
       form.getTextField('endereco1').setText(part1.toUpperCase());
       form.getTextField('endereco2').setText(part2.toUpperCase());
+      }
+
+      
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');

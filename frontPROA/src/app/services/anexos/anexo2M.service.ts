@@ -3,28 +3,28 @@ import { PDFDocument } from 'pdf-lib';
 import { Embarcacao } from 'src/app/model/embarcacao';
 import { Motor } from 'src/app/model/motor';
 import { FrontMotorService } from '../front-motor.service';
+import { Cliente } from 'src/app/model/cliente';
+import { FrontClienteService } from '../front-cliente.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo2MService {
 
-  constructor(private motorService: FrontMotorService ) { }
+  constructor(private motorService: FrontMotorService, private clienteService: FrontClienteService ) { }
 
+  cliente!: Cliente;
   motores: Motor[] = [];
   qtdmotores!: number;
   
   
-  async anexo2M (embarcacao: Embarcacao){
+  async anexo2M (embarcacao: Embarcacao, campotexto1: string, campotexto2: string){
 
-    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
-      this.motores = motores;
-    });   
-    this.qtdmotores = this.motores.length;
-    console.log("QTD MOTORES: ", this.qtdmotores);
-    
 
     try {
+
+      await this.carregarDados(embarcacao, campotexto1);
+
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2M-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
@@ -36,6 +36,20 @@ export class Anexo2MService {
       form.getTextField('cpfcnpjproprietario').setText(embarcacao.cliente.cpfcnpj);
       form.getTextField('telefoneproprietario').setText(embarcacao.cliente.telefone);
       form.getTextField('emailproprietario').setText(embarcacao.cliente.email);
+
+      form.getTextField('nomecomprador').setText(this.cliente.nome);
+      form.getTextField('cpfcnpjcomprador').setText(this.cliente.cpfcnpj);
+      form.getTextField('telefone').setText(this.cliente.celular);
+      form.getTextField('logradourocomprador').setText(this.cliente.logradouro);
+      form.getTextField('bairrocomprador').setText(this.cliente.bairro);
+      form.getTextField('cidadecomprador').setText(this.cliente.cidade);
+      form.getTextField('numerocomprador').setText(this.cliente.numero);
+      form.getTextField('complementocomprador').setText(this.cliente.complemento);
+      form.getTextField('cepcomprador').setText(this.cliente.cep);
+      form.getTextField('emailcomprador').setText(this.cliente.email);
+      form.getTextField('valorcomprador').setText("R$ " + campotexto2);
+      //form.getTextField('localdata').setText(this.cliente.nome);
+      
 
 
 
@@ -109,5 +123,17 @@ export class Anexo2MService {
     const blob = new Blob([data], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
+  }
+
+  async carregarDados (embarcacao: Embarcacao, campotexto1: string){
+    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
+      this.motores = motores;
+    });   
+    this.qtdmotores = this.motores.length;
+    console.log("QTD MOTORES: ", this.qtdmotores);
+    
+    this.clienteService.consultarClienteCPFCNPJ(campotexto1).subscribe(cliente => {
+      this.cliente = cliente;
+    });
   }
 }

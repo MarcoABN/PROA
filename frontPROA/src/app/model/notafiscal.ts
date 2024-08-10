@@ -11,4 +11,6 @@ export class Notafiscal {
     numeroNotaFiscal!: string;
 
     embarcacao!: Embarcacao;
+
+    pdfPath!: string;
 }

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
 import { Embarcacao } from "../model/embarcacao";
 import { Cliente } from "../model/cliente";
 import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
@@ -6,11 +6,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AnexosService } from "../services/anexos/anexo2D.service";
 import { FrontClienteService } from "../services/front-cliente.service";
 import { Modal } from 'bootstrap';
+import { NgForm } from "@angular/forms";
 import { Anexo2EService } from "../services/anexos/anexo2e.service";
 import { Anexo5HService } from "../services/anexos/anexo5h.service";
 import { Anexo3CService } from "../services/anexos/anexo3c.service";
 import { Anexo2LService } from "../services/anexos/anexo2L.service";
 import { Anexo2MService } from "../services/anexos/anexo2M.service";
+import { Anexo3DService } from "../services/anexos/anexo3D.service";
+import { Anexo3AService } from "../services/anexos/anexo3A.service";
+import { Anexo2FService } from "../services/anexos/anexo2F.service";
 
 @Component({
     selector: 'app-anexos',
@@ -18,21 +22,27 @@ import { Anexo2MService } from "../services/anexos/anexo2M.service";
     styleUrls: ['./anexos.component.css']
 })
 export class AnexosComponent implements AfterViewInit {
+    @ViewChild('clienteInput') clienteInput!: ElementRef;
     idEmbarcacao!: number;
+    embarcacoes: Embarcacao[] = [];
     cpfcnpjCliente!: string;
     embarcacao!: Embarcacao;
     cliente!: Cliente;
     nomeCliente: string = '';
     natureza!: string;
     opcao: string = '';
-    campotexto1 : string = '';
-    campotexto2 : string = '';
-    campotexto3 : string = '';
+    campotexto1: string = '';
+    campotexto2: string = '';
+    campotexto3: string = '';
     charCount: number = 0;
     naturezaModal: any;
     modalAnexo2E: any;
     modalAnexo5H: any;
-    embarcacoes: Embarcacao[] = [];
+    modalAnexo2M: any;
+    modalAnexo3D: any;
+    modalAnexo3A: any;
+    modalAnexo2F: any;
+    
 
     constructor(
         private anexosService: AnexosService,
@@ -41,29 +51,53 @@ export class AnexosComponent implements AfterViewInit {
         private anexo3Cservice: Anexo3CService,
         private anexo2Lservice: Anexo2LService,
         private anexo2Mservice: Anexo2MService,
+        private anexo3Dservice: Anexo3DService,
+        private anexo3Aservice: Anexo3AService,
+        private anexo2Fservice: Anexo2FService,
         private clienteService: FrontClienteService,
         private embarcacaoService: FrontEmbarcacaoService,
         private router: Router,
         private route: ActivatedRoute
-    ) {}
+    ) { }
 
     mostrarErroNatureza: boolean = false;
 
     ngAfterViewInit() {
         const naturezaModalElement = document.getElementById('naturezaModal');
-                if (naturezaModalElement) {
-            this.naturezaModal = new Modal(naturezaModalElement);            
+        if (naturezaModalElement) {
+            this.naturezaModal = new Modal(naturezaModalElement);
         }
 
         const modalAnexo2EElement = document.getElementById('modalAnexo2E');
         if (modalAnexo2EElement) {
-            this.modalAnexo2E = new Modal(modalAnexo2EElement);            
+            this.modalAnexo2E = new Modal(modalAnexo2EElement);
         }
 
         const modalAnexo5HElement = document.getElementById('modalAnexo5H');
         if (modalAnexo5HElement) {
-            this.modalAnexo5H = new Modal(modalAnexo5HElement);            
+            this.modalAnexo5H = new Modal(modalAnexo5HElement);
         }
+
+        const modalAnexo2MElement = document.getElementById('modalAnexo2M');
+        if (modalAnexo2MElement) {
+            this.modalAnexo2M = new Modal(modalAnexo2MElement);
+        }
+
+        const modalAnexo3DElement = document.getElementById('modalAnexo3D');
+        if (modalAnexo3DElement) {
+            this.modalAnexo3D = new Modal(modalAnexo3DElement);
+        }
+
+        const modalAnexo3AElement = document.getElementById('modalAnexo3A');
+        if (modalAnexo3AElement) {
+            this.modalAnexo3A = new Modal(modalAnexo3AElement);
+        }
+
+        const modalAnexo2FElement = document.getElementById('modalAnexo2F');
+        if (modalAnexo2FElement) {
+            this.modalAnexo2F = new Modal(modalAnexo2FElement);
+        }
+
     }
 
     consultarAnexo() {
@@ -109,7 +143,7 @@ export class AnexosComponent implements AfterViewInit {
 
     updateCharCount() {
         this.charCount = this.campotexto1.length;
-      }
+    }
 
     openModal() {
         if (this.naturezaModal) {
@@ -125,6 +159,38 @@ export class AnexosComponent implements AfterViewInit {
         if (this.modalAnexo5H) {
             this.modalAnexo5H.show();
         }
+    }
+
+    openModal2M() {
+        if (this.modalAnexo2M) {
+
+            this.modalAnexo2M.show();
+        }
+
+    }
+
+    openModal3D() {
+        if (this.modalAnexo3D) {
+
+            this.modalAnexo3D.show();
+        }
+
+    }
+
+    openModal3A() {
+        if (this.modalAnexo3A) {
+
+            this.modalAnexo3A.show();
+        }
+
+    }
+
+    openModal2F() {
+        if (this.modalAnexo2F) {
+
+            this.modalAnexo2F.show();
+        }
+
     }
 
     confirmarNatureza() {
@@ -166,6 +232,34 @@ export class AnexosComponent implements AfterViewInit {
         this.gerarAnexo5H();
     }
 
+    confirmarAnexo2M() {
+        if (this.modalAnexo2M) {
+            this.modalAnexo2M.hide();
+        }
+        this.gerarAnexo2M();
+    }
+
+    confirmarAnexo3D() {
+        if (this.modalAnexo3D) {
+            this.modalAnexo3D.hide();
+        }
+        this.gerarAnexo3D();
+    }
+
+    confirmarAnexo3A() {
+        if (this.modalAnexo3A) {
+            this.modalAnexo3A.hide();
+        }
+        this.gerarAnexo3A();
+    }
+
+    confirmarAnexo2F() {
+        if (this.modalAnexo2F) {
+            this.modalAnexo2F.hide();
+        }
+        this.gerarAnexo2F();
+    }
+
     gerarPdf() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
@@ -187,7 +281,9 @@ export class AnexosComponent implements AfterViewInit {
     gerarAnexo5H() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.anexo5Hservice.anexo5H(selectedEmbarcacao, this.opcao, this.campotexto1);
+            this.anexo5Hservice.anexo5H(this.opcao, this.campotexto1, selectedEmbarcacao);
+        } else if (this.cliente) {
+            this.anexo5Hservice.anexo5H(this.opcao, this.campotexto1, undefined, this.cliente);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
@@ -206,6 +302,8 @@ export class AnexosComponent implements AfterViewInit {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
             this.anexo2Lservice.anexo2L(selectedEmbarcacao);
+        } else if (this.cliente) {
+            this.anexo2Lservice.anexo2L(undefined, this.cliente);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
@@ -214,18 +312,50 @@ export class AnexosComponent implements AfterViewInit {
     gerarAnexo2M() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.anexo2Mservice.anexo2M(selectedEmbarcacao);
+            this.anexo2Mservice.anexo2M(selectedEmbarcacao, this.campotexto1, this.campotexto2);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
     }
 
-    limparDados() {
+    gerarAnexo3D() {
+        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+        if (selectedEmbarcacao) {
+            this.anexo3Dservice.anexo3D(this.campotexto1, this.campotexto2, this.opcao, selectedEmbarcacao);
+        } else {
+            console.error('Embarcação selecionada não encontrada.');
+        }
+    }
+
+    gerarAnexo3A() {
+        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+        if (selectedEmbarcacao) {
+            this.anexo3Aservice.anexo3A(this.opcao, this.campotexto1, undefined, this.cliente);
+        } else {
+            console.error('Embarcação selecionada não encontrada.');
+        }
+    }
+
+    gerarAnexo2F() {
+        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+        if (selectedEmbarcacao) {
+            this.anexo2Fservice.anexo2F(selectedEmbarcacao, this.campotexto1, this.campotexto2);
+        } else {
+            console.error('Embarcação selecionada não encontrada.');
+        }
+    }
+
+    limparDados(form?: NgForm) {
+        if (form) {form.resetForm();}; //Reseta o formulário inteiro
+        this.cpfcnpjCliente = '';
         this.nomeCliente = '';
         this.embarcacoes = [];
-        this.idEmbarcacao = undefined!;
         this.cliente = undefined!;
-    }
+        this.idEmbarcacao = undefined!;
+        setTimeout(() => {
+          this.clienteInput.nativeElement.focus();//Coloca o foco no campo de texto "Cliente (CPF ou CNPJ)"
+        }, 0);
+      }
 
     onCheckboxChange(event: Event) {
         const checkbox = event.target as HTMLInputElement;

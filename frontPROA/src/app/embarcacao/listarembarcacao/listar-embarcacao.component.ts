@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Embarcacao } from 'src/app/model/embarcacao';
 import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
 import { FrontClienteService } from 'src/app/services/front-cliente.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-listar-embarcacao',
@@ -10,7 +11,7 @@ import { FrontClienteService } from 'src/app/services/front-cliente.service';
   styleUrls: ['./listar-embarcacao.component.css']
 })
 export class ListarEmbarcacaoComponent implements OnInit {
-
+  @ViewChild('clienteInput') clienteInput!: ElementRef;
   embarcacoes: Embarcacao[] = [];
   cpf: string = '';
   nomeCliente: string = '';
@@ -51,17 +52,14 @@ export class ListarEmbarcacaoComponent implements OnInit {
     });
   }
 
-  limparDados() {
-    this.nomeCliente = '';
-    this.embarcacoes = [];
-  }
-
   alterarEmbarcacao(codigo: number) {
     this.router.navigate(['embarcacao/alterar-embarcacao', codigo]);
   }
 
   cadastrarEmbarcacao() {
-    this.router.navigate(['embarcacao/cadastrar-embarcacao']);
+    const cpfCnpjSemMascara = this.cpf.replace(/[^\d]+/g, '');
+    console.log('CPF/CNPJ enviado:', cpfCnpjSemMascara);
+    this.router.navigate(['embarcacao/cadastrar-embarcacao', { cpf: cpfCnpjSemMascara }]);
   }
 
   consultarEmbarcacao(codigo: number) {
@@ -87,4 +85,15 @@ export class ListarEmbarcacaoComponent implements OnInit {
     console.log('teste', idEmbarcacao);
   }
 
+  limparDados(form?: NgForm) {
+    if (form) {
+        form.resetForm(); // Reseta o formulário inteiro
+    }
+    this.cpf = '';
+    this.nomeCliente = '';
+    this.embarcacoes = [];
+    setTimeout(() => {
+        this.clienteInput.nativeElement.focus(); // Coloca o foco no campo de texto "Cliente (CPF ou CNPJ)"
+    }, 0);
+  }
 }

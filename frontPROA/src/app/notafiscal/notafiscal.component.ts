@@ -15,10 +15,11 @@ export class NotafiscalComponent implements OnInit {
   idEmbarcacao!: number;
   notaFiscal: Notafiscal | null = null;
   novaNotaFiscal: Notafiscal = new Notafiscal();
+  selectedFile: File | null = null;
 
   constructor(
-    private notaFiscalService: FrontNotafiscalService, 
-    private router: Router, 
+    private notaFiscalService: FrontNotafiscalService,
+    private router: Router,
     private route: ActivatedRoute,
     private embarcacaoService: FrontEmbarcacaoService
   ) {}
@@ -36,14 +37,27 @@ export class NotafiscalComponent implements OnInit {
     this.notaFiscalService.listarNotaFiscalPorEmbarcacao(this.idEmbarcacao).subscribe(notasFiscais => {
         if (notasFiscais.length > 0) {
           this.notaFiscal = notasFiscais[0];
+          this.loadNotaFiscalPDF();
         } else {
           this.notaFiscal = null;
         }
       },
-      (error) => {
+      error => {
         console.error('Erro ao listar notas fiscais:', error);
       }
     );
+  }
+
+  loadNotaFiscalPDF(): void {
+    if (this.notaFiscal) {
+      this.notaFiscalService.getNotaFiscalPDF(this.notaFiscal.id).subscribe(pdf => {
+        const url = URL.createObjectURL(pdf);
+        const iframe = document.querySelector('iframe') as HTMLIFrameElement;
+        iframe.src = url;
+      }, error => {
+        console.error('Erro ao carregar PDF:', error);
+      });
+    }
   }
 
   excluirNotaFiscal(): void {
@@ -52,30 +66,52 @@ export class NotafiscalComponent implements OnInit {
         () => {
           this.notaFiscal = null;
         },
-        (error) => {
+        error => {
           console.error('Erro ao excluir nota fiscal:', error);
         }
       );
     }
   }
 
-  salvarNotaFiscal(): void {
-    this.novaNotaFiscal.embarcacao = this.embarcacao;
+  excluirNotaFiscalPDF(): void {
     if (this.notaFiscal) {
-      this.notaFiscalService.alterarNotaFiscal(this.notaFiscal.id, this.notaFiscal).subscribe(
+      this.notaFiscalService.excluirNotaFiscalPDF(this.notaFiscal.id).subscribe(
         () => {
           this.listarNotaFiscal();
         },
-        (error) => {
-          console.error('Erro ao alterar nota fiscal:', error);
+        error => {
+          console.error('Erro ao excluir PDF:', error);
+        }
+      );
+    }
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  salvarNotaFiscal(): void {
+    if (this.selectedFile && this.notaFiscal) {
+      this.notaFiscalService.uploadNotaFiscalPDF(this.notaFiscal.id, this.selectedFile).subscribe(
+        () => {
+          this.listarNotaFiscal();
+        },
+        error => {
+          console.error('Erro ao fazer upload do PDF:', error);
         }
       );
     } else {
+      this.novaNotaFiscal.embarcacao = this.embarcacao;
       this.notaFiscalService.incluirNotaFiscal(this.novaNotaFiscal).subscribe(
-        () => {
-          this.listarNotaFiscal();
+        nota => {
+          this.notaFiscal = nota as Notafiscal;
+          if (this.selectedFile) {
+            this.salvarNotaFiscal();  // Recur to upload PDF after saving the NotaFiscal
+          } else {
+            this.listarNotaFiscal();
+          }
         },
-        (error) => {
+        error => {
           console.error('Erro ao incluir nota fiscal:', error);
         }
       );

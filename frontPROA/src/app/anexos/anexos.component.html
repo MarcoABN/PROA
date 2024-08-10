@@ -1,63 +1,89 @@
 <div class="container" style="height: 80vh; overflow-y: auto;">
     <h2 class="text-center">Anexos</h2>
-    <form (ngSubmit)="consultarAnexo()">
+    <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
         <div class="form-group">
-            <label for="cliente">Cliente (CPF ou CNPJ)</label> 
-            <input type="text" 
-                   class="form-control" 
-                   id="cliente" 
-                   [(ngModel)]="cpfcnpjCliente" 
-                   name="cliente" 
-                   mask="000.000.000-00 || 00.000.000/0000-00"
-                   [dropSpecialCharacters]="false"
-                   required
-                   style="width: 200px; display: inline-block; margin-right: 10px;">
-            <input type="text" 
-                   class="form-control" 
-                   [(ngModel)]="nomeCliente" 
-                   name="nomeCliente" 
-                   readonly
-                   style="width: 400px; display: inline-block;">
+            <label for="cliente">Cliente (CPF ou CNPJ)</label>
+            <br>
+            <input type="text" class="form-control" id="cliente" #clienteInput [(ngModel)]="cpfcnpjCliente"
+                name="cliente" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="false" required
+                style="width: 200px; display: inline-block; margin-right: 10px;">
+            <input type="text" class="form-control" [(ngModel)]="nomeCliente" name="nomeCliente" readonly
+                style="width: 400px; display: inline-block;">
         </div>
         <br>
         <div class="button-container">
-            <button type="submit" class="btn btn-primary">Pesquisar</button>
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
+            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
         </div>
         <br><br>
         <div class="form-group">
             <label for="embarcacao">Embarcação</label>
-            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
-                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}</option>
+            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao"
+                (change)="onEmbarcacaoChange($event)" required>
+                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}
+                </option>
             </select>
-        </div>     
+        </div>
     </form>
     <br>
-    
-    <br><br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="openModal()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2D</button>
-    </div>
-    <br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="openModal2E()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2E</button>
-    </div>
-    <br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="openModal5H()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 5H</button>
-    </div>
-    <br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="gerarAnexo3C()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3C</button>
-    </div>
-    <br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="gerarAnexo2L()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2L</button>
-    </div>
-    <br>
-    <div class="button-container">
-        <button type="button" class="btn btn-secondary" (click)="gerarAnexo2M()" [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2M</button>
+
+    <div class="row">
+        <div class="col">
+            <h4>Normam 211</h4>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal5H()" 
+                    [disabled]="!cliente">Gerar Anexo 5H</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="gerarAnexo2L()" 
+                    [disabled]="!cliente">Gerar Anexo 2L</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2D</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal2E()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2E</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="gerarAnexo3C()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3C</button>
+            </div>
+            <br>
+
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal2M()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2M</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal3D()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3D</button>
+            </div>
+        </div>
+
+        <div class="col">
+            <h4>Normam 212</h4>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal3A()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3A</button>
+            </div>
+            <br>
+            <div class="button-container">
+                <button type="button" class="btn btn-secondary" (click)="openModal2F()"
+                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2F</button>
+            </div>
+
+        </div>
     </div>
 </div>
+
 
 <!-- Modal anexo 2D-->
 <div class="modal fade" id="naturezaModal" tabindex="-1" aria-labelledby="naturezaModalLabel" aria-hidden="true">
@@ -71,27 +97,33 @@
                 <div class="form-group">
                     <label>Natureza</label>
                     <div>
-                        <input type="radio" id="naturezaInscricao" name="natureza" value="Inscrição" [(ngModel)]="natureza" required>
+                        <input type="radio" id="naturezaInscricao" name="natureza" value="Inscrição"
+                            [(ngModel)]="natureza" required>
                         <label for="naturezaInscricao">Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaCancelamento" name="natureza" value="Cancelamento" [(ngModel)]="natureza">
+                        <input type="radio" id="naturezaCancelamento" name="natureza" value="Cancelamento"
+                            [(ngModel)]="natureza">
                         <label for="naturezaCancelamento">Cancelamento</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfProprietario" name="natureza" value="Transf. Propriedade" [(ngModel)]="natureza">
+                        <input type="radio" id="naturezaTransfProprietario" name="natureza" value="Transf. Propriedade"
+                            [(ngModel)]="natureza">
                         <label for="naturezaTransfProprietario">Transf. Propriedade</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza" value="Transf. Jurisdição" [(ngModel)]="natureza">
+                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza" value="Transf. Jurisdição"
+                            [(ngModel)]="natureza">
                         <label for="naturezaTransfJurisdicao">Transf. Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaAtualizacao" name="natureza" value="Atualização de Dados" [(ngModel)]="natureza">
+                        <input type="radio" id="naturezaAtualizacao" name="natureza" value="Atualização de Dados"
+                            [(ngModel)]="natureza">
                         <label for="naturezaAtualizacao">Atualização de Dados</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaEmissao" name="natureza" value="Emissão de Certidão" [(ngModel)]="natureza">
+                        <input type="radio" id="naturezaEmissao" name="natureza" value="Emissão de Certidão"
+                            [(ngModel)]="natureza">
                         <label for="naturezaEmissao">Emissão de Certidão</label>
                     </div>
                 </div>
@@ -116,125 +148,154 @@
                 <div class="form-group">
                     <label>Tipo Requerimento</label>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="inscricao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="inscricao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="cancelamento" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="cancelamento" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Canc. de Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencaconstrucao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="licencaconstrucao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Licença de Construção</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencaalteracao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="licencaalteracao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Licença de Alteracao</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencareclassificacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="licencareclassificacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Licença de Reclassificação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfpropriedade" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="transfpropriedade" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Transferência de Propriedade</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfjurisdicao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="transfjurisdicao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Transferência de Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfpropjurisdicao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="transfpropjurisdicao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Transferência de Propriedade e Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="mudancanome" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="mudancanome" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Mudança de nome da Embarcação</label>
                     </div>
                     <div class="form-group" *ngIf="opcao === 'mudancanome'">
                         <label for="nome">1° Opção:</label>
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1" name="campotexto1" required>
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
                     </div>
                     <div class="form-group" *ngIf="opcao === 'mudancanome'">
                         <label for="nome">2° Opção:</label>
-                        <input type="text" id="nomeopcao2" class="form-control" [(ngModel)]="campotexto2" name="campotexto2" required>
+                        <input type="text" id="nomeopcao2" class="form-control" [(ngModel)]="campotexto2"
+                            name="campotexto2" required>
                     </div>
                     <div class="form-group" *ngIf="opcao === 'mudancanome'">
                         <label for="nome">3° Opção:</label>
-                        <input type="text" id="nomeopcao3" class="form-control" [(ngModel)]="campotexto3" name="campotexto3" required>
+                        <input type="text" id="nomeopcao3" class="form-control" [(ngModel)]="campotexto3"
+                            name="campotexto3" required>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_sim" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_sim" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Renovação TIE/TIEM COM Alteração</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_nao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_nao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Renovação TIE/TIEM SEM Alteração</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_perda" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_perda" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Perda)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_roubo" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_roubo" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Roubo)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_extravio" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_extravio"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Extravio)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_mauestado" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_mauestado"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Mau estado de conservação)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosembarcacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosembarcacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Alteração de dados cadastrais da embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosproprietario" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosproprietario"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Alteração de dados cadastrais do proprietário</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="trocamotor" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="trocamotor" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento"> Troca do Motor Propulsor</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="certidaoembarcacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="certidaoembarcacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Certidão Relativa a Situação da Embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="registroaverbacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="registroaverbacao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Registro de Ônus e Averbações relativos a embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="cancaverbacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="cancaverbacao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Cancelamento do Registro de Ônus e Averbações (embarcação)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaarqueacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaarqueacao" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Vistoria de Arqueação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriarearqueacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="vistoriarearqueacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Vistoria de Rearqueação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaclassificacao" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaclassificacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Vistoria para alterar a classificação da embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="outrosservicos" [(ngModel)]="opcao" required>
+                        <input type="radio" id="Requerimento" name="opcao" value="outrosservicos" [(ngModel)]="opcao"
+                            required>
                         <label for="Requerimento">Outros serviços (Justificar)</label>
                     </div>
                     <div class="form-group" *ngIf="opcao === 'outrosservicos'">
                         <label for="nome">Justificativa:</label>
-                        <input type="text" id="justificativa" class="form-control" [(ngModel)]="campotexto1" name="campotexto1" required>
+                        <input type="text" id="justificativa" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
                     </div>
 
 
-                    
-                    
+
+
                 </div>
             </div>
             <div class="modal-footer">
@@ -257,66 +318,81 @@
                 <div class="form-group">
                     <label>Requerimento:</label>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="1" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="1"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 1 - CONCESSÃO DE CHA POR CORRESPONDÊNCIA/EQUIVALÊNCIA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="2" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="2"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 2 - EMISSÃO/RENOVAÇÃO</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="3" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="3"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 3 - RENOVAÇÃO DE CHA (ARA, MSA OU CPA)</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="4" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="4"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 4 - EMISSÃO CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="5" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="5"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 5 - RENOVAÇÃO CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="6" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="6"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 6 - CANC. CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="7" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="7"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 7 - CRED. ESTAB. TRINAMENTO NÁUTICO / PESSOA FÍSICA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="8" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="8"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 8 - CRED. DE ÓRGÃO DO ESCOTEIRO DO MAR</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="9" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="9"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 9 - CRED. ESTAB. TRINAMENTO NÁUTICO / VELEIRO</label>
                     </div>
                     <label>10 - RENOVAÇÃO DO CREDENCIAMENTO (Selecione)</label>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10a" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="10a"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> A - ESTAB. TREINAMENTO NÁUTICO / PESSOA FÍSICA </label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10b" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="10b"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> B - ÓRGÃO DO ESCOTEIRO DO MAR</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10c" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="10c"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> C - CRED. ESTAB. TRINAMENTO NÁUTICO / VELEIRO</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="11" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="11"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 11 - DESCREDENCIAMENTO VOLUNTÁRIO</label>
-                    </div>                    
+                    </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="12" (change)="onCheckboxChange($event)">
+                        <input type="checkbox" id="Requerimento" name="opcao" value="12"
+                            (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 12 - PEDIDO DE REVISÃO DE PROVAS DE CAPITÃO AMADOR</label>
                     </div>
 
                     <div class="form-group">
                         <label for="campoTexto1">Comentários Adicionais:</label>
-                        <textarea id="campoTexto1" class="form-control" rows="5" maxlength="500" [(ngModel)]="campotexto1" (input)="updateCharCount()"></textarea>
+                        <textarea id="campoTexto1" class="form-control" rows="5" maxlength="500"
+                            [(ngModel)]="campotexto1" (input)="updateCharCount()"></textarea>
                         <small class="form-text text-muted">
                             Máximo de 500 caracteres.{{ charCount }}/500.
                         </small>
@@ -330,5 +406,205 @@
             </div>
         </div>
     </div>
+</div>8
+
+<!-- Modal anexo 2M-->
+<div class="modal fade" id="modalAnexo2M" tabindex="-1" aria-labelledby="modalAnexo2MLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2MLabel">Informe o comprador:</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>CPF/CPNJ</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Valor</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto2"
+                            name="campotexto2" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2M()">Confirmar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Modal anexo 3D-->
+<div class="modal fade" id="modalAnexo3D" tabindex="-1" aria-labelledby="modalAnexo3DLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo3DLabel">Anexo 3D:</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Organização Militar:</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Construtor</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto2"
+                            name="campotexto2" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tipo:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="radioConstruida" name="tipo" [(ngModel)]="opcao" value="Construida">
+                        <label class="form-check-label" for="radioConstruida">Construida</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="radioAlterada" name="tipo" [(ngModel)]="opcao" value="Alterada">
+                        <label class="form-check-label" for="radioAlterada">Alterada</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo3D()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 3A-->
+<div class="modal fade" id="modalAnexo3A" tabindex="-1" aria-labelledby="modalAnexo3ALabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo3ALabel">Selecionar Requerimento</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Requerimento:</label>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="1"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento1"> 1 - EMISSÃO/RENOVAÇÃO/2a VIA CHA CATEGORIA DE MTA.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="2"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 2 -  EMISSÃO DE CHA-MTA-E (HABILITAÇÃO PARA ALUGUEL DE MTA)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="3"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 3 - RENOVAÇÃO DE CHA (ARA, MSA OU CPA)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="3a"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> >>3 - Declaro que conduzo ou já conduzi Moto Aquática</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="4"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 4 - CRED. DE ESTAB. DE TREINAMENTO NÁUTICO / PESSOA</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="5"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 5 - CRED. DE ESTAB. DE ALUGUEL DE MOTO AQUÁTICA</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="6"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 6 - CANC. CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="6a"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> >>6 - NÃO HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="6b"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> >>6 - HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="7"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 7 - CRED. ESTAB. TRINAMENTO NÁUTICO / PESSOA FÍSICA</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="7a"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> >>7 - NÃO HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="7b"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> >>7 - HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="8"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 8 - DESCREDENCIAMENTO VOLUNTÁRIO DE ETN-M/PF</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Requerimento" name="opcao" value="9"
+                            (change)="onCheckboxChange($event)">
+                        <label for="Requerimento2"> 9 - DESCREDENCIAMENTO VOLUNTÁRIO DE EAMA</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="campoTexto1">Comentários Adicionais:</label>
+                        <textarea id="campoTexto1" class="form-control" rows="5" maxlength="500"
+                            [(ngModel)]="campotexto1" (input)="updateCharCount()"></textarea>
+                        <small class="form-text text-muted">
+                            Máximo de 300 caracteres.{{ charCount }}/300.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo3A()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 2F-->
+<div class="modal fade" id="modalAnexo2F" tabindex="-1" aria-labelledby="modalAnexo2FLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2FLabel">Informe o comprador:</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>CPF/CPNJ</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2F()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

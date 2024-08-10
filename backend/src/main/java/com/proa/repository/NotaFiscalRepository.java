@@ -13,4 +13,5 @@ public interface NotaFiscalRepository extends JpaRepository<NotaFiscal, Long>  {
 
 	
 	List<NotaFiscal> findByEmbarcacaoId(Long Id);
+	
 }

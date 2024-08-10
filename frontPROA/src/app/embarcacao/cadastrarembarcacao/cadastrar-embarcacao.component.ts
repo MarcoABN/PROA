@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Embarcacao } from 'src/app/model/embarcacao';
 import { Motor } from 'src/app/model/motor';
 import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
 import { FrontMotorService } from 'src/app/services/front-motor.service';
 import { CepService } from 'src/app/services/cep.service';
+import { Cliente } from 'src/app/model/cliente';
+import { FrontClienteService } from 'src/app/services/front-cliente.service';
 
 @Component({
   selector: 'app-cadastrar-embarcacao',
@@ -13,18 +15,34 @@ import { CepService } from 'src/app/services/cep.service';
 })
 export class CadastrarEmbarcacaoComponent implements OnInit {
 
+  cpfcnpj!: string;
+  cliente!: Cliente;
   idEmbarcacao!: number;
   embarcacao: Embarcacao = new Embarcacao();
   motores: Motor[] = [];
 
   constructor(
     private embarcacaoService: FrontEmbarcacaoService,
+    private clienteService: FrontClienteService,
     private motorService: FrontMotorService,
     private router: Router,
-    private cepService: CepService
+    private cepService: CepService,
+    private route: ActivatedRoute
   ){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cpfcnpj = this.route.snapshot.params['cpf'];
+    this.cliente = new Cliente();
+    this.clienteService.consultarClienteCPFCNPJ(this.cpfcnpj).subscribe(
+      (data: Cliente) => {
+        this.cliente = data;
+        console.log('Cliente recebido: ', this.cliente);
+      },
+      (error) => {
+        console.error('Erro ao consultar cliente: ', error);
+      }
+    );
+  }
 
   retornar(){
     this.router.navigate(['inicio']);
@@ -37,7 +55,7 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
     }
 
     this.embarcacao.id = 0;
-
+    this.embarcacao.cliente = this.cliente;
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {
       console.log(data);
       this.cadastrarMotores();

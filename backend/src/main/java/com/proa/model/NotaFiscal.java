@@ -40,20 +40,27 @@ public class NotaFiscal {
 	
 	@Column (name = "numeronotafiscal")
 	private String numeroNotaFiscal;
+	
+	@Column(name = "pdf_path")
+	private String pdfPath;
+
 
 	
 	
 
-	public NotaFiscal(Embarcacao embarcacao, Long iD, String cNPJVendedor, String razaoSocial, Date dtVenda,
-			String local, String numeroNotaFiscal) {
+	
+
+	public NotaFiscal(Embarcacao embarcacao, Long id, String cNPJVendedor, String razaoSocial, Date dtVenda,
+			String local, String numeroNotaFiscal, String pdfPath) {
 		super();
 		this.embarcacao = embarcacao;
-		id = iD;
+		this.id = id;
 		CNPJVendedor = cNPJVendedor;
 		this.razaoSocial = razaoSocial;
 		this.dtVenda = dtVenda;
 		Local = local;
 		this.numeroNotaFiscal = numeroNotaFiscal;
+		this.pdfPath = pdfPath;
 	}
 
 	public NotaFiscal() {
@@ -115,7 +122,17 @@ public class NotaFiscal {
 
 	public void setEmbarcacao(Embarcacao embarcacao) {
 		this.embarcacao = embarcacao;
+	}
+
+	public String getPdfPath() {
+		return pdfPath;
+	}
+
+	public void setPdfPath(String pdfPath) {
+		this.pdfPath = pdfPath;
 	}	
+	
+	
 	
 	
 }

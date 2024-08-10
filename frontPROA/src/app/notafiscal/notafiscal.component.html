@@ -2,13 +2,13 @@
   <h2 class="text-center">Nota Fiscal da Embarcação</h2>
   
   <div class="form-group">
-      <label for="cliente">Nome do Cliente:</label>
-      <input type="text" id="cliente" class="form-control" [(ngModel)]="embarcacao.cliente.nome" readonly>
+    <label for="cliente">Nome do Cliente:</label>
+    <input type="text" id="cliente" class="form-control" [(ngModel)]="embarcacao.cliente.nome" readonly>
   </div>
   
   <div class="form-group">
-      <label for="embarcacao">Nome da Embarcação:</label>
-      <input type="text" id="embarcacao" class="form-control" [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
+    <label for="embarcacao">Nome da Embarcação:</label>
+    <input type="text" id="embarcacao" class="form-control" [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
   </div>
 
   <div *ngIf="notaFiscal; else cadastrarNotaFiscal">
@@ -30,15 +30,26 @@
           <td>{{ notaFiscal.id }}</td>
           <td>{{ notaFiscal.cnpjvendedor }}</td>
           <td>{{ notaFiscal.razaoSocial }}</td>
-          <td>{{ notaFiscal.dtVenda | date:'dd/MM/yyyy'}}</td>
+          <td>{{ notaFiscal.dtVenda | date:'dd/MM/yyyy' }}</td>
           <td>{{ notaFiscal.local }}</td>
           <td>{{ notaFiscal.numeroNotaFiscal }}</td>
           <td>
-            <button (click)="excluirNotaFiscal()" class="btn btn-danger">Excluir</button>
+            
+            <button (click)="excluirNotaFiscal()" class="btn btn-danger">Excluir Nota</button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <h4>Visualizar PDF</h4>
+    <iframe width="100%" height="500px"></iframe>
+
+    <div class="form-group">
+      <label for="file">Atualizar Nota Fiscal (PDF):</label>
+      <input type="file" id="file" (change)="onFileSelected($event)" class="form-control">
+      <button (click)="salvarNotaFiscal()" class="btn btn-primary" style="margin-top: 10px;">Salvar PDF</button>
+      <button (click)="excluirNotaFiscalPDF()" class="btn btn-danger" style="margin-top: 10px;">Excluir PDF</button>
+    </div>
   </div>
 
   <ng-template #cadastrarNotaFiscal>
@@ -64,6 +75,12 @@
         <label for="numeroNotaFiscal">Número da Nota Fiscal:</label>
         <input type="text" id="numeroNotaFiscal" class="form-control" [(ngModel)]="novaNotaFiscal.numeroNotaFiscal" name="numeroNotaFiscal" required>
       </div>
+
+      <div class="form-group">
+        <label for="file">Upload Nota Fiscal (PDF):</label>
+        <input type="file" id="file" (change)="onFileSelected($event)" class="form-control" required>
+      </div>
+
       <div class="text-center">
         <button type="submit" class="btn btn-primary" style="margin: 10px;">Salvar</button>
         <button type="button" (click)="cancelar()" class="btn btn-secondary" style="margin: 10px;">Cancelar</button>

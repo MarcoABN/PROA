@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Notafiscal } from '../model/notafiscal';
@@ -7,40 +7,46 @@ import { Notafiscal } from '../model/notafiscal';
   providedIn: 'root'
 })
 export class FrontNotafiscalService {
- 
-  
   private url = "http://localhost:8080/cnotafiscal/notafiscal";
   private url2 = "http://localhost:8080/cnotafiscal/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 
-  //Listar Embarcacoes a partir do metodo API REST que tem na URL acima
-  listarNotaFiscal(): Observable<Notafiscal[]>{
-    return this.httpClient.get<Notafiscal[]>(`${this.url}`)
+  listarNotaFiscal(): Observable<Notafiscal[]> {
+    return this.httpClient.get<Notafiscal[]>(`${this.url}`);
   }
 
-  listarNotaFiscalPorEmbarcacao(idEmbarcacao: number): Observable<Notafiscal[]>{
-    return this.httpClient.get<Notafiscal[]>(`${this.url2}/${idEmbarcacao}`)
+  listarNotaFiscalPorEmbarcacao(idEmbarcacao: number): Observable<Notafiscal[]> {
+    return this.httpClient.get<Notafiscal[]>(`${this.url2}/${idEmbarcacao}`);
   }
 
-  //Serviço para consulta da NotaFiscal
-  consultarNotaFiscal (idNotaFiscal: number): Observable<Notafiscal>{
-    
-    return this.httpClient.get<Notafiscal>(`${this.url}/${idNotaFiscal}`)
+  consultarNotaFiscal(idNotaFiscal: number): Observable<Notafiscal> {
+    return this.httpClient.get<Notafiscal>(`${this.url}/${idNotaFiscal}`);
   }
 
-  //Servico para incluir uma NotaFiscal
-  incluirNotaFiscal(notaFiscal: Notafiscal): Observable<object>{
+  incluirNotaFiscal(notaFiscal: Notafiscal): Observable<object> {
     return this.httpClient.post(`${this.url}`, notaFiscal);
   }
 
-  //Servico para Alterar uma NotaFiscal
-  alterarNotaFiscal(IDNotaFiscal: number, notaFiscal: Notafiscal): Observable<object>{
+  alterarNotaFiscal(IDNotaFiscal: number, notaFiscal: Notafiscal): Observable<object> {
     return this.httpClient.put(`${this.url}/${IDNotaFiscal}`, notaFiscal);
   }
 
-  //Servico para Excluir uma NotaFiscal
-  excluirNotaFiscal(IDNotaFiscal: number): Observable<Object>{
+  excluirNotaFiscal(IDNotaFiscal: number): Observable<Object> {
     return this.httpClient.delete<Notafiscal>(`${this.url}/${IDNotaFiscal}`);
+  }
+
+  uploadNotaFiscalPDF(idNotaFiscal: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post(`${this.url}/${idNotaFiscal}/upload`, formData);
+  }
+
+  excluirNotaFiscalPDF(idNotaFiscal: number): Observable<any> {
+    return this.httpClient.delete(`${this.url}/${idNotaFiscal}/pdf`);
+  }
+
+  getNotaFiscalPDF(idNotaFiscal: number): Observable<Blob> {
+    return this.httpClient.get(`${this.url}/${idNotaFiscal}/pdf`, { responseType: 'blob' });
   }
 }

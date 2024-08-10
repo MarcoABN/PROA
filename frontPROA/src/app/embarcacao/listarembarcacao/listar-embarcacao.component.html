@@ -1,8 +1,9 @@
 <h2 class="text-center">Embarcações Cadastradas</h2>
 <div class="container">
-    <form (ngSubmit)="pesquisarPorCPF()">
+    <form #clienteForm="ngForm" (ngSubmit)="pesquisarPorCPF()">
         <div class="form-group">
             <label for="cliente">Cliente (CPF ou CNPJ)</label>
+            <br>
             <input type="text" 
                    class="form-control" 
                    id="cliente" 
@@ -21,7 +22,8 @@
         </div>
         <br>
         <div class="button-container">
-            <button type="submit" class="btn btn-primary">Pesquisar</button>
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
+            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
         </div>
         <br><br>
     </form>
@@ -50,5 +52,5 @@
     </table>
 
     <br>
-    <button (click)="cadastrarEmbarcacao()" class="btn btn-info" style="margin: 10px;">Cadastrar Nova Embarcacao</button>
+    <button (click)="cadastrarEmbarcacao()" *ngIf="nomeCliente" class="btn btn-info">Cadastrar Nova Embarcacao</button>
 </div>

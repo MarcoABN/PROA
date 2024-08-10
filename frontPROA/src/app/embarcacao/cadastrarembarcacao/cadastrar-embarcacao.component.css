@@ -18,3 +18,9 @@
     transform: translateX(-50%);
     z-index: 1000; /* Para garantir que os botões estejam acima do conteúdo */
   }
+
+  .readonly-input {
+    background-color: #e9ecef;
+    color: #495057;
+    pointer-events: none; /* This prevents the user from clicking into the field */
+}
