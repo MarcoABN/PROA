@@ -51,4 +51,16 @@ export class AutenticacaoService {
     localStorage.clear();
     this.auth.signOut();
   }
+
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await this.auth.sendPasswordResetEmail(email);
+      alert('Um link para resetar sua senha foi enviado para seu e-mail.');
+    } catch (error) {
+      console.error('Erro ao tentar resetar a senha', error);
+      alert('Erro ao tentar resetar a senha. Verifique se o e-mail está correto.');
+      throw error;
+    }
+  }
+  
 }

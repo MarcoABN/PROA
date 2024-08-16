@@ -91,7 +91,7 @@ button[mat-raised-button] {
 }
 
 button[mat-raised-button]:disabled {
-    background-color: #81d4fa; /* Light Blue for disabled state */
+    background-color: #2297ce; /* Light Blue for disabled state */
     color: #ffffff; /* White */
 }
 

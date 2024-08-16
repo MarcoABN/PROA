@@ -42,4 +42,22 @@ export class LoginComponent {
         alert('Erro ao tentar fazer o login');
       });
   }
+  
+  esqueciMinhaSenha(): void {
+    const email = this.formLogin.get('email')?.value;
+  
+    if (!email) {
+      alert('Por favor, insira o seu e-mail para recuperar a senha.');
+      return;
+    }
+  
+    this.authService.resetPassword(email)
+      .then(() => {
+        console.log('E-mail de reset de senha enviado.');
+      })
+      .catch(error => {
+        console.error('Erro ao tentar enviar o e-mail de reset de senha', error);
+      });
+  }
+  
 }

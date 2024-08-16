@@ -19,12 +19,11 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
   cliente!: Cliente;
   idEmbarcacao!: number;
   embarcacao: Embarcacao = new Embarcacao();
-  motores: Motor[] = [];
+  
 
   constructor(
     private embarcacaoService: FrontEmbarcacaoService,
     private clienteService: FrontClienteService,
-    private motorService: FrontMotorService,
     private router: Router,
     private cepService: CepService,
     private route: ActivatedRoute
@@ -42,11 +41,24 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
         console.error('Erro ao consultar cliente: ', error);
       }
     );
+    this.embarcacao.areaNavegacao = 'INTERIOR';
+    this.embarcacao.tipoAtividade = 'ESPORTE E LAZER';
+    this.embarcacao.tipoPropulsao = 'MOTOR';
+    this.embarcacao.qtdTripulantes = 1;
+    this.embarcacao.qtdMotores = 1;
+    
   }
 
   retornar(){
     this.router.navigate(['inicio']);
   }
+
+  confirmCancel() {
+    const confirmation = confirm("Você realmente deseja cancelar a operação?");
+    if (confirmation) {
+        this.retornar();  //Chame a função que lida com a ação de cancelar
+    }
+}
 
   onSubmit(){
     if (!this.embarcacao.nomeEmbarcacao || !this.embarcacao.dtConstrucao) {
@@ -58,18 +70,7 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
     this.embarcacao.cliente = this.cliente;
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {
       console.log(data);
-      this.cadastrarMotores();
     });
-  }
-
-  cadastrarMotores() {
-    this.motores.forEach(motor => {
-      motor.embarcacao = this.embarcacao; // Associar motor à embarcação
-      this.motorService.incluirMotor(motor).subscribe(data => {
-        console.log(data);
-      });
-    });
-    this.retornar();
   }
 
   buscarEndereco() {
@@ -88,13 +89,5 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
         }
       );
     }
-  }
-
-  adicionarMotor() {
-    this.motores.push(new Motor());
-  }
-
-  removerMotor(index: number) {
-    this.motores.splice(index, 1);
   }
 }

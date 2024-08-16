@@ -28,6 +28,14 @@ export class CadastrarClienteComponent implements OnInit {
     this.router.navigate(['inicio']);
   }
 
+  confirmCancel() {
+    const confirmation = confirm("Você realmente deseja cancelar a operação?");
+    if (confirmation) {
+        this.retornar();  //Chame a função que lida com a ação de cancelar
+    }
+}
+
+
   onSubmit(){
     if (!this.cliente.nome) {
       alert("Por favor, preencha todos os campos.");
