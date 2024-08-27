@@ -33,6 +33,13 @@ export class AlterarEmbarcacaoComponent implements OnInit {
     this.router.navigate(['/embarcacao/listarembarcacao']);
   }
 
+  confirmCancel() {
+    const confirmation = confirm("Você realmente deseja cancelar a operação?");
+    if (confirmation) {
+        this.retornar();  //Chame a função que lida com a ação de cancelar
+    }
+}
+
   buscarEndereco() {
     if (this.embarcacao.cep) {
       this.cepService.buscarCep(this.embarcacao.cep).subscribe(

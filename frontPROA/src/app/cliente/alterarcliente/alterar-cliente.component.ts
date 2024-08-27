@@ -33,6 +33,13 @@ export class AlterarClienteComponent implements OnInit {
     this.router.navigate(['/cliente/listar-cliente']);
   }
 
+  confirmCancel() {
+    const confirmation = confirm("Você realmente deseja cancelar a operação?");
+    if (confirmation) {
+        this.retornar();  //Chame a função que lida com a ação de cancelar
+    }
+}
+
   onSubmit() {
     this.clienteService.alterarCliente(this.idCliente, this.cliente).subscribe(data => {
       console.log(data);
