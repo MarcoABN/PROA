@@ -43,7 +43,7 @@ export class CadastrarClienteComponent implements OnInit {
     }
 
     this.cliente.id = 0;
-
+    this.cliente.cpfcnpj = this.cliente.cpfcnpj.replace(/[^\d]+/g, '');
     this.ClienteService.cadastrarCliente(this.cliente).subscribe(data => {
       console.log(data);
       this.retornar();
