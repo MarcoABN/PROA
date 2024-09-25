@@ -31,4 +31,8 @@ export class InicioComponent {
     this.router.navigate(['/anexos/anexos']);
   }
 
+  emitirServicos(){
+    this.router.navigate(['/servico-anexo/servico-anexo']);
+  }
+
 }

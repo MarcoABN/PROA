@@ -15,7 +15,7 @@ import { Anexo2MService } from "../services/anexos/anexo2M.service";
 import { Anexo3DService } from "../services/anexos/anexo3D.service";
 import { Anexo3AService } from "../services/anexos/anexo3A.service";
 import { Anexo2FService } from "../services/anexos/anexo2F.service";
-
+ 
 @Component({
     selector: 'app-anexos',
     templateUrl: './anexos.component.html',
