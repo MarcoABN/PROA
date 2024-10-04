@@ -17,7 +17,7 @@ export class AnexosService {
 
   constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) { }
 
-  async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string): Promise<void> {
+  async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string, servico?: string): Promise<void | Uint8Array> {
 
     this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
       this.motores = motores;
@@ -128,11 +128,12 @@ export class AnexosService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      //Chamada para função: Exibir ou baixar o PDF
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      //this.downloadPdf(modifiedPdfBytes, 'output.pdf');
-
-      console.log('PDF Criado!');
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     } catch (err) {
       console.error(err);
     }

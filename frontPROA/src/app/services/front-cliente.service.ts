@@ -11,6 +11,7 @@ export class FrontClienteService {
 
   private url = "http://localhost:8080/ccliente/cliente";
   private url2 = "http://localhost:8080/ccliente/cpfcnpj";
+  private url3 = "http://localhost:8080/ccliente/representantes";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -45,5 +46,11 @@ export class FrontClienteService {
     return this.httpClient.delete<Cliente>(`${this.url}/${IDCliente}`);
 
   }
+
+  //Consultar por CPFCNPJ
+  consultarRepresentantes(idEmpresa: number): Observable<Cliente[]> {
+    return this.httpClient.get<Cliente[]>(`${this.url3}/${idEmpresa}`);
+  }
+  
 
 }

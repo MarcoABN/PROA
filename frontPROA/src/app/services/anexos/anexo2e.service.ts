@@ -10,7 +10,7 @@ export class Anexo2EService {
 
   constructor(private datePipe: DatePipe) { }
 
-  async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string): Promise<void>{
+  async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array>{
 
     try{
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2E-N211.pdf').then(res => res.arrayBuffer());
@@ -142,9 +142,14 @@ export class Anexo2EService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
 
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
+
     }catch (err) {
       console.error(err);
     }

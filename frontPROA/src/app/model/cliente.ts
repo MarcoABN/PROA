@@ -25,8 +25,10 @@ export class Cliente {
     bairro!: string;
     cidade!: string;
     uf!: string;
+    representaEmpresa!: string;
     
     //Adicionar posterior: relação de classes
 
+    idEmpresa!: number;
     
 }

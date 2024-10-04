@@ -91,18 +91,29 @@ public class Cliente {
 	
 	@Column (name="uf")
 	private String UF;
-
+	
+	@Column (name="representaempresa")
+	private String representaEmpresa;
+	
+	@Column (name="idempresa")
+	private Long idEmpresa;
 	
 
 
+	
+	
 
 	
 
-	public Cliente(Long id, String nome, String rG, String orgEmissor, Date dtEmissao, String cPFCNPJ,
-			String nacionalidade, String naturalidade, Date dataNasc, String telefone, String celular, String email,
-			String senha, String cep, String logradouro, String numero, String complemento, String bairro,
-			String cidade, String uF) {
+	
+
+	public Cliente(List<Embarcacao> embarcacoes, OrgMilitar orgmilitar, Long id, String nome, String rG,
+			String orgEmissor, Date dtEmissao, String cPFCNPJ, String nacionalidade, String naturalidade, Date dataNasc,
+			String telefone, String celular, String email, String senha, String cep, String logradouro, String numero,
+			String complemento, String bairro, String cidade, String uF, String representaEmpresa, Long idEmpresa) {
 		super();
+		this.embarcacoes = embarcacoes;
+		this.orgmilitar = orgmilitar;
 		this.id = id;
 		this.nome = nome;
 		RG = rG;
@@ -123,7 +134,10 @@ public class Cliente {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		UF = uF;
+		this.representaEmpresa = representaEmpresa;
+		this.idEmpresa = idEmpresa;
 	}
+ 
 
 	public Cliente() {
 		super();
@@ -275,6 +289,15 @@ public class Cliente {
 		UF = uF.toUpperCase();
 	}
 
+	
+
+	public String getRepresentaEmpresa() {
+		return representaEmpresa;
+	}
+
+	public void setRepresentaEmpresa(String representaEmpresa) {
+		this.representaEmpresa = representaEmpresa;
+	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -308,6 +331,15 @@ public class Cliente {
 		this.nacionalidade = nacionalidade;
 	}
 
+	public long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
+	
 	
 
 	

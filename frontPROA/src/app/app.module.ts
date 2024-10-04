@@ -26,6 +26,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
+import { EmpresaComponent } from './empresa/empresa.component';
 
 
 
@@ -50,6 +51,7 @@ import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
     ManterMotorComponent,
      NotafiscalComponent,
      ServicoAnexoComponent,
+     EmpresaComponent,
  
     
   ],

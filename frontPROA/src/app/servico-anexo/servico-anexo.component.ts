@@ -14,6 +14,7 @@ import { Anexo2FService } from '../services/anexos/anexo2F.service';
 import { FrontClienteService } from '../services/front-cliente.service';
 import { FrontEmbarcacaoService } from '../services/front-embarcacao.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JuntaAnexoService } from '../services/junta-anexo.service';
 
 @Component({
   selector: 'app-servico-anexo',
@@ -48,6 +49,7 @@ export class ServicoAnexoComponent {
       private anexo2Fservice: Anexo2FService,
       private clienteService: FrontClienteService,
       private embarcacaoService: FrontEmbarcacaoService,
+      private juntaAnexo: JuntaAnexoService,
       private router: Router,
   ) { }
 
@@ -55,7 +57,6 @@ export class ServicoAnexoComponent {
 
   ngAfterViewInit() {
       
-
   }
 
   consultarAnexo() {
@@ -103,7 +104,7 @@ export class ServicoAnexoComponent {
       this.charCount = this.campotexto1.length;
   }
 
-
+/******** Para DELETAR
   gerarPdf() {
       const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
       if (selectedEmbarcacao) {
@@ -113,14 +114,42 @@ export class ServicoAnexoComponent {
       }
   }
 
-  gerarAnexo2E() {
+  gerarAnexo2E(): Promise<void | Uint8Array> {
       const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
       if (selectedEmbarcacao) {
-          this.anexo2EService.anexo2E(selectedEmbarcacao, this.opcao, this.campotexto1, this.campotexto2, this.campotexto3);
+          return this.anexo2EService.anexo2E(selectedEmbarcacao, "inscricao", this.campotexto1, this.campotexto2, this.campotexto3, 'OK'); //Here
       } else {
           console.error('Embarcação selecionada não encontrada.');
+          return Promise.resolve();
       }
   }
+      *********/
+     
+
+  //Metodo para gerar os anexos referentes ao serviço de inscrição e então juntar tudo em um único arquivo.
+  async servicoInscricao() {
+    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+    if (selectedEmbarcacao) {
+        const anexo2e = await this.anexo2EService.anexo2E(selectedEmbarcacao, "inscricao", this.campotexto1, this.campotexto2, this.campotexto3, 'OK');
+
+        const anexo2d = await this.anexosService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza, 'OK');
+
+        
+        
+        if (anexo2e instanceof Uint8Array && anexo2d instanceof Uint8Array) {
+            //console.log("aqui");
+            const pdfs: Uint8Array[] = [anexo2e, anexo2d]; // Substitua pelos PDFs reais
+            this.juntaAnexo.juntarPDFs(...pdfs);
+
+        } else {
+            console.error('Resultado não é um Uint8Array');
+        }
+    } else {
+        console.error('Embarcação selecionada não encontrada.');
+    }
+}
+
+
 
   gerarAnexo5H() {
       const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
@@ -214,4 +243,6 @@ export class ServicoAnexoComponent {
           this.opcao = values.join(',');
       }
   }
+
+
 }
