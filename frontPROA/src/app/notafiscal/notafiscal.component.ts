@@ -73,19 +73,6 @@ export class NotafiscalComponent implements OnInit {
     }
   }
 
-  excluirNotaFiscalPDF(): void {
-    if (this.notaFiscal) {
-      this.notaFiscalService.excluirNotaFiscalPDF(this.notaFiscal.id).subscribe(
-        () => {
-          this.listarNotaFiscal();
-        },
-        error => {
-          console.error('Erro ao excluir PDF:', error);
-        }
-      );
-    }
-  }
-
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
@@ -94,7 +81,7 @@ export class NotafiscalComponent implements OnInit {
     if (this.selectedFile && this.notaFiscal) {
       this.notaFiscalService.uploadNotaFiscalPDF(this.notaFiscal.id, this.selectedFile).subscribe(
         () => {
-          this.listarNotaFiscal();
+          this.loadNotaFiscalPDF();
         },
         error => {
           console.error('Erro ao fazer upload do PDF:', error);
@@ -106,7 +93,7 @@ export class NotafiscalComponent implements OnInit {
         nota => {
           this.notaFiscal = nota as Notafiscal;
           if (this.selectedFile) {
-            this.salvarNotaFiscal();  // Recur to upload PDF after saving the NotaFiscal
+            this.salvarNotaFiscal();  // Recur para upload do PDF após salvar a Nota Fiscal
           } else {
             this.listarNotaFiscal();
           }

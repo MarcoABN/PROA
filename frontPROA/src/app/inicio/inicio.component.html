@@ -1,74 +1,26 @@
-<!DOCTYPE html>
-<html lang="PT-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+<div class="container mt-4 scrollable-content">
+    <h1>Bem-vindo a PROA</h1>
+    <p>Escolha uma das opções abaixo:</p>
 
-        .container {
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .option-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .option {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            margin: 10px;
-            padding: 20px;
-            width: 200px;
-            text-align: center;
-            transition: transform 0.2s, background-color 0.2s;
-            cursor: pointer;
-        }
-
-        .option img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-
-        .option:hover {
-            transform: scale(1.05);
-            background-color: #e9ecef;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Bem-vindo a PROA</h1>
-        <p>Escolha uma das opções abaixo:</p>
+<div class="option-container">
+    <div class="option" (click)="listarCliente()">
+        <img src="../../assets/iconuser.png" alt="Clientes">
+        <p>Clientes</p>
     </div>
-    <div class="option-container">
-        <div class="option" (click)="listarCliente()">
-            <img src="../../assets/iconuser.png" alt="Clientes">
-            <p>Clientes</p>
-        </div>
 
-        <div class="option" (click)="listarembarcacao()">
-            <img src="../../assets/iconboat.png" alt="Embarcações">
-            <p>Embarcações</p>
-        </div>
-        
-        <div class="option" (click)="emitirAnexos()">
-            <img src="../../assets/iconanexo.png" alt="Anexos">
-            <p>Anexos</p>
-        </div>
-
-        <div class="option" (click)="emitirServicos()">
-            <img src="../../assets/iconservice.png" alt="Serviços">
-            <p>Serviços</p>
-        </div>
+    <div class="option" (click)="listarembarcacao()">
+        <img src="../../assets/iconboat.png" alt="Embarcações">
+        <p>Embarcações</p>
     </div>
-</body>
-</html>
+    
+    <div class="option" (click)="emitirAnexos()">
+        <img src="../../assets/iconanexo.png" alt="Anexos">
+        <p>Anexos</p>
+    </div>
+
+    <div class="option" (click)="emitirServicos()">
+        <img src="../../assets/iconservice.png" alt="Serviços">
+        <p>Serviços</p>
+    </div>
+</div>
+</div>

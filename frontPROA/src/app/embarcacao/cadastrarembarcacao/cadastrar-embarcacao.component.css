@@ -1,26 +1,20 @@
-.form-check-input {
-    margin-left: 10px; /* Adicione a quantidade de espaçamento desejada aqui */
-    border: 1px solid #000;
+.scrollable-content {
+  max-height: 80vh; /* Define a altura máxima como 80% da altura da viewport */
+  overflow-y: auto; /* Permite rolagem vertical quando necessário */
+  padding-right: 15px; /* Ajuste para evitar que o conteúdo fique encostado na borda direita */
+  margin-bottom: 20px; /* Adiciona um espaço na parte inferior */
 }
-.container {
-    max-height: 80vh; /* Ajuste conforme necessário */
-    overflow-y: auto;
-    padding: 15px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-  }
-  
-  .button-container {
-    text-align: center;
-    position: fixed;
-    bottom: 120px; /* Distância do fundo da tela */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000; /* Para garantir que os botões estejam acima do conteúdo */
-  }
 
-  .readonly-input {
-    background-color: #e9ecef;
-    color: #495057;
-    pointer-events: none; /* This prevents the user from clicking into the field */
+/* Opcional: Adiciona um estilo para a barra de rolagem (pode variar de acordo com o navegador) */
+.scrollable-content::-webkit-scrollbar {
+  width: 8px; /* Largura da barra de rolagem */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: darkgray; /* Cor da barra de rolagem */
+  border-radius: 10px; /* Bordas arredondadas */
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Cor do fundo da barra de rolagem */
 }

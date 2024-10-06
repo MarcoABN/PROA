@@ -1,54 +1,69 @@
-/* Global settings */
-body, html {
+/* Estilos para o body e html */
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    box-sizing: border-box;
-    height: 100%;
-    width: 100%;
-    background-color: #ffffff; /* White background */
+}
+
+body {
     display: flex;
     flex-direction: column;
 }
 
-/* Navbar */
-.navbar {
-    height: 60px; /* Ajuste conforme necessário */
-    flex-shrink: 0; /* Impede que a navbar seja comprimida */
+/* Estilo para o componente principal da aplicação */
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Centraliza as opções de menu à esquerda da tela */
-.navbar-nav {
-    flex-direction: row;
+/* Navbar */
+.navbar {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+}
+
+/* Wrapper de conteúdo */
+.content-wrapper {
+    flex: 1 0 auto;
+    padding: 0px;
+    overflow-y: auto;
 }
 
 /* Footer */
 .footer {
-    height: 60px; /* Mesmo tamanho do cabeçalho */
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
+    padding: 0px 0;
+    height: 65px;
 }
 
-.footer-title {
-    font-weight: bold;
-    font-size: 1.2em;
+/* Cor de fundo azul naval */
+.bg-navy {
+    background-color: #000080;
 }
 
-.footer-description {
-    font-size: 0.9em;
+/* Estilos adicionais para o navbar */
+.navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
 }
 
-/* Adapta dinamicamente a tela do usuário */
-@media (max-width: 768px) {
+.dropdown-menu {
+    margin-top: 0;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #000080;
+    color: white;
+}
+
+/* Media query para telas menores */
+@media (max-width: 992px) {
     .navbar-nav {
         flex-direction: column;
-        align-items: flex-start;
     }
-
-    .navbar-nav li {
-        margin-right: 0;
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
     }
 }

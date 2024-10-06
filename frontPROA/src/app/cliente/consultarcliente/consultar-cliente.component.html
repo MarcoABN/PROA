@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Cliente</title>
-    <link rel="stylesheet" href="consultar-cliente.component.css">
-</head>
+<div class="container mt-4 scrollable-content">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Detalhes do Cliente</title>
+            <link rel="stylesheet" href="consultar-cliente.component.css">
+        </head>
 
-<body>
-    <div class="container">
         <h3>Detalhes do Cliente</h3>
         <br>
         <div><label><b>ID:</b></label> {{ cliente.id }}</div>
@@ -37,10 +34,9 @@
         <div><label><b>Cidade:</b></label> {{ cliente.cidade }}</div>
         <div><label><b>UF (Estado):</b></label> {{ cliente.uf }}</div>
         <br><br>
-    </div>
+    
     <div>
         <button (click)="retornar()" class="btn btn-success" style="margin-left: 10px;">Voltar</button>
     </div>
-</body>
+</div>
 
-</html>

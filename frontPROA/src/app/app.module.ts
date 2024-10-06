@@ -27,6 +27,7 @@ import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
 import { EmpresaComponent } from './empresa/empresa.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 
 
@@ -52,7 +53,7 @@ import { EmpresaComponent } from './empresa/empresa.component';
      NotafiscalComponent,
      ServicoAnexoComponent,
      EmpresaComponent,
- 
+     SafeUrlPipe,
     
   ],
   imports: [

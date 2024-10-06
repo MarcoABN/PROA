@@ -10,6 +10,7 @@ import { AutenticacaoService } from './services/autenticacao/autenticacao.servic
 export class AppComponent implements OnInit {
   title = 'frontembarcacao';
   isAuthenticated = false;
+  isMenuCollapsed = true;
 
   constructor(private authService: AutenticacaoService, private router: Router) {}
 
@@ -22,5 +23,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login/login']);
+  }
+
+  toggleMenu() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
   }
 }

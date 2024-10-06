@@ -1,0 +1,20 @@
+.scrollable-content {
+    max-height: 80vh; /* Define a altura máxima como 80% da altura da viewport */
+    overflow-y: auto; /* Permite rolagem vertical quando necessário */
+    padding-right: 15px; /* Ajuste para evitar que o conteúdo fique encostado na borda direita */
+    margin-bottom: 20px; /* Adiciona um espaço na parte inferior */
+}
+
+/* Opcional: Adiciona um estilo para a barra de rolagem (pode variar de acordo com o navegador) */
+.scrollable-content::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background-color: darkgray; /* Cor da barra de rolagem */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do fundo da barra de rolagem */
+}

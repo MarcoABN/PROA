@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Embarcação</title>
-    <link rel="stylesheet" href="consultar-embarcacao.component.css">
-</head>
 
-<body>
-    <div class="container">
+<div class="container mt-4 scrollable-content">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Detalhes da Embarcação</title>
+        <link rel="stylesheet" href="consultar-embarcacao.component.css">
+    </head>
+    
         <h3>Detalhes da Embarcação</h3>
         <br>
         <div><label><b>ID:</b></label> {{ embarcacao.id }}</div>
@@ -60,10 +59,8 @@
         <div><label><b>Cidade:</b></label> {{ embarcacao.cidade }}</div>
         <br><br>
 
-    </div>
+    
     <div>
         <button (click)="retornar()" class="btn btn-success" style="margin-left: 10px;">Voltar</button>
     </div>
-</body>
-
-</html>
+</div>
