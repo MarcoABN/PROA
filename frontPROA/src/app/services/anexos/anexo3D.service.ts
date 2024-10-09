@@ -9,7 +9,7 @@ export class Anexo3DService {
   mesextenso?: String;
   constructor() { }
 
-  async anexo3D(orgMilitar: string, construtor: string, opcao: string, embarcacao: Embarcacao): Promise<void> {
+  async anexo3D(orgMilitar: string, construtor: string, opcao: string, embarcacao: Embarcacao, servico?: string): Promise<void | Uint8Array> {
 
     try {
 
@@ -80,10 +80,12 @@ export class Anexo3DService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
-
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     } catch (err) {
       console.error(err);
     }

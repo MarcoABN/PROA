@@ -10,7 +10,7 @@ export class Anexo2LService {
 
   constructor() { }
 
-  async anexo2L (embarcacao?: Embarcacao, cliente?: Cliente){
+  async anexo2L (embarcacao?: Embarcacao, cliente?: Cliente, servico?: string): Promise<void | Uint8Array>{
     
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2L-N211.pdf').then(res => res.arrayBuffer());
@@ -67,10 +67,12 @@ export class Anexo2LService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
-
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     }catch (err){
       console.log(err);
     }

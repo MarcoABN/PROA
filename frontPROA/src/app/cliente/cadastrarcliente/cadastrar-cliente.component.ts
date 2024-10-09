@@ -36,19 +36,32 @@ export class CadastrarClienteComponent implements OnInit {
 }
 
 
-  onSubmit(){
-    if (!this.cliente.nome) {
-      alert("Por favor, preencha todos os campos.");
-      return;
-    }
-
-    this.cliente.id = 0;
-    this.cliente.cpfcnpj = this.cliente.cpfcnpj.replace(/[^\d]+/g, '');
-    this.ClienteService.cadastrarCliente(this.cliente).subscribe(data => {
-      console.log(data);
-      this.retornar();
-    });
+onSubmit() {
+  if (!this.cliente.nome) {
+    alert("Por favor, preencha todos os campos.");
+    return;
   }
+
+  this.cliente.id = 0;
+  this.cliente.cpfcnpj = this.cliente.cpfcnpj.replace(/[^\d]+/g, '');
+
+  this.ClienteService.cadastrarCliente(this.cliente).subscribe(
+    data => {
+      alert("Cadastro realizado com sucesso!");
+      this.retornar();
+    },
+    error => {
+      if (error.error && error.error.message && error.error.message.includes("duplicate key value violates unique constraint \"cpfcnpj\"")) {
+        alert("O CPF/CNPJ informado já está cadastrado.");
+      } else {
+        alert("Ocorreu um erro ao realizar o cadastro. Tente novamente.");
+      }
+      console.error("Erro ao cadastrar cliente: ", error);
+    }
+  );
+}
+
+
 
   buscarEndereco() {
     if (this.cliente.cep) {

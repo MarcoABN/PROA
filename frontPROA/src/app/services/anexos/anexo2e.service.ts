@@ -10,6 +10,8 @@ export class Anexo2EService {
 
   constructor(private datePipe: DatePipe) { }
 
+  //Função para gerar o Anexo 2E. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
+  //Se for uma chamada do serviço é necessário passar algo como último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
   async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array>{
 
     try{
@@ -132,11 +134,6 @@ export class Anexo2EService {
       form.getTextField('comprimento').setText(embarcacao.compTotal.toString()+"m");
       form.getTextField('numcasco').setText(embarcacao.numCasco);
       form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao);
-
-
-
-
-
 
 
 

@@ -11,7 +11,7 @@ export class Anexo3AService {
   texto: string[] = [];
   constructor(private datePipe: DatePipe) { }
 
-  async anexo3A(solicitacao: string, campotexto1: string, embarcacao?: Embarcacao, cliente?: Cliente): Promise<void> {
+  async anexo3A(solicitacao: string, campotexto1: string, embarcacao?: Embarcacao, cliente?: Cliente, servico?: string): Promise<void | Uint8Array>{
 
     try {
 
@@ -138,10 +138,12 @@ export class Anexo3AService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
-
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     } catch (err) {
       console.error(err);
     }

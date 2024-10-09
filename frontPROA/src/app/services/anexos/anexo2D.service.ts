@@ -17,6 +17,8 @@ export class AnexosService {
 
   constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) { }
 
+    //Função para gerar o Anexo 2D. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
+  //Se for uma chamada do serviço-anexo é necessário passar algo no último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
   async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string, servico?: string): Promise<void | Uint8Array> {
 
     this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {

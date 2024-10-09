@@ -13,7 +13,7 @@ export class Anexo2FService {
   clienteNovo!: Cliente;
   
 
-  async anexo2F(embarcacao: Embarcacao, campotexto1: string, campotexto2: string) {
+  async anexo2F(embarcacao: Embarcacao, campotexto1: string, campotexto2: string, servico?: string): Promise<void | Uint8Array> {
 
     await this.carregarDados(campotexto1);
 
@@ -112,10 +112,12 @@ export class Anexo2FService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
-
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     } catch (err) {
       console.log(err);
     }

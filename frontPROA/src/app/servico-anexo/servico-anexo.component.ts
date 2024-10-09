@@ -14,7 +14,8 @@ import { Anexo2FService } from '../services/anexos/anexo2F.service';
 import { FrontClienteService } from '../services/front-cliente.service';
 import { FrontEmbarcacaoService } from '../services/front-embarcacao.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JuntaAnexoService } from '../services/junta-anexo.service';
+import { FrontEmailService } from '../services/front-email.service';
+import { PDFDocument } from 'pdf-lib';
 
 @Component({
   selector: 'app-servico-anexo',
@@ -49,8 +50,8 @@ export class ServicoAnexoComponent {
       private anexo2Fservice: Anexo2FService,
       private clienteService: FrontClienteService,
       private embarcacaoService: FrontEmbarcacaoService,
-      private juntaAnexo: JuntaAnexoService,
       private router: Router,
+      private emailService: FrontEmailService,
   ) { }
 
   mostrarErroNatureza: boolean = false;
@@ -103,53 +104,6 @@ export class ServicoAnexoComponent {
   updateCharCount() {
       this.charCount = this.campotexto1.length;
   }
-
-/******** Para DELETAR
-  gerarPdf() {
-      const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-      if (selectedEmbarcacao) {
-          this.anexosService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza);
-      } else {
-          console.error('Embarcação selecionada não encontrada.');
-      }
-  }
-
-  gerarAnexo2E(): Promise<void | Uint8Array> {
-      const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-      if (selectedEmbarcacao) {
-          return this.anexo2EService.anexo2E(selectedEmbarcacao, "inscricao", this.campotexto1, this.campotexto2, this.campotexto3, 'OK'); //Here
-      } else {
-          console.error('Embarcação selecionada não encontrada.');
-          return Promise.resolve();
-      }
-  }
-      *********/
-     
-
-  //Metodo para gerar os anexos referentes ao serviço de inscrição e então juntar tudo em um único arquivo.
-  async servicoInscricao() {
-    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-    if (selectedEmbarcacao) {
-        const anexo2e = await this.anexo2EService.anexo2E(selectedEmbarcacao, "inscricao", this.campotexto1, this.campotexto2, this.campotexto3, 'OK');
-
-        const anexo2d = await this.anexosService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza, 'OK');
-
-        
-        
-        if (anexo2e instanceof Uint8Array && anexo2d instanceof Uint8Array) {
-            //console.log("aqui");
-            const pdfs: Uint8Array[] = [anexo2e, anexo2d]; // Substitua pelos PDFs reais
-            this.juntaAnexo.juntarPDFs(...pdfs);
-
-        } else {
-            console.error('Resultado não é um Uint8Array');
-        }
-    } else {
-        console.error('Embarcação selecionada não encontrada.');
-    }
-}
-
-
 
   gerarAnexo5H() {
       const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
@@ -244,5 +198,183 @@ export class ServicoAnexoComponent {
       }
   }
 
+
+  async ServicoAltcEmbTela(){
+    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+
+    if (selectedEmbarcacao){
+        const anexo3DPdf = await this.anexo3Dservice.anexo3D(
+                                                          this.campotexto1, 
+                                                          this.campotexto2, 
+                                                          this.opcao, 
+                                                          selectedEmbarcacao,
+                                                          "OK"
+        );
+
+        // Gerar PDF do Anexo 2D
+        const anexo2DPdf = await this.anexosService.anexo2D(
+                                                          selectedEmbarcacao, 
+                                                          this.cliente, 
+                                                          this.natureza,
+                                                          'OK'
+        );
+        // Verificar se os PDFs foram gerados corretamente
+      const pdfs: Uint8Array[] = [];
+      if (anexo3DPdf) {
+        pdfs.push(anexo3DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2E');
+      }
+  
+      if (anexo2DPdf) {
+        pdfs.push(anexo2DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2D');
+      }
+  
+      // Enviar o array de PDFs gerados para a função de concatenação e exibição
+      if (pdfs.length > 0) {
+        await this.concatenarEExibirPDFs(pdfs);
+      }
+
+    }
+  }
+
+  async ServicoAltEmbEmail() {
+
+    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+    if (selectedEmbarcacao) {
+        this.opcao = "Atualização de Dados"
+        const anexo3D = await this.anexo3Dservice.anexo3D(
+                                                        this.campotexto1, 
+                                                        this.campotexto2, 
+                                                        this.opcao, 
+                                                        selectedEmbarcacao,
+                                                        "OK"
+        );
+        const anexo2d = await this.anexosService.anexo2D(
+                                                        selectedEmbarcacao, 
+                                                        this.cliente, 
+                                                        'Inscrição', 
+                                                        'OK'
+        );
+      if (anexo3D && anexo2d) {
+        const pdfs: Uint8Array[] = [anexo3D, anexo2d];
+  
+        this.emailService.enviarPDFsPorEmail(
+            selectedEmbarcacao.cliente.email, // Destinatário
+            'Projeto de apoio a Regularização de Operações Aquaviárias - PROA', // Assunto
+            'Seguem os anexos para os serviços requisitados. Dúvidas consulte sua escola Naval.', //Conteudo do email
+            ...pdfs
+            )
+      }
+    }
+  }
+
+  async ServicoInscEmbTela() {
+    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+  
+    if (selectedEmbarcacao) {
+      // Gerar PDF do Anexo 2E
+      const anexo2EPdf = await this.anexo2EService.anexo2E(
+                                                          selectedEmbarcacao, 
+                                                          'inscricao', 
+                                                          this.campotexto1, 
+                                                          this.campotexto2, 
+                                                          this.campotexto3,
+                                                          'OK'
+      );
+      
+      // Gerar PDF do Anexo 2D
+      const anexo2DPdf = await this.anexosService.anexo2D(
+                                                        selectedEmbarcacao, 
+                                                        this.cliente, 
+                                                        'Inscrição',
+                                                        'OK'
+      );
+  
+      // Verificar se os PDFs foram gerados corretamente
+      const pdfs: Uint8Array[] = [];
+      if (anexo2EPdf) {
+        pdfs.push(anexo2EPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2E');
+      }
+  
+      if (anexo2DPdf) {
+        pdfs.push(anexo2DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2D');
+      }
+  
+      // Enviar o array de PDFs gerados para a função de concatenação e exibição
+      if (pdfs.length > 0) {
+        await this.concatenarEExibirPDFs(pdfs);
+      }
+    }
+  }
+  
+
+  // Função para enviar anexos por e-mail
+async ServicoInscEmbEmail() {
+    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+    if (selectedEmbarcacao) {
+      const anexo2e = await this.anexo2EService.anexo2E(
+                                                      selectedEmbarcacao, 
+                                                      'inscricao',
+                                                      this.campotexto1, 
+                                                      this.campotexto2, 
+                                                      this.campotexto3, 
+                                                      'OK');
+
+      const anexo2d = await this.anexosService.anexo2D(
+                                                      selectedEmbarcacao, 
+                                                      this.cliente, 
+                                                      'Inscrição', 
+                                                      'OK');
+  
+      if (anexo2e && anexo2d) {
+        
+        const pdfs: Uint8Array[] = [anexo2e, anexo2d];
+  
+        this.emailService.enviarPDFsPorEmail(
+            selectedEmbarcacao.cliente.email, // Destinatário
+            'Projeto de apoio a Regularização de Operações Aquaviárias - PROA', // Assunto
+            'Seguem os anexos para os serviços requisitados. Dúvidas consulte sua escola Naval.', //Conteudo do email
+            ...pdfs
+            )
+      }
+    }
+  }
+
+  
+
+  //Essa função é para concatenar em um único arquivo todos os PDF's e depois exibir em tela.
+  async concatenarEExibirPDFs(pdfs: Uint8Array[]) {
+    if (pdfs && pdfs.length > 0) {
+      // Criar um novo documento PDF
+      const novoPdf = await PDFDocument.create();
+  
+      // Para cada PDF passado como parâmetro, carregar e copiar suas páginas
+      for (const pdfBytes of pdfs) {
+        const pdf = await PDFDocument.load(pdfBytes);
+        const paginas = await novoPdf.copyPages(pdf, pdf.getPageIndices());
+        paginas.forEach(pagina => novoPdf.addPage(pagina));
+      }
+  
+      // Gerar o PDF unificado
+      const pdfUnificadoBytes = await novoPdf.save();
+  
+      // Criar um Blob e uma URL para exibir ou baixar o PDF
+      const pdfBlob = new Blob([pdfUnificadoBytes], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+  
+      // Abrir o PDF combinado em uma nova aba
+      window.open(pdfUrl, '_blank');
+    } else {
+      console.error('Nenhum PDF foi fornecido para concatenar');
+    }
+  }
+  
 
 }

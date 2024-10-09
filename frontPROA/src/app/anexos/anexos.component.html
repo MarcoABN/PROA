@@ -29,57 +29,106 @@
 
     <div class="row">
         <div class="col">
+            
             <h4>Normam 211</h4>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal5H()" 
-                    [disabled]="!cliente">Gerar Anexo 5H</button>
-            </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="gerarAnexo2L()" 
-                    [disabled]="!cliente">Gerar Anexo 2L</button>
-            </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2D</button>
-            </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal2E()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2E</button>
-            </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="gerarAnexo3C()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3C</button>
-            </div>
-            <br>
-
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal2M()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2M</button>
-            </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal3D()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3D</button>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 5H</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente" type="button" class="btn btn-primary" (click)="openModal5H()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2L</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente" type="button" class="btn btn-primary" (click)="gerarAnexo2L()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2D</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2E</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2E()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 3C</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="gerarAnexo3C()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2M</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2M()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 3D</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal3D()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
+    
         <div class="col">
             <h4>Normam 212</h4>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal3A()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 3A</button>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 3A</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal3A()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2F</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2F()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br>
-            <div class="button-container">
-                <button type="button" class="btn btn-secondary" (click)="openModal2F()"
-                    [disabled]="!cliente || !embarcacoes.length">Gerar Anexo 2F</button>
-            </div>
-
         </div>
     </div>
 </div>

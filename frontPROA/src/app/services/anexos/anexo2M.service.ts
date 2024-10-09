@@ -18,7 +18,7 @@ export class Anexo2MService {
   qtdmotores!: number;
   
   
-  async anexo2M (embarcacao: Embarcacao, campotexto1: string, campotexto2: string){
+  async anexo2M (embarcacao: Embarcacao, campotexto1: string, campotexto2: string, servico?: string): Promise<void | Uint8Array>{
 
 
     try {
@@ -109,10 +109,12 @@ export class Anexo2MService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-
-      this.abrirPDFemJanela(modifiedPdfBytes);
-      console.log('PDF Criado!');
-
+      if (!servico){
+        this.abrirPDFemJanela(modifiedPdfBytes);
+        console.log('PDF Criado!');
+      } else {
+        return modifiedPdfBytes;
+      }
     }catch (err){
       console.log(err);
     }

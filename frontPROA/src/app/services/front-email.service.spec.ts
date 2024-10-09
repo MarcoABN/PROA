@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JuntaAnexoService } from './junta-anexo.service';
+import { FrontEmailService } from './front-email.service';
 
-describe('JuntaAnexoService', () => {
-  let service: JuntaAnexoService;
+describe('FrontEmailService', () => {
+  let service: FrontEmailService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(JuntaAnexoService);
+    service = TestBed.inject(FrontEmailService);
   });
 
   it('should be created', () => {

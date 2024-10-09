@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Empresa } from 'src/app/model/empresa';
 import { FrontEmpresaService } from 'src/app/services/front-empresa.service';
 import { CepService } from 'src/app/services/cep.service';
 import { Cliente } from '../model/cliente';
 import { FrontClienteService } from '../services/front-cliente.service';
+import { OrgMilitar } from '../model/orgmilitar';
+import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
+import { NgForm } from '@angular/forms';
+import { Modal } from 'bootstrap';
+
 
 @Component({
   selector: 'app-empresa',
@@ -12,22 +17,43 @@ import { FrontClienteService } from '../services/front-cliente.service';
   styleUrls: ['./empresa.component.css']
 })
 export class EmpresaComponent implements OnInit {
+  @ViewChild('orgMilitarForm') orgMilitarForm!: NgForm;
 
   empresaExiste: boolean = false;
   empresa: Empresa = new Empresa();
   cliente: Cliente[] = [];
   cpf: string = '';  // Novo campo para o CPF do cliente
 
+  orgMilitares: OrgMilitar[] = [];
+  novaOrgMilitar: OrgMilitar = new OrgMilitar();
+
+  modalCadastroOrgMilitar: any;
+
   constructor(
     private empresaService: FrontEmpresaService,
     private router: Router,
     private cepService: CepService,
-    private clienteService: FrontClienteService
+    private clienteService: FrontClienteService,
+    private orgMilitarService: FrontOrgmilitarService
   ) { }
 
   ngOnInit(): void {
     this.verificarEmpresaCadastrada();
+    this.carregarOrgMilitares();
   }
+
+  ngAfterViewInit() {
+    const modalElement = document.getElementById('modalOrgMilitar');
+    if (modalElement) {
+        this.modalCadastroOrgMilitar = new Modal(modalElement);
+    }
+  }
+
+  openModal() {
+    if (this.modalCadastroOrgMilitar) {
+        this.modalCadastroOrgMilitar.show();
+    }
+}
 
   verificarEmpresaCadastrada() {
     this.empresaService.listarEmpresa().subscribe(
@@ -39,7 +65,7 @@ export class EmpresaComponent implements OnInit {
         }
       },
       error => {
-        console.log('Erro ao buscar empresa:', error);
+        console.log('Erro ao buscar empresa:', error);.0
       }
     );
   }
@@ -133,4 +159,45 @@ export class EmpresaComponent implements OnInit {
     });
   }
 
+  carregarOrgMilitares() {
+    this.orgMilitarService.listar().subscribe(
+      (orgMilitares: OrgMilitar[]) => {
+        this.orgMilitares = orgMilitares;
+      },
+      error => {
+        console.error('Erro ao carregar organizações militares:', error);
+      }
+    );
+  }
+
+
+  salvarOrgMilitar() {
+    if (this.orgMilitarForm.form.valid) {
+      this.orgMilitarService.inserir(this.novaOrgMilitar).subscribe(
+        () => {
+          this.carregarOrgMilitares();
+          this.novaOrgMilitar = new OrgMilitar();
+          this.modalCadastroOrgMilitar.hide();
+        },
+        error => {
+          console.error('Erro ao salvar organização militar:', error);
+        }
+      );
+    }
+  }
+
+  excluirOrgMilitar(id: number) {
+    if (confirm('Tem certeza que deseja excluir esta organização militar?')) {
+      this.orgMilitarService.excluir(id).subscribe(
+        () => {
+          this.carregarOrgMilitares();
+        },
+        error => {
+          console.error('Erro ao excluir organização militar:', error);
+        }
+      );
+    }
+  }
 }
+
+

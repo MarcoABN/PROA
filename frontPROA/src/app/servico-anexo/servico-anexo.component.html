@@ -1,65 +1,105 @@
-    <div class="container mt-4 scrollable-content">
-        <h2 class="text-center">Serviços</h2>
-        <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
-            <div class="form-group">
-                <label for="cliente">Cliente (CPF ou CNPJ)</label>
-                <br>
-                <input type="text" class="form-control" id="cliente" #clienteInput [(ngModel)]="cpfcnpjCliente"
-                    name="cliente" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="false" required
-                    style="width: 200px; display: inline-block; margin-right: 10px;">
-                <input type="text" class="form-control" [(ngModel)]="nomeCliente" name="nomeCliente" readonly
-                    style="width: 400px; display: inline-block;">
-            </div>
+<div class="container mt-4 scrollable-content" style="height: 80vh; overflow-y: auto;">
+    <h2 class="text-center">Serviços</h2>
+    <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
+        <div class="form-group">
+            <label for="cliente">Cliente (CPF ou CNPJ)</label>
             <br>
-            <div class="button-container">
-                <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
-                <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
-            </div>
-            <br><br>
-            <div class="form-group">
-                <label for="embarcacao">Embarcação</label>
-                <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao"
-                    (change)="onEmbarcacaoChange($event)" required>
-                    <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}
-                    </option>
-                </select>
-            </div>
-        </form>
+            <input type="text" class="form-control" id="cliente" #clienteInput [(ngModel)]="cpfcnpjCliente"
+                name="cliente" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="false" required
+                style="width: 200px; display: inline-block; margin-right: 10px;">
+            <input type="text" class="form-control" [(ngModel)]="nomeCliente" name="nomeCliente" readonly
+                style="width: 400px; display: inline-block;">
+        </div>
         <br>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
+            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="embarcacao">Embarcação</label>
+            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao"
+                (change)="onEmbarcacaoChange($event)" required>
+                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}
+                </option>
+            </select>
+        </div>
+    </form>
+    <br>
+    
+    <div class="servicos-disponiveis">
+        <h2 class="mb-3">Serviços disponíveis:</h2>
         
-        <div class="servicos-disponiveis">
-            <h3 class="mb-3">Serviços disponíveis:</h3>
-            
-            <div class="servico-item">
-                <label class="form-label">Emissão CHA - Moto Aquática</label>
-                <div>
-                    <button type="button" class="btn btn-outline-primary me-2" (click)="null">Visualizar</button>
-                    <button type="button" class="btn btn-primary" (click)="null">Enviar</button>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Emissão CHA - Moto Aquática</h5>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary me-2" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
+                            <button type="button" class="btn btn-primary" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Enviar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="servico-item">
-                <label class="form-label">Emissão CHA - Arrais</label>
-                <div>
-                    <button type="button" class="btn btn-outline-primary me-2" (click)="null">Visualizar</button>
-                    <button type="button" class="btn btn-primary" (click)="null">Enviar</button>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Emissão CHA - Arrais</h5>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary me-2" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
+                            <button type="button" class="btn btn-primary" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Enviar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="servico-item">
-                <label class="form-label">Renovação CHA - Arrais</label>
-                <div>
-                    <button type="button" class="btn btn-outline-primary me-2" (click)="null">Visualizar</button>
-                    <button type="button" class="btn btn-primary" (click)="null">Enviar</button>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Renovação CHA - Arrais</h5>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary me-2" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
+                            <button type="button" class="btn btn-primary" (click)="null"
+                                [disabled]="!cliente || !embarcacoes.length">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Inscrição de Embarcação Esporte Recreio</h5>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary me-2" (click)="ServicoInscEmbTela()"
+                                [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
+                            <button type="button" class="btn btn-primary" (click)="ServicoInscEmbEmail()"
+                                [disabled]="!cliente || !embarcacoes.length">Enviar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="servico-item">
-                <label class="form-label">Inscrição de Embarcação Esporte Recreio</label>
-                <div>
-                    <button type="button" class="btn btn-outline-primary me-2" (click)="servicoInscricao()">Visualizar</button>
-                    <button type="button" class="btn btn-primary" (click)="null">Enviar</button>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Alteração de Embarcação Esporte Recreio</h5>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary me-2" (click)="ServicoAltcEmbTela()"
+                                [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
+                            <button type="button" class="btn btn-primary" (click)="ServicoAltEmbEmail()"
+                                [disabled]="!cliente || !embarcacoes.length">Enviar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proa.exception.ResourceNotFoundException;
 import com.proa.model.Cliente;
 import com.proa.repository.ClienteRepository;
+import com.proa.service.EmailService;
 
 @CrossOrigin (origins = "http://localhost:4200")
 @RequestMapping ("/ccliente/")
@@ -29,6 +30,10 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteRepository clientRep;
+	
+	//Opção para envio de email
+	@Autowired
+	private EmailService emailService;
 
 	//Metodo para listar Cliente
 	@GetMapping("/cliente")
@@ -145,4 +150,7 @@ public class ClienteController {
 		return ResponseEntity.ok(resposta);
 
 	}
+	
+	
+	//
 }
