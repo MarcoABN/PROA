@@ -103,7 +103,38 @@
                     </div>
                 </div>
             </div>
+
+            <br><br>
+            <div class="row">
+                <div class="col">
+                    <h4>Procurações</h4>
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <!-- Procurações -->
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Procuração 01</h5>
+                                    <div class="mt-3">
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="null">Visualizar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Procuração 02</h5>
+                                    <div class="mt-3">
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="null">Visualizar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     
         <div class="col">
             <h4>Normam 212</h4>
@@ -129,9 +160,12 @@
                     </div>
                 </div>
             </div>
+
+            
         </div>
     </div>
 </div>
+
 
 
 <!-- Modal anexo 2D-->
@@ -455,7 +489,7 @@
             </div>
         </div>
     </div>
-</div>8
+</div>
 
 <!-- Modal anexo 2M-->
 <div class="modal fade" id="modalAnexo2M" tabindex="-1" aria-labelledby="modalAnexo2MLabel" aria-hidden="true">
@@ -497,14 +531,16 @@
                 <h5 class="modal-title" id="modalAnexo3DLabel">Anexo 3D:</h5>
                 <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
+     
                 <div class="form-group">
-                    <label>Organização Militar:</label>
-                    <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
-                            name="campotexto1" required>
-                    </div>
-                </div>
+                    <label for="orgMilitarSelect">Organização Militar:</label>
+                    <select id="orgMilitarSelect" class="form-control" [(ngModel)]="campotexto1" name="campotexto1" required>
+                      <option *ngFor="let org of orgMilitares" [value]="org.nome">{{ org.nome }}</option>
+                    </select>
+                  </div>
+                
                 <div class="form-group">
                     <label>Construtor</label>
                     <div class="form-group">

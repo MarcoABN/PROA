@@ -74,6 +74,10 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 	
+	public Cliente findByEmail(String email) {
+        return this.clientRep.findByEmail(email);
+    }
+	
 
 	//Metodo para inserir
 	@PostMapping("/cliente")

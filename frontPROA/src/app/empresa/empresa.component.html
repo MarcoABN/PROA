@@ -158,30 +158,34 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Nova Organização Militar</h5>
-                <button type="button" class="btn-close" data-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form #orgMilitarForm="ngForm">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="nome" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="nome" [(ngModel)]="novaOrgMilitar.nome" name="nome" required>
+                            <input type="text" class="form-control" id="nome" [(ngModel)]="novaOrgMilitar.nome" name="nome" required
+                                   (input)="novaOrgMilitar.nome = novaOrgMilitar.nome.toUpperCase()">
                         </div>
                         <div class="col-md-6">
                             <label for="abreviatura" class="form-label">Abreviatura</label>
-                            <input type="text" class="form-control" id="abreviatura" [(ngModel)]="novaOrgMilitar.abreviatura" name="abreviatura" required>
+                            <input type="text" class="form-control" id="abreviatura" [(ngModel)]="novaOrgMilitar.abreviatura" name="abreviatura" required
+                                   (input)="novaOrgMilitar.abreviatura = novaOrgMilitar.abreviatura.toUpperCase()">
                         </div>
                         <div class="col-md-6">
                             <label for="telefone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" id="telefone" [(ngModel)]="novaOrgMilitar.telefone" name="telefone" required>
+                            <input type="text" class="form-control" id="telefone" [(ngModel)]="novaOrgMilitar.telefone" name="telefone" required
+                                   mask="(00) 0000-0000 || (00) 00000-0000" [dropSpecialCharacters]="false">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" (click)="salvarOrgMilitar()" [disabled]="!orgMilitarForm.form.valid">Salvar</button>
             </div>
         </div>
     </div>
 </div>
+

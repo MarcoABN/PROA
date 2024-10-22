@@ -9,6 +9,8 @@ import { OrgMilitar } from '../model/orgmilitar';
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
 import { NgForm } from '@angular/forms';
 import { Modal } from 'bootstrap';
+import { AutenticacaoService } from '../services/autenticacao/autenticacao.service';
+import { UserLogin } from '../services/autenticacao/user.model';
 
 
 @Component({
@@ -34,7 +36,8 @@ export class EmpresaComponent implements OnInit {
     private router: Router,
     private cepService: CepService,
     private clienteService: FrontClienteService,
-    private orgMilitarService: FrontOrgmilitarService
+    private orgMilitarService: FrontOrgmilitarService,
+    private authService: AutenticacaoService
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +56,13 @@ export class EmpresaComponent implements OnInit {
     if (this.modalCadastroOrgMilitar) {
         this.modalCadastroOrgMilitar.show();
     }
-}
+  }
+
+  fecharModal() {
+  if (this.modalCadastroOrgMilitar) {
+      this.modalCadastroOrgMilitar.hide();
+  }
+  }
 
   verificarEmpresaCadastrada() {
     this.empresaService.listarEmpresa().subscribe(
@@ -134,10 +143,27 @@ export class EmpresaComponent implements OnInit {
             cliente.representaEmpresa = 'S';  // Sinalizar como representante
             cliente.idEmpresa = this.empresa.id;
             this.clienteService.alterarCliente(cliente.id, cliente).subscribe(() => {
-              console.log (cliente.id, '  ', cliente.nome, '  ', cliente.representaEmpresa);
+              console.log(cliente.id, '  ', cliente.nome, '  ', cliente.representaEmpresa);
               this.consultarRepresentates();  // Atualizar a lista de representantes
               this.cpf = '';  // Limpar o campo de CPF
             });
+  
+            // Inserção do usuário selecionado no Firebase para autenticação
+            const userLogin: UserLogin = { email: cliente.email, senha: cliente.cpfcnpj };
+            
+            // Registrar o usuário no Firebase
+            this.authService.register(userLogin)
+              .then(() => {
+                // Após o registro bem-sucedido, redefinir a senha
+                return this.authService.resetPassword(userLogin.email);
+              })
+              .then(() => {
+                console.log('Senha redefinida com sucesso.');
+              })
+              .catch(error => {
+                console.error('Erro no registro ou redefinição de senha:', error);
+              });
+            
           } else {
             alert('Cliente não encontrado.');
           }
@@ -150,6 +176,8 @@ export class EmpresaComponent implements OnInit {
       alert('Por favor, insira um CPF válido.');
     }
   }
+  
+  
 
   // Novo método para remover representante
   removerRepresentante(cliente: Cliente) {
@@ -177,7 +205,7 @@ export class EmpresaComponent implements OnInit {
         () => {
           this.carregarOrgMilitares();
           this.novaOrgMilitar = new OrgMilitar();
-          this.modalCadastroOrgMilitar.hide();
+          this.fecharModal();
         },
         error => {
           console.error('Erro ao salvar organização militar:', error);

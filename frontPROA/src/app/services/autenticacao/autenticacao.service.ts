@@ -62,5 +62,18 @@ export class AutenticacaoService {
       throw error;
     }
   }
+
+  async register(userLogin: UserLogin): Promise<any> {
+    try {
+      const credential = await this.auth.createUserWithEmailAndPassword(userLogin.email, userLogin.senha);
+      this.user = credential.user;
+      this.setUserSubject(this.user); // Armazena o usuário recém-criado no localStorage
+      return credential.user;
+    } catch (error) {
+      this.error = error;
+      throw error; // Lança o erro para ser capturado pelo componente
+    }
+}
+
   
 }

@@ -81,7 +81,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
       }),
     BrowserAnimationsModule
   ],
-  providers: [DatePipe, provideNgxMask()],
+  providers: [DatePipe, provideNgxMask()
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

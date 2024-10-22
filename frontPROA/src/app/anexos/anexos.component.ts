@@ -15,6 +15,8 @@ import { Anexo2MService } from "../services/anexos/anexo2M.service";
 import { Anexo3DService } from "../services/anexos/anexo3D.service";
 import { Anexo3AService } from "../services/anexos/anexo3A.service";
 import { Anexo2FService } from "../services/anexos/anexo2F.service";
+import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
+import { OrgMilitar } from '../model/orgmilitar';
  
 @Component({
     selector: 'app-anexos',
@@ -42,6 +44,8 @@ export class AnexosComponent implements AfterViewInit {
     modalAnexo3D: any;
     modalAnexo3A: any;
     modalAnexo2F: any;
+    orgMilitares: OrgMilitar[] = [];
+    selectedOrgMilitar: OrgMilitar | null = null;
     
 
     constructor(
@@ -56,11 +60,27 @@ export class AnexosComponent implements AfterViewInit {
         private anexo2Fservice: Anexo2FService,
         private clienteService: FrontClienteService,
         private embarcacaoService: FrontEmbarcacaoService,
+        private orgMilitarService: FrontOrgmilitarService,
         private router: Router,
         private route: ActivatedRoute
     ) { }
 
     mostrarErroNatureza: boolean = false;
+
+    ngOnInit() {
+        this.carregarOrgMilitares();
+      }
+      
+      carregarOrgMilitares() {
+        this.orgMilitarService.listar().subscribe(
+          (orgMilitares) => {
+            this.orgMilitares = orgMilitares;
+          },
+          (error) => {
+            console.error('Erro ao carregar organizações militares', error);
+          }
+        );
+      }
 
     ngAfterViewInit() {
         const naturezaModalElement = document.getElementById('naturezaModal');
