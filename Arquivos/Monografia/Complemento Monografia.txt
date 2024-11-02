@@ -1,0 +1,120 @@
+Estrutura Complementar Proposta
+***3. MODELAGEM DO SOFTWARE (Expansão)
+***3.1 Diagrama de Atividade (já existe)
+
+Complementar com descrição detalhada dos fluxos
+Explicar cada atividade e decisão
+
+3.2 Levantamento de Requisitos
+
+***Requisitos Funcionais
+***Requisitos Não Funcionais
+Regras de Negócio
+Restrições Técnicas
+
+3.3 Casos de Uso
+
+***Diagrama geral
+***Descrição detalhada dos principais casos de uso
+***Atores e suas interações
+
+3.4 Modelo de Dados
+
+***Diagrama Entidade-Relacionamento
+Dicionário de Dados
+Decisões de modelagem
+
+3.5 Modelagem de Classes
+
+***Diagrama de Classes
+Descrição das principais classes e relacionamentos
+Padrões de projeto aplicados
+
+3.6 Interface do Usuário
+
+Protótipos de telas
+Fluxos de navegação
+Decisões de design e usabilidade
+
+4. DESENVOLVIMENTO DO SISTEMA
+4.1 Arquitetura
+
+Visão geral da arquitetura
+Componentes principais
+Tecnologias utilizadas
+Padrões arquiteturais
+
+4.2 Backend
+
+Estrutura do projeto Spring Boot
+Principais APIs desenvolvidas
+Segurança e autenticação
+Integração com banco de dados
+
+4.3 Frontend
+
+Estrutura do projeto Angular
+Componentes desenvolvidos
+Gerenciamento de estado
+Integração com backend
+
+4.4 Funcionalidades Implementadas
+
+Cadastro e gestão de usuários
+Gestão de embarcações
+Geração de documentos
+Outras funcionalidades específicas
+
+5. RESULTADOS E VALIDAÇÃO
+5.1 Testes Realizados
+
+Estratégia de testes
+Testes unitários
+Testes de integração
+Testes de aceitação
+
+5.2 Métricas e Qualidade
+
+Cobertura de testes
+Análise estática de código
+Performance
+Segurança
+
+5.3 Implantação
+
+Processo de deploy
+Ambiente de produção
+Monitoramento
+Manutenção
+
+5.4 Validação com Usuários
+
+Feedback recebido
+Melhorias implementadas
+Avaliação de usabilidade
+
+6. CONCLUSÃO
+6.1 Resultados Alcançados
+
+Objetivos atingidos
+Benefícios obtidos
+Limitações encontradas
+
+6.2 Trabalhos Futuros
+
+Melhorias propostas
+Novas funcionalidades
+Possíveis extensões
+
+6.3 Considerações Finais
+
+Reflexão sobre o projeto
+Aprendizados
+Contribuições
+
+APÊNDICES
+
+Códigos relevantes
+Documentação adicional
+Manuais de usuário
+Outros materiais de suporte
