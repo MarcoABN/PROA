@@ -8,17 +8,10 @@ import { AutenticacaoService } from './services/autenticacao/autenticacao.servic
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'frontembarcacao';
   isAuthenticated = false;
   isMenuCollapsed = true;
-
+  title = 'frontembarcacao';
   constructor(private authService: AutenticacaoService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.authService.getUser().subscribe(user => {
-      this.isAuthenticated = !!user; // Converte o valor para booleano
-    });
-  }
 
   logout() {
     this.authService.logout();
@@ -27,5 +20,11 @@ export class AppComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
+  }
+
+  ngOnInit(): void {
+    this.authService.getUser().subscribe(user => {
+      this.isAuthenticated = !!user; // Converte o valor para booleano
+    });
   }
 }

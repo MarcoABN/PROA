@@ -1,0 +1,45 @@
+@startuml
+!theme vibrant
+rectangle {
+left to right direction
+
+actor Prestador as p
+
+usecase "Gerar Documentação Embarcação" as gerardocs
+usecase "Consultar Cliente" as consultarcliente
+usecase "Enviar por email" as envioemail
+usecase "Imprimir documentos" as imprimirdocs
+
+usecase "Manter Embarcação" as manteremb
+usecase "Cadastrar Embarcaçao" as cadastraremb
+usecase "Alterar Embarcaçao" as alteraremb
+usecase "Ecluir Embarcaçao" as excluiremb
+usecase "Consultar Embarcação" as consultaremb
+
+usecase "Manter Motor" as mantermotor
+usecase "Cadastrar Motor" as cadmotor
+usecase "Excluir Motor" as excluirmotor
+usecase "Anexar Nota Fiscal" as anexarnota
+
+
+
+p --> manteremb
+manteremb ..> cadastraremb : include
+cadastraremb ..> consultarcliente : include 
+manteremb ..> alteraremb : include
+manteremb ..> excluiremb : include
+manteremb ..> consultaremb : include
+manteremb <.. anexarnota : extends
+
+manteremb <. gerardocs : extends
+gerardocs ..> consultaremb : include
+gerardocs <.. envioemail : extends
+gerardocs <.. imprimirdocs : extends
+
+manteremb <.. mantermotor : extends
+mantermotor ..> cadmotor : include
+mantermotor ..> excluirmotor : include
+note "Ver diagrama: Detalhamento Gerar Documentação Embarcação" as N1
+gerardocs .. N1
+}
+@enduml

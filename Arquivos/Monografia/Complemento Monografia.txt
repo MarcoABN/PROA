@@ -21,7 +21,7 @@ Restrições Técnicas
 3.4 Modelo de Dados
 
 ***Diagrama Entidade-Relacionamento
-Dicionário de Dados
+***Dicionário de Dados
 Decisões de modelagem
 
 3.5 Modelagem de Classes

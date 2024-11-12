@@ -1,0 +1,294 @@
+@startuml
+!theme vibrant
+rectangle {
+start
+
+
+:Receber contato do cliente;
+
+:Identificar serviço;
+
+:Informar prazos e custos;
+
+:Confirmar serviço contratado;
+
+:Solicitar dados do cliente;
+
+#LightSkyBlue:Acessar o sistema;
+
+#LightSkyBlue:Realizar Login;
+
+
+if(Tipo de serviço?) then (Serviços Pessoa Física)
+
+
+    while (cliente cadastrado?) is (Não)
+        #LightSkyBlue:Cadastrar Cliente;
+    endwhile (Sim)
+
+    #LightSkyBlue:Selecionar serviço;
+
+    if (CLiente está presente?)then (não)
+        #LightSkyBlue:Enviar Documentos por email;
+    else (Sim)
+    label imprimir_anexo
+    (A)
+    #LightSkyBlue:imprimir Documentos;
+    endif
+    :Colher assinatura;
+    :Reconhecer Firma;
+
+    if()
+    label apenas_espaco
+    
+    else()
+
+    label realizar_agendamento
+    (R)
+    endif
+
+
+    :Realizar Agendamento;
+    :Comparecer a Marinha;
+    :Iniciar Serviço junto a Marinha;
+
+    if(Tipo Serviço?) then (Emissão CHA)
+
+        if (Serviço Aceito?) then (Sim)
+
+            :Agendar aulas;
+            :Agendar Prova;
+            :Obter resultado;
+
+            while (cliente aprovado?)is (Não)
+                :Agendar Reteste;
+            endwhile (Sim)
+
+            :Aguardar Emissão CHA;
+            :Agendar Retirada;
+
+        else (Não)
+            if (Requer correção?) then (sim)
+                #LightSkyBlue:Acessar Cadastro;
+                #LightSkyBlue:Corrigir dados do Cliente;
+                (A)
+                note right
+                        Após correção,
+                        o serviço 
+                        retorna a etapa
+                        "Imprimir anexo"
+                end note
+                
+                goto imprimir_anexo
+
+            else (Não)
+                :Reiniciar Serviço;
+                (R)
+                note right
+                    Retorna 
+                    a etapa 
+                    "Realizar 
+                    Agendamento"
+                end note
+                goto realizar_agendamento
+            endif
+        endif
+    else (Renovação CHA)
+        if (Serviço Aceito?) then (Sim)
+            :Aguardar Emissão CHA;
+            :Agendar Retirada;
+        else (Não)
+            if (Requer correção?) then (Sim)
+                #LightSkyBlue:Acessar Cadastro;
+                #LightSkyBlue:Corrigir dados do Cliente;
+                (A)
+                note right
+                        Após correção,
+                        o serviço 
+                        retorna a etapa
+                        "Imprimir anexo"
+                end note
+                goto imprimir_anexo
+            else (Não)
+                :Reiniciar Serviço;
+                (R)
+                note right
+                    Retorna 
+                    a etapa 
+                    "Realizar 
+                    Agendamento"
+                end note
+                goto realizar_agendamento
+            endif
+        endif
+
+
+    endif
+
+:Entregar CHA Cliente;
+stop
+
+else (Serviços para Embarcacoes)
+
+    while (cliente cadastrado?) is (Não)
+        #LightSkyBlue:Cadastrar Cliente;
+    endwhile (sim)
+
+    while (Embarcação cadastrada?) is (Não)
+        #LightSkyBlue:Cadastrar Embarcação;
+        
+    endwhile (sim)
+
+    if (Serviço) then (Transferência)
+        
+        while (Comprador cadastrado?) is (Não)
+            note right
+                        Para o serviço "Transferencia"
+                        é necessário que tanto o vendedor
+                        quanto o comprador estejam 
+                        cadastrados como clientes.
+                        Demais serviços seguem o fluxo
+                        sem essa iteração.
+                    end note
+            #LightSkyBlue:Cadastrar Cliente;
+            
+        endwhile (sim)
+    endif
+
+    
+
+    #LightSkyBlue:Selecionar Serviço;
+    
+    if (CLiente está presente?)then (não)
+        #LightSkyBlue:Enviar Documentos por email;
+    else (Sim)
+    (A)
+    label imprimir_anexo2
+    
+    #LightSkyBlue:imprimir Documentos;
+        note right
+            Serviços recusados junto 
+            a Marinha por inconsistÊncia 
+            nos dados informados devem 
+            ser corrigidos e retornar 
+            a esse ponto do Servico.
+        end note
+    
+    endif
+
+    :Colher assinatura;
+    :Reconhecer Firma;
+    
+    if()
+    label apenas_espaco
+    
+    else()
+
+    label realizar_agendamento2
+    (R)
+    endif
+
+
+    :Realizar Agendamento;
+    note right
+            Serviços recusados junto a Marinha
+            por motivos diversos que NÃO requerem
+            correção nos dados devem retornar a esse
+            ponto do Servico.
+        end note
+    :Comparecer a Marinha;
+    :Iniciar Serviço junto a Marinha;
+
+    switch (Tipo de serviço?)
+        case (Emissão TIE)
+            if (Servico Aceito?) then (Sim)
+                :Agendar Vistoria;
+                :Aguardar resultado;
+
+                if(Embarcação regular?) then (sim)
+                    :Aguardar Emissão TIE;
+                    :Agendar Retirada;
+                else (Não)
+                    :Solicitar Adequações;
+                    #LightSkyBlue:Corrigir dados do 
+                    cliente/embarcação;
+                    note left
+                        Retorna
+                        a etapa 
+                        "Imprimir 
+                        Documentos"
+                    end note
+                    (A)
+                    goto imprimir_anexo2
+                endif
+            else (Não)
+                    
+                if (Requer correção?) then (sim)
+                    #LightSkyBlue:Acessar Cadastro;
+                    #LightSkyBlue:Corrigir dados do 
+                    cliente/Embarcação;
+                    note left
+                        Retorna 
+                        a etapa 
+                        "Imprimir 
+                        Documentos"
+                    end note
+                    (A)
+                    goto imprimir_anexo2
+                else (Não)
+                label espaco
+                label espaco
+                label espaco
+                    :Reiniciar Serviço;
+                    
+                    note right
+                        Retorna 
+                        a etapa
+                        "Realizar 
+                        Agendamento"
+                    end note
+                    (R)
+                    goto realizar_agendamento2
+                endif
+            endif
+        case (Renovação/Transferencia de TIE)
+            if (Serviço Aceito?) then (Sim)
+                :Aguardar Emissão TIE;
+                :Agendar Retirada;
+            else (Não)
+                
+                if (Requer correção?) then (Sim)
+                    #LightSkyBlue:Acessar Cadastro;
+                    #LightSkyBlue:Corrigir dados do 
+                    cliente/Embarcação;
+                    note right
+                        Retorna 
+                        a etapa 
+                        "Imprimir 
+                        Documentos"
+                    end note
+                    (A)
+                    goto imprimir_anexo2
+                else (Não)
+                label espaco
+                label espaco
+                label espaco
+                label espaco
+                :Reiniciar Serviço;
+                note right
+                    retorna 
+                    a etapa 
+                    "Realizar 
+                    Agendamento"
+                end note
+                (R)
+                goto realizar_agendamento2
+                endif
+            endif
+        
+    endswitch
+    :Entregar TIE Cliente;
+    stop
+endif
+}
+@enduml

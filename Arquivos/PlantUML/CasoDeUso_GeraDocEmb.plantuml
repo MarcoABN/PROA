@@ -1,0 +1,99 @@
+@startuml
+skinparam linetype ortho
+
+
+rectangle {
+  
+actor Prestador as p
+
+usecase "Gerar Documentação Embarcação" as gerardocsemb
+p -- gerardocsemb
+
+package ServiçosMotoAquatica {
+usecase "Inscrição Moto Aquatica" as registromotoaqua
+usecase "Transferencia Moto Aquatica" as transfmotoaqua
+}
+note right of (ServiçosMotoAquatica)
+  Serviços relacioados a TIE
+  (Titulo de Inscrição de Embarcação)
+  da modalidade Moto Aquática
+end note
+package AnexosMotoAquatica {
+usecase "Gerar anexo (2A Normam 212)" as anexo2a
+usecase "Gerar anexo (2B Normam 212)" as anexo2b
+usecase "Gerar anexo (2F Normam 212)" as anexo2f
+usecase "Gerar anexo (Procuração)" as procuracao
+usecase "Gerar anexo (Declaração Residencia)" as declararesidencia
+}
+note left of (AnexosMotoAquatica)
+  Anexos presentes na NORMAM 212
+  Necessários para solicitação
+  dos serviços junto a Marinha juntamente 
+  com a Procuração e a Dec. Residencia.
+end note
+
+
+gerardocsemb <. registromotoaqua : extends
+gerardocsemb <. transfmotoaqua : extends
+
+registromotoaqua .> anexo2a :include
+registromotoaqua ..> anexo2b :include
+registromotoaqua ...> procuracao :include
+registromotoaqua ....> declararesidencia :include
+
+transfmotoaqua .> anexo2b :include
+transfmotoaqua ..> anexo2f :include
+transfmotoaqua ...> procuracao :include
+transfmotoaqua ....> declararesidencia :include
+
+
+package ServiçosEsporteRecreio{
+usecase "Inscrição Esporte-Recreio" as emissaotieesprec
+usecase "Renovação Esporte-Recreio" as renovatieesprec
+usecase "Transf. Esporte-Recreio" as transfesprec
+}
+
+note left of (ServiçosEsporteRecreio)
+  Serviços relacioados a TIE
+  (Titulo de Inscrição de Embarcação)
+  da modalidade Esporte-Recreio
+end note
+
+package AnexosEmbEsporteRecreio {
+usecase "Gerar anexo (2D - Normam 211)" as Anexo2d
+usecase "Gerar anexo (2E - Normam 211)" as Anexo2e
+usecase "Gerar anexo (2M - Normam 211)" as Anexo2m
+usecase "Gerar anexo (3C - Normam 211)" as Anexo3c
+usecase "Gerar anexo (3D - Normam 211)" as Anexo3d
+usecase "Gerar anexo (Procuração)" as procuracao2
+usecase "Gerar anexo (Declaração Residencia)" as declararesidencia2
+}
+note left of (AnexosEmbEsporteRecreio)
+  Anexos presentes na NORMAM 211
+  Necessários para solicitação
+  dos serviços junto a Marinha juntamente 
+  com a Procuração e a Dec. Residencia.
+end note
+
+gerardocsemb <.... emissaotieesprec : extends
+gerardocsemb <.... renovatieesprec : extends
+gerardocsemb <..... transfesprec : extends
+
+emissaotieesprec .> Anexo2d :include
+emissaotieesprec ..> Anexo2e :include
+emissaotieesprec ...> Anexo3d :include
+emissaotieesprec ....> procuracao2 :include
+emissaotieesprec .....> declararesidencia2 :include
+
+renovatieesprec ..> Anexo2d :include
+renovatieesprec ...> Anexo2e :include
+renovatieesprec ....> procuracao2 :include
+renovatieesprec ......> declararesidencia2 :include
+
+transfesprec ...> Anexo2e :include
+transfesprec ....> Anexo2d :include
+transfesprec .....> Anexo2m :include
+transfesprec .......> procuracao2 :include
+transfesprec ........> declararesidencia2 :include
+}
+@enduml

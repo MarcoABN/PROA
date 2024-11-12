@@ -1,0 +1,188 @@
+@startuml
+
+skinparam linetype ortho
+rectangle {
+namespace Model {
+
+    class Cliente {
+    -id : long
+    -cpfcnpj : String
+    -rg : String
+    -uf : String
+    -bairro : String
+    -celular : String
+    -cep : String
+    -cidade : String
+    -complemento : String
+    -datanasc : Date
+    -dtemissao : Date
+    -email : String
+    -logradouro : String
+    -nome : String
+    -numero : String
+    -orgemissor : String
+    -senha : String
+    -telefone : String
+    -empresa_id : long
+    -orgmilitar_id : long
+    -nacionalidade : String
+    -naturalidade : String
+    -representaempresa : String
+    -idempresa : long
+    +ConsultarCliente()
+    +ConsultarPorCpf()
+    +InserirCliente()
+    +AlterarCliente()
+    +ExcluirCliente()
+    }
+    class Embarcacao {
+        -id : long
+    -cep : String
+    -uf : String
+    -areanavegacao : String
+    -arqueacaobruta : float
+    -arqueacaoliquida : float
+    -bairro : String
+    -bocamoldada : float
+    -calado : String
+    -capacarmazenamento : float
+    -cidade : String
+    -compperpendicular : float
+    -comptotal : float
+    -complemento : String
+    -construtor : String
+    -contorno : float
+    -corpredominante : String
+    -dtconstrucao : Date
+    -dtinscricao : Date
+    -logradouro : String
+    -lotacao : int
+    -matcasco : String
+    -matsuperestrutura : String
+    -nomeembarcacao : String
+    -numcasco : String
+    -numinscricao : String
+    -numero : String
+    -pontalmoldado : float
+    -portebruto : String
+    -potenciamotor : float
+    -qtdmotores : int
+    -qtdtripulantes : int
+    -tipoatividade : String
+    -tipoembarcacao : String
+    -tipopropulsao : String
+    -cliente_id : long
+    -orgmilitar_id : long
+    -numnotafiscal : String
+    -datavenda : Date
+    -nomevendedor : String
+    -pdf_path : String
+    -localvenda : String
+    -cpfcnpjvendedor : String
+    +ListarEmbarcacoesPorCliente()
+    +ConsultarEmbarcacao()
+    +InserirEmbarcacao()
+    +AlterarEmbarcacao()
+    +ExcluirEmbarcacao()
+    }
+    class Motor {
+        -id : long
+    -marca : String
+    -numserie : String
+    -potencia : String
+    -embarcacao_id : long
+    -notafiscal_id : long
+    -embarcacao : long
+    +ListarMotorPorEmbarcacao()
+    +InserirMotor()
+    +ExcluirMotor()
+    +ConsultarMotor()
+    }
+    class OrgMilitar {
+        -id : long
+    -cep : String
+    -uf : String
+    -abreviatura : String
+    -bairro : String
+    -cidade : String
+    -complemento : String
+    -logradouro : String
+    -nome : String
+    -numero : String
+    -telefone : String
+    +InserirOrgMilitar()
+    +AlterarOrgMilitar()
+    +ExcluirOrgMilitar()
+    +ConsultarOrgMilitar()
+    }
+    class Usuario {
+        -id : long
+    -cpfcnpj : String
+    -email : String
+    -nome : String
+    -senha : String
+    +IncluirUsuario()
+    +AlterarUsuario()
+    +ExcluirUsuario()
+    +ConsultarUsuario()
+    }
+
+    Cliente "1" - "0..*" Embarcacao : cliente_id
+    OrgMilitar "1" - "0..*" Cliente : orgmilitar_id
+    OrgMilitar "1" - "0..*" Embarcacao : orgmilitar_id
+    Embarcacao "1" - "0..*" Motor : embarcacao_id
+}
+
+namespace Controller {
+    class ClienteController{}
+    ClienteController --- Cliente
+
+    class EmbarcacaoController{}
+    EmbarcacaoController --- Embarcacao
+    EmbarcacaoController --- Cliente
+    EmbarcacaoController --- Motor
+    EmbarcacaoController --- OrgMilitar
+
+    ClienteController --- EmbarcacaoController
+
+    class AcessoController{}
+    Usuario --- AcessoController 
+
+    class AnexoService{}
+    AnexoService --- ClienteController
+    AnexoService --- EmbarcacaoController
+    
+}
+
+namespace View {
+    class CadastrarCliente{}
+    class ConsultarCliente{}
+    class ExcluirCliente{}
+
+    CadastrarCliente --- ClienteController
+    ConsultarCliente --- ClienteController
+    ExcluirCliente --- ClienteController
+
+    class CadastrarEmbarcacao{}
+    class ConsultarEmbarcacao{}
+    class ExcluirEmbarcacao{}
+
+    CadastrarEmbarcacao --- EmbarcacaoController
+    ConsultarEmbarcacao --- EmbarcacaoController
+    ExcluirEmbarcacao --- EmbarcacaoController
+
+    
+
+    class GerarDocumentacaoPF{}
+    class GerarDocumentacaoEmbarcacao{}
+
+    GerarDocumentacaoPF --- AnexoService
+    GerarDocumentacaoEmbarcacao --- AnexoService
+
+
+    class AcessoView{}
+    AcessoView --- AcessoController
+    
+}
+}
+@enduml

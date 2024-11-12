@@ -1,0 +1,29 @@
+@startuml
+!theme vibrant
+left to right direction
+rectangle {
+actor Prestador as p
+
+usecase "Manter Cliente" as mantercliente
+usecase "Gerar Documentação PF" as gerardocs
+usecase "Cadastrar Cliente" as cadastrarcliente
+usecase "Alterar Cliente" as alterarcliente
+usecase "Consultar Cliente" as consultarcliente
+usecase "Excluir Cliente" as excluircliente
+usecase "Enviar por email" as envioemail
+usecase "Imprimir documentos" as imprimirdocs
+
+p --> mantercliente
+mantercliente <. gerardocs : extends
+mantercliente ..> cadastrarcliente : include
+mantercliente ..> alterarcliente : include
+mantercliente ..> consultarcliente : include
+mantercliente ..> excluircliente : include
+gerardocs <.. envioemail : extends
+gerardocs <.. imprimirdocs : extends
+gerardocs ..> consultarcliente : include
+
+note "Ver diagrama: Detalhamento Gerar Documentação PF" as N1
+gerardocs .. N1
+}
+@enduml

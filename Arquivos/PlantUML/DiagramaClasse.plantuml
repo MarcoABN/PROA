@@ -1,0 +1,72 @@
+@startuml
+!theme vibrant
+left to right direction
+skinparam linetype ortho
+rectangle {
+namespace Model {
+
+    class Cliente {}
+    class Embarcacao {}
+    class Motor {}
+    class OrgMilitar {}
+    class Usuario {}
+
+    Cliente "1" - "0..*" Embarcacao : cliente_id
+    OrgMilitar "1" - "0..*" Cliente : orgmilitar_id
+    OrgMilitar "1" - "0..*" Embarcacao : orgmilitar_id
+    Embarcacao "1" - "0..*" Motor : embarcacao_id
+}
+
+namespace Controller {
+    class ClienteController{}
+    ClienteController --- Cliente
+
+    class EmbarcacaoController{}
+    EmbarcacaoController --- Embarcacao
+    EmbarcacaoController --- Cliente
+    EmbarcacaoController --- Motor
+    EmbarcacaoController --- OrgMilitar
+
+    ClienteController --- EmbarcacaoController
+
+    class AcessoController{}
+    Usuario --- AcessoController 
+
+    class AnexoService{}
+    AnexoService --- ClienteController
+    AnexoService --- EmbarcacaoController
+    
+}
+
+namespace View {
+    class CadastrarCliente{}
+    class ConsultarCliente{}
+    class ExcluirCliente{}
+
+    CadastrarCliente --- ClienteController
+    ConsultarCliente --- ClienteController
+    ExcluirCliente --- ClienteController
+
+    class CadastrarEmbarcacao{}
+    class ConsultarEmbarcacao{}
+    class ExcluirEmbarcacao{}
+
+    CadastrarEmbarcacao --- EmbarcacaoController
+    ConsultarEmbarcacao --- EmbarcacaoController
+    ExcluirEmbarcacao --- EmbarcacaoController
+
+    
+
+    class GerarDocumentacaoPF{}
+    class GerarDocumentacaoEmbarcacao{}
+
+    GerarDocumentacaoPF --- AnexoService
+    GerarDocumentacaoEmbarcacao --- AnexoService
+
+
+    class AcessoView{}
+    AcessoView --- AcessoController
+    
+}
+}
+@enduml

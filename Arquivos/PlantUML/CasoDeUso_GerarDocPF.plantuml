@@ -1,0 +1,36 @@
+@startuml
+!theme vibrant
+rectangle {
+left to right direction
+
+actor Prestador as p
+
+usecase "Gerar Documentação PF" as gerardocspf
+
+usecase "Selecionar Emissão CHA MT" as emissaochamt
+usecase "Selecionar Emissao CHA ER" as emissaochaer
+usecase "Selecionar Renovação CHA" as renovacaocha
+
+usecase "Gerar anexo (3A Normam 212)" as anexo3a
+usecase "Gerar anexo (5H Normam 211)" as Anexo5h
+usecase "Gerar anexo (Procuração)" as procuracao
+usecase "Gerar anexo (Declaração Endereço)" as declaraenderedo
+
+p -- gerardocspf
+gerardocspf <.. emissaochamt : extends
+gerardocspf <.. emissaochaer : extends
+gerardocspf <.. renovacaocha : extends
+
+emissaochamt ..> anexo3a : include
+emissaochamt ..> procuracao : include
+emissaochamt ..> declaraenderedo : include
+
+emissaochaer ..> Anexo5h : include
+emissaochaer ..> procuracao : include
+emissaochaer ..> declaraenderedo : include
+
+renovacaocha ..> Anexo5h : include
+renovacaocha ..> procuracao : include
+renovacaocha ..> declaraenderedo : include
+}
+@enduml
