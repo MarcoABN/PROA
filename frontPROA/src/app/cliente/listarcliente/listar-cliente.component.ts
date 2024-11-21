@@ -38,7 +38,7 @@ export class ListarClienteComponent implements OnInit {
       });
     }else {
       //Exibe a mensagem de erro se o CPF/CNPJ for inválido
-      this.mensagemErro = 'CPF/CNPJ inválido!';
+      this.mensagemErro = 'CPF ou CNPJ inválido!';
       this.cliente = null;
     }
   }

@@ -30,16 +30,14 @@
     <table class="table table-striped" *ngIf="cliente">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
                 <th>CPF</th>
+                <th>Nome</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{cliente.id}}</td>
-                <td>{{cliente.nome}}</td>
                 <td>{{cliente.cpfcnpj}}</td>
+                <td>{{cliente.nome}}</td>
                 <td>
                     <button (click)="consultarCliente(cliente.id)" class="btn btn-primary" style="margin: 10px;">Visualizar</button>
                     <button (click)="alterarCliente(cliente.id)" class="btn btn-secondary" style="margin: 10px;">Alterar</button>

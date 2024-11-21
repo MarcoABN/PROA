@@ -4,6 +4,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { FrontClienteService } from 'src/app/services/front-cliente.service';
 import { CepService } from 'src/app/services/cep.service';
 import { FormsModule } from '@angular/forms';
+import { ValidadorcpfcnpjService } from 'src/app/services/validacao/validadorcpfcnpj.service';
 
 
 @Component({
@@ -15,11 +16,13 @@ export class CadastrarClienteComponent implements OnInit {
 
   idCliente!: number;
   cliente: Cliente = new Cliente();
+  mensagemErro: string = '';
 
   constructor(
     private ClienteService: FrontClienteService,
     private router: Router,
-    private cepService: CepService
+    private cepService: CepService,
+    private serviceCpfCnpj: ValidadorcpfcnpjService
   ){}
 
   ngOnInit(): void {}
@@ -42,9 +45,15 @@ onSubmit() {
     return;
   }
 
+  if (!this.serviceCpfCnpj.validarCpfCnpj(this.cliente.cpfcnpj)){
+    alert('CPF ou CNPJ inválido!');
+  }
+
+  if (this.serviceCpfCnpj.validarCpfCnpj(this.cliente.cpfcnpj)) {
+
   this.cliente.id = 0;
   this.cliente.cpfcnpj = this.cliente.cpfcnpj.replace(/[^\d]+/g, '');
-
+  
   this.ClienteService.cadastrarCliente(this.cliente).subscribe(
     data => {
       alert("Cadastro realizado com sucesso!");
@@ -59,6 +68,9 @@ onSubmit() {
       console.error("Erro ao cadastrar cliente: ", error);
     }
   );
+
+}
+
 }
 
 

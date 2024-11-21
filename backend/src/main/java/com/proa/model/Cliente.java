@@ -95,9 +95,6 @@ public class Cliente {
 	@Column (name="representaempresa")
 	private String representaEmpresa;
 	
-	@Column (name="idempresa")
-	private Long idEmpresa;
-	
 
 
 	
@@ -135,7 +132,7 @@ public class Cliente {
 		this.cidade = cidade;
 		UF = uF;
 		this.representaEmpresa = representaEmpresa;
-		this.idEmpresa = idEmpresa;
+
 	}
  
 
@@ -329,14 +326,6 @@ public class Cliente {
 
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
-	}
-
-	public long getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(long idEmpresa) {
-		this.idEmpresa = idEmpresa;
 	}
 
 	
