@@ -1,0 +1,47 @@
+@startuml
+!theme vibrant
+skinparam linetype ortho
+
+
+rectangle {
+  
+actor Prestador as p
+
+usecase "Gerar Documentação Embarcação" as gerardocsemb
+p -- gerardocsemb
+
+package ServiçosMotoAquatica {
+usecase "Inscrição Moto Aquatica" as registromotoaqua
+usecase "Transferencia Moto Aquatica" as transfmotoaqua
+}
+
+package AnexosMotoAquatica {
+usecase "Gerar anexo (2A Normam 212)" as anexo2a
+usecase "Gerar anexo (2B Normam 212)" as anexo2b
+usecase "Gerar anexo (2F Normam 212)" as anexo2f
+usecase "Gerar anexo (Procuração)" as procuracao
+usecase "Gerar anexo (Declaração Residencia)" as declararesidencia
+}
+note right of (AnexosMotoAquatica)
+  Anexos presentes na NORMAM 212
+  Necessários para solicitação
+  dos serviços junto a Marinha juntamente 
+  com a Procuração e a Dec. Residencia.
+end note
+
+
+gerardocsemb <.... registromotoaqua : extends
+gerardocsemb <. transfmotoaqua : extends
+
+registromotoaqua .> anexo2a :include
+registromotoaqua .> anexo2b :include
+registromotoaqua .> procuracao :include
+registromotoaqua .> declararesidencia :include
+
+transfmotoaqua ........> anexo2b :include
+transfmotoaqua .> anexo2f :include
+transfmotoaqua .> procuracao :include
+transfmotoaqua .> declararesidencia :include
+
+}
+@enduml

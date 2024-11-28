@@ -1,0 +1,78 @@
+@startuml
+left to right direction
+
+skinparam linetype ortho
+rectangle {
+namespace Model {
+
+    class Cliente {
+
+    }
+    class Embarcacao {
+
+    }
+    class Motor {
+
+    }
+    class OrgMilitar {
+
+    }
+    class Usuario {
+
+    }
+
+    Cliente "1" - "0..*" Embarcacao : cliente_id
+    OrgMilitar "1" - "0..*" Cliente : orgmilitar_id
+    OrgMilitar "1" - "0..*" Embarcacao : orgmilitar_id
+    Embarcacao "1" - "0..*" Motor : embarcacao_id
+}
+
+namespace Controller {
+    class ClienteController{}
+    ClienteController "1" --- "0..*" Cliente
+
+    class EmbarcacaoController{}
+    EmbarcacaoController "1" --- "1" Embarcacao
+    EmbarcacaoController "1" --- "0..*" Cliente
+    EmbarcacaoController "1" --- "0..*" Motor
+    EmbarcacaoController "1" --- "0..*" OrgMilitar
+
+    ClienteController "1" --- "1" EmbarcacaoController
+
+    class AcessoController{}
+    Usuario "1" --- "1" AcessoController 
+
+    class AnexoService{}
+    AnexoService "1" --- "1..*" ClienteController
+    AnexoService "1" --- "1..*" EmbarcacaoController
+    
+}
+
+namespace View {
+    class CadastrarCliente{}
+    class ConsultarCliente{}
+    class ExcluirCliente{}
+
+    CadastrarCliente "1" --- "1" ClienteController
+    ConsultarCliente "1" --- "1" ClienteController
+    ExcluirCliente "1" --- "1" ClienteController
+
+    class CadastrarEmbarcacao{}
+    class ConsultarEmbarcacao{}
+    class ExcluirEmbarcacao{}
+
+    CadastrarEmbarcacao "1" --- "1" EmbarcacaoController
+    ConsultarEmbarcacao "1" --- "1" EmbarcacaoController
+    ExcluirEmbarcacao "1" --- "1" EmbarcacaoController
+
+    class GerarDocumentacaoPF{}
+    class GerarDocumentacaoEmbarcacao{}
+
+    GerarDocumentacaoPF "1" --- "1" AnexoService
+    GerarDocumentacaoEmbarcacao "1" --- "1" AnexoService
+
+    class AcessoView{}
+    AcessoView "1" --- "1" AcessoController
+}
+}
+@enduml

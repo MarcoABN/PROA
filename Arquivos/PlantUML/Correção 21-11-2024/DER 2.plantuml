@@ -1,0 +1,27 @@
+@startuml
+rectangle {
+
+
+entity "Cliente" as cliente {
+}
+
+entity "Embarcacao" as embarcacao {
+}
+
+entity "Motor" as motor {
+}
+
+entity "OrgMilitar" as orgmilitar {
+}
+
+entity "Usuario" as usuario {
+}
+
+
+
+embarcacao ||--o{ motor : "embarcacao_id"
+cliente ||---o{ embarcacao : "cliente_id"
+orgmilitar ||--o{ cliente : "orgmilitar_id"
+orgmilitar ||--o{ embarcacao : "orgmilitar_id"
+}
+@enduml

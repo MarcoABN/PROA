@@ -1,0 +1,71 @@
+@startuml
+!theme vibrant
+rectangle {
+start
+
+
+:Receber contato do cliente;
+
+:Identificar serviço;
+
+:Informar prazos e custos;
+
+:Confirmar serviço contratado;
+
+:Solicitar dados do cliente;
+
+#LightSkyBlue:Acessar o sistema;
+
+#LightSkyBlue:Realizar Login;
+
+
+if(Tipo de serviço?) then (Serviços Pessoa Física)
+
+
+    while (cliente cadastrado?) is (Não)
+        #LightSkyBlue:Cadastrar Cliente;
+    endwhile (Sim)
+    stop
+    note right
+        Fluxo continua no 
+        diagrama "Serviços para Clientes".
+    end note
+    
+    
+
+else (Serviços para Embarcacoes)
+
+    while (cliente cadastrado?) is (Não)
+        #LightSkyBlue:Cadastrar Cliente;
+    endwhile (sim)
+
+    while (Embarcação cadastrada?) is (Não)
+        #LightSkyBlue:Cadastrar Embarcação;
+        
+    endwhile (sim)
+
+    if (Serviço) then (Transferência)
+        label espaco
+        while (Comprador cadastrado?) is (Não)
+            note left
+                        Para o serviço "Transferencia"
+                        é necessário que tanto o vendedor
+                        quanto o comprador estejam 
+                        cadastrados como clientes.
+                        Demais serviços seguem o fluxo
+                        sem essa iteração.
+                    end note
+            #LightSkyBlue:Cadastrar Cliente;
+            
+        endwhile (sim)
+    else  (Outros)
+    endif
+    stop
+    note right
+    Fluxo continua no 
+    diagrama "Serviços para Embarcações".
+    end note
+    
+endif
+}
+@enduml

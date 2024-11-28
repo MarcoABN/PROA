@@ -70,6 +70,8 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
     this.embarcacao.cliente = this.cliente;
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {
       console.log(data);
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['embarcacao/listarembarcacao']);
     });
   }
 

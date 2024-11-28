@@ -13,28 +13,31 @@
   
   <br>
   <h3>Motores</h3>
-  <table class="table table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Marca</th>
-              <th>Número de Série</th>
-              <th>Potência</th>
-              <th>Ações</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let motor of motores">
-              <td>{{ motor.id }}</td>
-              <td>{{ motor.marca }}</td>
-              <td>{{ motor.numSerie }}</td>
-              <td>{{ motor.potencia }}</td>
-              <td>
-                  <button type="button" class="btn btn-danger" (click)="excluirMotor(motor.id)">Excluir</button>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+<table class="table table-striped" *ngIf="motores.length > 0; else noMotores">
+  <thead>
+    <tr>
+      <th>Marca</th>
+      <th>Número de Série</th>
+      <th>Potência</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let motor of motores">
+      <td>{{ motor.marca }}</td>
+      <td>{{ motor.numSerie }}</td>
+      <td>{{ motor.potencia }}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="excluirMotor(motor.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noMotores>
+  <p class="text-center text-muted">Nenhum motor cadastrado para esta embarcação.</p>
+</ng-template>
+
   
   <br>
   <h3>Adicionar Motor</h3>

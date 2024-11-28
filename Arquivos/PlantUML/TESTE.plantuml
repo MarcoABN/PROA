@@ -1,0 +1,26 @@
+@startuml
+
+rectangle {
+
+skinparam linetype ortho
+entity "Cliente" as cliente {
+}
+
+entity "Embarcacao" as embarcacao {
+}
+
+entity "Motor" as motor {
+}
+
+entity "OrgMilitar" as orgmilitar {
+}
+
+entity "Usuario" as usuario {
+}
+
+cliente ||--o{ embarcacao : "cliente_id"
+orgmilitar ||----o{ cliente : "orgmilitar_id"
+orgmilitar ||--o{ embarcacao : "orgmilitar_id"
+embarcacao ||---o{ motor : "embarcacao_id"
+}
+@enduml

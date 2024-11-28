@@ -93,6 +93,7 @@ renovatieesprec ......> declararesidencia2 :include
 transfesprec ...> Anexo2e :include
 transfesprec ....> Anexo2d :include
 transfesprec .....> Anexo2m :include
+transfesprec .....> Anexo3c :include
 transfesprec .......> procuracao2 :include
 transfesprec ........> declararesidencia2 :include
 }

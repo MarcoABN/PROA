@@ -1,0 +1,58 @@
+@startuml
+!theme vibrant
+
+
+rectangle {
+  
+actor Prestador as p
+
+usecase "Gerar Documentação Embarcação" as gerardocsemb
+p -- gerardocsemb
+
+package ServiçosEsporteRecreio{
+usecase "Inscrição Esporte-Recreio" as emissaotieesprec
+usecase "Renovação Esporte-Recreio" as renovatieesprec
+usecase "Transf. Esporte-Recreio" as transfesprec
+}
+
+
+
+
+package AnexosEmbEsporteRecreio {
+usecase "Gerar anexo (2D - Normam 211)" as Anexo2d
+usecase "Gerar anexo (2E - Normam 211)" as Anexo2e
+usecase "Gerar anexo (2M - Normam 211)" as Anexo2m
+usecase "Gerar anexo (3C - Normam 211)" as Anexo3c
+usecase "Gerar anexo (3D - Normam 211)" as Anexo3d
+usecase "Gerar anexo (Procuração)" as procuracao2
+usecase "Gerar anexo (Declaração Residencia)" as declararesidencia2
+}
+
+
+gerardocsemb <... emissaotieesprec : extends
+gerardocsemb <... renovatieesprec : extends
+gerardocsemb <... transfesprec : extends
+
+emissaotieesprec ........> Anexo2d :include
+emissaotieesprec ........> Anexo2e :include
+emissaotieesprec ........> Anexo3d :include
+
+
+renovatieesprec ........> Anexo2d :include
+renovatieesprec ........> Anexo2e :include
+
+
+transfesprec ........> Anexo2e :include
+transfesprec ........> Anexo2d :include
+transfesprec ........> Anexo2m :include
+transfesprec ........> Anexo3c :include
+
+emissaotieesprec ....> procuracao2: include
+renovatieesprec ...> procuracao2: include
+transfesprec ...> procuracao2: include
+emissaotieesprec ...> declararesidencia2: include
+renovatieesprec ...> declararesidencia2: include
+transfesprec ...> declararesidencia2: include
+
+}
+@enduml

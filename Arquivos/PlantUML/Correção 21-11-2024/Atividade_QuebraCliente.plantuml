@@ -1,0 +1,107 @@
+@startuml
+!theme vibrant
+rectangle {
+    start
+    #LightSkyBlue:Selecionar serviço;
+
+    if (CLiente está presente?)then (não)
+        #LightSkyBlue:Enviar Documentos por email;
+    else (Sim)
+    label imprimir_anexo
+    (A)
+    #LightSkyBlue:imprimir Documentos;
+    endif
+    :Colher assinatura;
+    :Reconhecer Firma;
+
+    if()
+    label apenas_espaco
+    
+    else()
+
+    label realizar_agendamento
+    (R)
+    endif
+
+
+    :Realizar Agendamento;
+    :Comparecer a Marinha;
+    :Iniciar Serviço junto a Marinha;
+
+    if(Tipo Serviço?) then (Emissão CHA)
+
+        if (Serviço Aceito?) then (Sim)
+
+            :Agendar aulas;
+            :Agendar Prova;
+            :Obter resultado;
+
+            while (cliente aprovado?)is (Não)
+                :Agendar Reteste;
+            endwhile (Sim)
+
+            :Aguardar Emissão CHA;
+            :Agendar Retirada;
+
+        else (Não)
+            if (Requer correção?) then (sim)
+                #LightSkyBlue:Acessar Cadastro;
+                #LightSkyBlue:Corrigir dados do Cliente;
+                (A)
+                note right
+                        Após correção,
+                        o serviço 
+                        retorna a etapa
+                        "Imprimir anexo"
+                end note
+                
+                goto imprimir_anexo
+
+            else (Não)
+                :Reiniciar Serviço;
+                (R)
+                note right
+                    Retorna 
+                    a etapa 
+                    "Realizar 
+                    Agendamento"
+                end note
+                goto realizar_agendamento
+            endif
+        endif
+    else (Renovação CHA)
+        if (Serviço Aceito?) then (Sim)
+            :Aguardar Emissão CHA;
+            :Agendar Retirada;
+        else (Não)
+            if (Requer correção?) then (Sim)
+                #LightSkyBlue:Acessar Cadastro;
+                #LightSkyBlue:Corrigir dados do Cliente;
+                (A)
+                note right
+                        Após correção,
+                        o serviço 
+                        retorna a etapa
+                        "Imprimir anexo"
+                end note
+                goto imprimir_anexo
+            else (Não)
+                :Reiniciar Serviço;
+                (R)
+                note right
+                    Retorna 
+                    a etapa 
+                    "Realizar 
+                    Agendamento"
+                end note
+                goto realizar_agendamento
+            endif
+        endif
+
+
+    endif
+
+:Entregar CHA Cliente;
+stop
+    }
+    @enduml

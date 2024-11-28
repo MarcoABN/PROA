@@ -47,7 +47,7 @@ export class ManterMotorComponent implements OnInit {
       //console.log('TESTE MOTOR', this.motores[0].id, this.motores[0].marca);
     }, error => {
       console.error('Erro ao carregar motores', error);
-      alert('Erro ao carregar motores');
+      
     });
   }
   
@@ -56,6 +56,7 @@ export class ManterMotorComponent implements OnInit {
     if (idMotor) {
       this.motorService.excluirMotor(idMotor).subscribe(() => {
         alert('Motor excluído com sucesso!');
+        location.reload();
         this.carregarMotores(); // Atualiza a lista de motores
       }, error => {
         console.error('Erro ao excluir motor', error);

@@ -1,0 +1,38 @@
+@startuml
+!theme vibrant
+skinparam linetype ortho
+left to right direction
+
+rectangle {
+  
+actor Prestador as p
+
+usecase "Gerar Documentação Embarcação" as gerardocsemb
+p -- gerardocsemb
+
+package ServiçosMotoAquatica {
+usecase "Inscrição Moto Aquatica" as registromotoaqua
+usecase "Transferencia Moto Aquatica" as transfmotoaqua
+}
+note left of (ServiçosMotoAquatica)
+  Detalhamento: Serviços para Embarcação Moto Aquatica"
+end note
+
+package ServiçosEsporteRecreio{
+usecase "Inscrição Esporte-Recreio" as emissaotieesprec
+usecase "Renovação Esporte-Recreio" as renovatieesprec
+usecase "Transf. Esporte-Recreio" as transfesprec
+}
+note left of (ServiçosEsporteRecreio)
+   Detalhamento: Serviços para Embarcação Esporte-Recreio"
+end note
+
+gerardocsemb <... registromotoaqua : extends
+gerardocsemb <. transfmotoaqua : extends
+
+gerardocsemb <... emissaotieesprec : extends
+gerardocsemb <. renovatieesprec : extends
+gerardocsemb <. transfesprec : extends
+
+}
+@enduml
