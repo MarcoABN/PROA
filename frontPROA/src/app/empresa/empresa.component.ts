@@ -1,231 +1,155 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Empresa } from 'src/app/model/empresa';
-import { FrontEmpresaService } from 'src/app/services/front-empresa.service';
-import { CepService } from 'src/app/services/cep.service';
-import { Cliente } from '../model/cliente';
-import { FrontClienteService } from '../services/front-cliente.service';
-import { OrgMilitar } from '../model/orgmilitar';
+import { Component, OnInit } from '@angular/core';
+import { FrontPrestadorService } from '../services/front-prestador.service';
+import { Prestador } from '../model/prestador';
+import { ValidadorcpfcnpjService } from '../services/validacao/validadorcpfcnpj.service';
+import { CepService } from '../services/cep.service';
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
-import { NgForm } from '@angular/forms';
-import { Modal } from 'bootstrap';
-import { AutenticacaoService } from '../services/autenticacao/autenticacao.service';
-import { UserLogin } from '../services/autenticacao/user.model';
+import { OrgMilitar } from '../model/orgmilitar';
+import { Procuracao } from '../model/procuracao';
+import { FrontProcuracaoService } from '../services/front-procuracao.service';
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-empresa',
   templateUrl: './empresa.component.html',
-  styleUrls: ['./empresa.component.css']
+  styleUrls: ['./empresa.component.css'],
 })
 export class EmpresaComponent implements OnInit {
-  @ViewChild('orgMilitarForm') orgMilitarForm!: NgForm;
+  prestadores: Prestador[] = [];
+  prestador: Prestador = new Prestador();
+  modalTitulo: string = '';
+  cpfCnpjInvalido: boolean = false;
+  procuracao: Procuracao = new Procuracao();
 
-  empresaExiste: boolean = false;
-  empresa: Empresa = new Empresa();
-  cliente: Cliente[] = [];
-  cpf: string = '';  // Novo campo para o CPF do cliente
-
+  // Organizações Militares
   orgMilitares: OrgMilitar[] = [];
-  novaOrgMilitar: OrgMilitar = new OrgMilitar();
-
-  modalCadastroOrgMilitar: any;
+  orgMilitar: OrgMilitar = new OrgMilitar();
+  modalTituloOrgMilitar: string = '';
 
   constructor(
-    private empresaService: FrontEmpresaService,
-    private router: Router,
+    private prestadorService: FrontPrestadorService,
+    private validadorCpfCnpj: ValidadorcpfcnpjService,
     private cepService: CepService,
-    private clienteService: FrontClienteService,
     private orgMilitarService: FrontOrgmilitarService,
-    private authService: AutenticacaoService
-  ) { }
+    private procuracaoService: FrontProcuracaoService
+  ) {}
 
   ngOnInit(): void {
-    this.verificarEmpresaCadastrada();
+    this.carregarPrestadores();
     this.carregarOrgMilitares();
+    this.carregarProcuracao01();
   }
 
-  ngAfterViewInit() {
-    const modalElement = document.getElementById('modalOrgMilitar');
-    if (modalElement) {
-        this.modalCadastroOrgMilitar = new Modal(modalElement);
-    }
-  }
-
-  openModal() {
-    if (this.modalCadastroOrgMilitar) {
-        this.modalCadastroOrgMilitar.show();
-    }
-  }
-
-  fecharModal() {
-  if (this.modalCadastroOrgMilitar) {
-      this.modalCadastroOrgMilitar.hide();
-  }
-  }
-
-  verificarEmpresaCadastrada() {
-    this.empresaService.listarEmpresa().subscribe(
-      (empresas: Empresa[]) => {
-        if (empresas.length > 0) {
-          this.empresaExiste = true;
-          this.empresa = empresas[0];  // Carregar a primeira empresa encontrada
-          this.consultarRepresentates();
-        }
-      },
-      error => {
-        console.log('Erro ao buscar empresa:', error);.0
-      }
-    );
-  }
-
-  onSubmit() {
-    if (!this.empresa.razaoSocial || !this.empresa.cnpj) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
-      return;
-    }
-
-    if (this.empresaExiste) {
-      this.empresaService.alterarEmpresa(this.empresa.id, this.empresa).subscribe(() => {
-        this.retornar();
-      });
-    } else {
-      this.empresaService.cadastrarEmpresa(this.empresa).subscribe(() => {
-        this.retornar();
-      });
-    }
-  }
-
-  buscarEndereco() {
-    if (this.empresa.cep) {
-      this.cepService.buscarCep(this.empresa.cep).subscribe(
-        dados => {
-          if (dados) {
-            this.empresa.logradouro = dados.logradouro;
-            this.empresa.bairro = dados.bairro;
-            this.empresa.uf = dados.uf;
-            this.empresa.cidade = dados.localidade;
-          }
-        },
-        error => {
-          console.error('Erro ao buscar o endereço:', error);
-        }
-      );
-    }
-  }
-
-  confirmCancel() {
-    const confirmation = confirm("Você realmente deseja cancelar a operação?");
-    if (confirmation) {
-      this.retornar();
-    }
-  }
-
-  retornar() {
-    this.router.navigate(['inicio']);
-  }
-
-  consultarRepresentates() {
-    if (this.empresa) {
-      this.clienteService.consultarRepresentantes(this.empresa.id).subscribe(data => {
-        this.cliente = data;  // Recebe a lista de representantes
-      });
-    }
-  }
-
-  // Novo método para adicionar representante
-  adicionarRepresentante() {
-    if (this.cpf) {
-      const cpfcnpj = this.cpf.replace(/[^\d]+/g, '');
-      this.clienteService.consultarClienteCPFCNPJ(cpfcnpj).subscribe(
-        cliente => {
-          if (cliente) {
-            cliente.representaEmpresa = 'S';  // Sinalizar como representante
-            cliente.idEmpresa = this.empresa.id;
-            this.clienteService.alterarCliente(cliente.id, cliente).subscribe(() => {
-              console.log(cliente.id, '  ', cliente.nome, '  ', cliente.representaEmpresa);
-              this.consultarRepresentates();  // Atualizar a lista de representantes
-              this.cpf = '';  // Limpar o campo de CPF
-            });
-  
-            // Inserção do usuário selecionado no Firebase para autenticação
-            const userLogin: UserLogin = { email: cliente.email, senha: cliente.cpfcnpj };
-            
-            // Registrar o usuário no Firebase
-            this.authService.register(userLogin)
-              .then(() => {
-                // Após o registro bem-sucedido, redefinir a senha
-                return this.authService.resetPassword(userLogin.email);
-              })
-              .then(() => {
-                console.log('Senha redefinida com sucesso.');
-              })
-              .catch(error => {
-                console.error('Erro no registro ou redefinição de senha:', error);
-              });
-            
-          } else {
-            alert('Cliente não encontrado.');
-          }
-        },
-        error => {
-          console.error('Erro ao buscar cliente:', error);
-        }
-      );
-    } else {
-      alert('Por favor, insira um CPF válido.');
-    }
-  }
-  
-  
-
-  // Novo método para remover representante
-  removerRepresentante(cliente: Cliente) {
-    cliente.representaEmpresa = 'N';  // Sinalizar que não é mais representante
-    this.clienteService.alterarCliente(cliente.id, cliente).subscribe(() => {
-      this.consultarRepresentates();  // Atualizar a lista de representantes
+  carregarProcuracao01(): void {
+    this.procuracaoService.consultarProcuracao("procuracao01").subscribe((dados: Procuracao) => {
+      this.procuracao = dados || new Procuracao(); // Carrega o texto ou inicializa vazio
     });
   }
 
-  carregarOrgMilitares() {
-    this.orgMilitarService.listar().subscribe(
-      (orgMilitares: OrgMilitar[]) => {
-        this.orgMilitares = orgMilitares;
+  salvarProcuracao(): void {
+    this.procuracaoService.alterarProcuracao(this.procuracao.id!, this.procuracao).subscribe(() => {
+      alert('Texto da procuração salvo com sucesso!');
+    });
+  }
+
+
+  carregarPrestadores(): void {
+    this.prestadorService.listarPrestador().subscribe((data) => {
+      this.prestadores = data;
+    });
+  }
+
+  salvarPrestador(): void {
+    if (this.cpfCnpjInvalido) {
+      alert('CPF/CNPJ inválido!');
+      return;
+    }
+
+    if (this.prestador.id) {
+      this.prestadorService.alterarPrestador(this.prestador.id, this.prestador).subscribe(() => {
+        this.carregarPrestadores();
+      });
+    } else {
+      this.prestadorService.incluirPrestador(this.prestador).subscribe(() => {
+        this.carregarPrestadores();
+      });
+    }
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalPrestador'));
+    modal.hide();
+  }
+
+  validarCpfCnpj(cpfCnpj: string | undefined): void {
+    if (!cpfCnpj) {
+      this.cpfCnpjInvalido = true;
+      return;
+    }
+    this.cpfCnpjInvalido = !this.validadorCpfCnpj.validarCpfCnpj(cpfCnpj);
+  }
+
+  buscarEndereco(cep: string | undefined): void {
+    if (!cep) {
+      alert('CEP inválido!');
+      return;
+    }
+    this.cepService.buscarCep(cep).subscribe(
+      (data) => {
+        this.prestador.logradouro = data.logradouro;
+        this.prestador.bairro = data.bairro;
+        this.prestador.cidade = data.localidade;
+        this.prestador.uf = data.uf;
       },
-      error => {
-        console.error('Erro ao carregar organizações militares:', error);
+      (error) => {
+        alert('CEP não encontrado!');
       }
     );
   }
 
+  abrirModalCadastrar(): void {
+    this.modalTitulo = 'Cadastrar Prestador';
+    this.prestador = new Prestador();
+    const modal = new bootstrap.Modal(document.getElementById('modalPrestador'));
+    modal.show();
+  }
 
-  salvarOrgMilitar() {
-    if (this.orgMilitarForm.form.valid) {
-      this.orgMilitarService.inserir(this.novaOrgMilitar).subscribe(
-        () => {
-          this.carregarOrgMilitares();
-          this.novaOrgMilitar = new OrgMilitar();
-          this.fecharModal();
-        },
-        error => {
-          console.error('Erro ao salvar organização militar:', error);
-        }
-      );
+  abrirModalAlterar(prestador: Prestador): void {
+    this.modalTitulo = 'Alterar Prestador';
+    this.prestador = { ...prestador };
+    const modal = new bootstrap.Modal(document.getElementById('modalPrestador'));
+    modal.show();
+  }
+
+
+
+  excluirPrestador(id: number): void {
+    if (confirm('Deseja realmente excluir este prestador?')) {
+      this.prestadorService.excluirPrestador(id).subscribe(() => {
+        this.carregarPrestadores();
+      });
     }
   }
 
-  excluirOrgMilitar(id: number) {
-    if (confirm('Tem certeza que deseja excluir esta organização militar?')) {
-      this.orgMilitarService.excluir(id).subscribe(
-        () => {
-          this.carregarOrgMilitares();
-        },
-        error => {
-          console.error('Erro ao excluir organização militar:', error);
-        }
-      );
-    }
+  // Organizações Militares
+  carregarOrgMilitares(): void {
+    this.orgMilitarService.listar().subscribe((data) => (this.orgMilitares = data));
+  }
+
+  abrirModalOrgMilitar(orgMilitar?: OrgMilitar): void {
+    this.modalTituloOrgMilitar = orgMilitar ? 'Alterar Organização Militar' : 'Cadastrar Organização Militar';
+    this.orgMilitar = orgMilitar ? { ...orgMilitar } : new OrgMilitar();
+    new bootstrap.Modal(document.getElementById('modalOrgMilitar')).show();
+  }
+
+  salvarOrgMilitar(): void {
+    const service = this.orgMilitar.id
+      ? this.orgMilitarService.alterar(this.orgMilitar.id, this.orgMilitar)
+      : this.orgMilitarService.inserir(this.orgMilitar);
+
+    service.subscribe(() => this.carregarOrgMilitares());
+    bootstrap.Modal.getInstance(document.getElementById('modalOrgMilitar')).hide();
+  }
+
+  excluirOrgMilitar(id: number): void {
+    this.orgMilitarService.excluir(id).subscribe(() => this.carregarOrgMilitares());
   }
 }
-
-

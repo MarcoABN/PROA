@@ -17,6 +17,7 @@ import { Anexo3AService } from "../services/anexos/anexo3A.service";
 import { Anexo2FService } from "../services/anexos/anexo2F.service";
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
 import { OrgMilitar } from '../model/orgmilitar';
+import { Procuracao01Service } from "../services/anexos/procuracao01.service";
  
 @Component({
     selector: 'app-anexos',
@@ -61,6 +62,7 @@ export class AnexosComponent implements AfterViewInit {
         private clienteService: FrontClienteService,
         private embarcacaoService: FrontEmbarcacaoService,
         private orgMilitarService: FrontOrgmilitarService,
+        private procuracao01Service: Procuracao01Service,
         private router: Router,
         private route: ActivatedRoute
     ) { }
@@ -278,6 +280,15 @@ export class AnexosComponent implements AfterViewInit {
             this.modalAnexo2F.hide();
         }
         this.gerarAnexo2F();
+    }
+//aqui
+    gerarProcuracao01() {
+        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+        if (selectedEmbarcacao) {
+            this.procuracao01Service.procuracao01(selectedEmbarcacao, this.cliente);
+        } else {
+            console.error('Embarcação selecionada não encontrada.');
+        }
     }
 
     gerarPdf() {

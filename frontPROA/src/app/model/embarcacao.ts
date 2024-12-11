@@ -29,8 +29,9 @@ export class Embarcacao {
     bocaMoldada!: number;
     contorno!: number;
     porteBruto!: string;
-    calado!: string;
-    pontalMoldado!: number;   
+    calado!: number;
+    pontalMoldado!: number;  
+    bordaLivre!: number; 
     //endereço
     logradouro!: string;
     bairro!: string;

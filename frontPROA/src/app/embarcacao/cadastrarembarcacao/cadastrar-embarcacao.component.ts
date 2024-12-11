@@ -66,6 +66,11 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
       return;
     }
 
+    if (this.embarcacao.pontalMoldado != (this.embarcacao.calado + this.embarcacao.bordaLivre)){
+      alert ("Medidas incorretas. Favor validar os dados inseridos.")
+      return;
+    }
+
     this.embarcacao.id = 0;
     this.embarcacao.cliente = this.cliente;
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {

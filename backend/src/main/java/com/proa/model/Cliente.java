@@ -27,9 +27,6 @@ public class Cliente {
 	@JoinColumn(name = "orgmilitar_id")
 	private OrgMilitar orgmilitar;
 	
-	@ManyToOne
-	@JoinColumn(name = "empresa_id")
-	private Empresa empresa;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,11 +89,6 @@ public class Cliente {
 	@Column (name="uf")
 	private String UF;
 	
-	@Column (name="representaempresa")
-	private String representaEmpresa;
-	
-
-
 	
 	
 
@@ -107,7 +99,7 @@ public class Cliente {
 	public Cliente(List<Embarcacao> embarcacoes, OrgMilitar orgmilitar, Long id, String nome, String rG,
 			String orgEmissor, Date dtEmissao, String cPFCNPJ, String nacionalidade, String naturalidade, Date dataNasc,
 			String telefone, String celular, String email, String senha, String cep, String logradouro, String numero,
-			String complemento, String bairro, String cidade, String uF, String representaEmpresa, Long idEmpresa) {
+			String complemento, String bairro, String cidade, String uF) {
 		super();
 		this.embarcacoes = embarcacoes;
 		this.orgmilitar = orgmilitar;
@@ -131,7 +123,6 @@ public class Cliente {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		UF = uF;
-		this.representaEmpresa = representaEmpresa;
 
 	}
  
@@ -284,24 +275,6 @@ public class Cliente {
 
 	public void setUF(String uF) {
 		UF = uF.toUpperCase();
-	}
-
-	
-
-	public String getRepresentaEmpresa() {
-		return representaEmpresa;
-	}
-
-	public void setRepresentaEmpresa(String representaEmpresa) {
-		this.representaEmpresa = representaEmpresa;
-	}
-
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
 	}
 
 	public OrgMilitar getOrgmilitar() {

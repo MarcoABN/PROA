@@ -274,7 +274,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="calado">Calado:</label>
-                            <input type="text" id="calado" class="form-control" [(ngModel)]="embarcacao.calado"
+                            <input type="number" id="calado" class="form-control" [(ngModel)]="embarcacao.calado"
                                 name="calado" required>
                         </div>
                     </div>
@@ -282,8 +282,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="pontalMoldado">Pontal Moldado:</label>
-                            <input type="number" id="pontalMoldado" class="form-control"
+                            <input type="number" id="pontalMoldado" class="form-control" [(ngModel)]="embarcacao.pontalMoldado"
                                 [(ngModel)]="embarcacao.pontalMoldado" name="pontalMoldado" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bordaLivre">Borda Livre:</label>
+                            <input type="number" id="bordaLivre" class="form-control" [(ngModel)]="embarcacao.bordaLivre"
+                                [(ngModel)]="embarcacao.bordaLivre" name="bordaLivre" required>
                         </div>
                     </div>
 

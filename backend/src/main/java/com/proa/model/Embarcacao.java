@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class Embarcacao {
 
 	
-	//Declaração de relacionamento "Um para muitos" com entidades OrgMilitar, Empresa e Cliente
+	//Declaração de relacionamento "Um para muitos" com entidades OrgMilitar, Cliente
 	
 	// Relacionamento com Motor
 	//@OneToMany(mappedBy = "embarcacao")
@@ -28,9 +28,7 @@ public class Embarcacao {
 	@JoinColumn(name = "orgmilitar_id")
 	private OrgMilitar orgmilitar;
 	
-	@ManyToOne
-	@JoinColumn(name = "empresa_id")
-	private Empresa empresa;
+
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
@@ -115,7 +113,7 @@ public class Embarcacao {
 	private float potenciaMotor;
 
 	@Column (name = "calado")
-	private String calado;
+	private float calado;
 
 	@Column (name = "numinscricao")
 	private String numInscricao;
@@ -143,6 +141,9 @@ public class Embarcacao {
 
 	@Column (name = "CEP")
 	private String CEP;
+	
+	@Column (name = "bordalivre")
+	private String bordaLivre;
 
 	
 
@@ -151,17 +152,16 @@ public class Embarcacao {
 	
 
 
-	public Embarcacao(OrgMilitar orgmilitar, Empresa empresa, Cliente cliente, long iD, int qtdMotores,
+	public Embarcacao(OrgMilitar orgmilitar, Cliente cliente, long iD, int qtdMotores,
 			float arqueacaoLiquida, float bocaMoldada, String areaNavegacao, float compPerpendicular, String numCasco,
 			Date dtConstrucao, float capArmazenamento, String matCasco, int qtdTripulantes, float contorno,
 			float compTotal, int lotacao, String tipoPropulsao, String matSuperestrutura, float pontalMoldado,
 			String construtor, float arqueacaoBruta, String tipoEmbarcacao, String nomeEmbarcacao,
-			String corPredominante, String porteBruto, Date dtInscricao, float potenciaMotor, String calado,
+			String corPredominante, String porteBruto, Date dtInscricao, float potenciaMotor, float calado,
 			String numInscricao, String tipoAtividade, String logradouro, String bairro, String numero,
-			String complemento, String uF, String cidade, String cEP) {
+			String complemento, String uF, String cidade, String cEP, String bordaLivre) {
 		super();
 		this.orgmilitar = orgmilitar;
-		this.empresa = empresa;
 		this.cliente = cliente;
 		id = iD;
 		this.qtdMotores = qtdMotores;
@@ -198,6 +198,7 @@ public class Embarcacao {
 		UF = uF;
 		this.cidade = cidade;
 		CEP = cEP;
+		this.bordaLivre = bordaLivre;
 	}
 
 
@@ -409,14 +410,14 @@ public class Embarcacao {
 		this.potenciaMotor = potenciaMotor;
 	}
 
-	public String getCalado() {
+	public float getCalado() {
 		return calado;
 	}
 
-	public void setCalado(String calado) {
-		this.calado = calado.toUpperCase();
+	public void setCalado(float calado) {
+		this.calado = calado;
 	}
-
+	
 	public String getNumInscricao() {
 		return numInscricao;
 	}
@@ -503,17 +504,6 @@ public class Embarcacao {
 
 
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-
 
 	public Cliente getCliente() {
 		return cliente;
@@ -523,6 +513,18 @@ public class Embarcacao {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+
+
+	public String getBordaLivre() {
+		return bordaLivre;
+	}
+
+
+
+	public void setBordaLivre(String bordaLivre) {
+		this.bordaLivre = bordaLivre;
 	}
 	
 	

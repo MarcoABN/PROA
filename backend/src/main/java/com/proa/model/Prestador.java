@@ -16,9 +16,6 @@ import jakarta.persistence.Table;
 @Table (name="prestador")
 public class Prestador {
 	
-	@ManyToOne
-	@JoinColumn(name = "empresa_id")
-	private Empresa empresa;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +32,15 @@ public class Prestador {
 	
 	@Column (name = "dtemissao")
 	private Date dtEmissao;
+	
+	@Column (name = "nacionalidade")
+	private String nacionalidade;
+	
+	@Column (name = "estadocivil")
+	private String estadoCivil;
+	
+	@Column (name = "profissao")
+	private String profissao;
 	
 	@Column (name = "CPFCNPJ")
 	private String CPFCNPJ;
@@ -72,15 +78,21 @@ public class Prestador {
 	@Column (name = "CEP")
 	private String CEP;
 
-	public Prestador(Long iD, String nome, String rG, String orgEmissor, Date dtEmissao, String cPFCNPJ,
-			String telefone, String celular, String email, String senha, String logradouro, String bairro,
-			String numero, String complemento, String uF, String cidade, String cEP) {
+	
+
+	public Prestador(Long iD, String nome, String rG, String orgEmissor, Date dtEmissao,
+			String nacionalidade, String estadoCivil, String profissao, String cPFCNPJ, String telefone, String celular,
+			String email, String senha, String logradouro, String bairro, String numero, String complemento, String uF,
+			String cidade, String cEP) {
 		super();
 		ID = iD;
 		this.nome = nome;
 		RG = rG;
 		this.orgEmissor = orgEmissor;
 		this.dtEmissao = dtEmissao;
+		this.nacionalidade = nacionalidade;
+		this.estadoCivil = estadoCivil;
+		this.profissao = profissao;
 		CPFCNPJ = cPFCNPJ;
 		this.telefone = telefone;
 		this.celular = celular;
@@ -235,13 +247,30 @@ public class Prestador {
 	public void setCEP(String cEP) {
 		CEP = cEP;
 	}
-	
-	public Empresa getEmpresa() {
-		return empresa;
+
+	public String getNacionalidade() {
+		return nacionalidade;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
 	}
+
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getProfissao() {
+		return profissao;
+	}
+
+	public void setProfissao(String profissao) {
+		this.profissao = profissao;
+	}
+	
 	
 }

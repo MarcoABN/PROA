@@ -76,8 +76,9 @@ public class PrestadorController {
 		prestLocalizado.setUF(prest.getUF());
 		prestLocalizado.setCidade(prest.getCidade());
 		prestLocalizado.setCEP(prest.getCEP());
-		//Relacionamento
-		prestLocalizado.setEmpresa(prest.getEmpresa());
+		prestLocalizado.setEstadoCivil(prest.getEstadoCivil());
+		prestLocalizado.setProfissao(prest.getProfissao());
+		prestLocalizado.setNacionalidade(prest.getNacionalidade());
 		
 		/*AVALIAR COMO DEVE SER TRATADO A QUESTÃO DO RELACIONAMENTO:
 		 * AO CRIAR GET/POST PARA OS RELACIONAMENTOS, TEMOS LOOP NAS VALIDAÇÕES

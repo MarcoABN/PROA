@@ -61,18 +61,7 @@ public class ClienteController {
 
         return ResponseEntity.ok(cliente);
     }
-	
-	//Metodo para consultar cadastros que atuam como representantes da empresa
-	//@GetMapping("/representantes/{idEmpresa}")
-    //public ResponseEntity<List<Cliente>> consultarRepresentantes(@PathVariable Long idEmpresa) {
-		//List<Cliente> clientes = this.clientRep.findByIdEmpresaAndRepresentaEmpresa(idEmpresa, "S");
 
-       // if (clientes.isEmpty()) {
-        //    throw new ResourceNotFoundException("Nenhum representante encontrado para a empresa ID: " + idEmpresa);
-      //  }
-        
-     //   return ResponseEntity.ok(clientes);
-  //  }
 	
 	public Cliente findByEmail(String email) {
         return this.clientRep.findByEmail(email);
@@ -113,9 +102,7 @@ public class ClienteController {
 		clientetLocalizado.setCidade(cliente.getCidade());
 		clientetLocalizado.setCep(cliente.getCep());
 		//Relacionamento
-		clientetLocalizado.setEmpresa(cliente.getEmpresa());
 		clientetLocalizado.setOrgmilitar(cliente.getOrgmilitar());
-		clientetLocalizado.setRepresentaEmpresa(cliente.getRepresentaEmpresa());
 		
 		System.out.println(cliente.getDataNasc());
 		System.out.println(clientetLocalizado.getDataNasc());
