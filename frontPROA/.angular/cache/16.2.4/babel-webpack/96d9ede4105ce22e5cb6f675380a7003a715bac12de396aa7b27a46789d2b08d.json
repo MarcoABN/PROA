@@ -1,0 +1,1 @@
+{"ast":null,"code":"export * from \"./alignment\";\nexport * from \"./layout\";","map":{"version":3,"names":[],"sources":["E:/PROA/frontPROA/node_modules/pdf-lib/es/api/text/index.js"],"sourcesContent":["export * from \"./alignment\";\nexport * from \"./layout\";\n"],"mappings":"AAAA,cAAc,aAAa;AAC3B,cAAc,UAAU"},"metadata":{},"sourceType":"module","externalDependencies":[]}
