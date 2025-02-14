@@ -20,7 +20,7 @@ import com.proa.exception.ResourceNotFoundException;
 import com.proa.model.Prestador;
 import com.proa.repository.PrestadorRepository;
 
-@CrossOrigin (origins = "http://localhost:4200")
+@CrossOrigin (origins = "*")
 @RequestMapping ("/cprestador/")
 @RestController
 public class PrestadorController {

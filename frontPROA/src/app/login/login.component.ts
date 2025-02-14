@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutenticacaoService } from '../services/autenticacao/autenticacao.service';
 import { Router } from '@angular/router';
@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   hide = true;
   formLogin!: FormGroup;
+  usuarioLogado: boolean = false;
 
   constructor(private readonly formBuilder: FormBuilder,
               private authService: AutenticacaoService,
@@ -19,6 +20,11 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.criarFormulario();
+
+    // Monitora se o usuário está logado
+    this.authService.isUsuarioLogado().subscribe(logado => {
+      this.usuarioLogado = logado;
+    });
   }
 
   criarFormulario(): void {
@@ -34,7 +40,7 @@ export class LoginComponent {
     }
 
     this.authService.login(this.formLogin.getRawValue())
-      .then(resposta => {
+      .then(() => {
         this.router.navigate(['/inicio']);
       })
       .catch(error => {
@@ -59,5 +65,4 @@ export class LoginComponent {
         console.error('Erro ao tentar enviar o e-mail de reset de senha', error);
       });
   }
-  
 }

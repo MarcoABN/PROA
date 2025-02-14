@@ -9,7 +9,7 @@ export class Anexo3CService {
 
   constructor() { }
 
-  async anexo3C (embarcacao: Embarcacao, servico?: string): Promise<void | Uint8Array>{
+  async anexo3C (embarcacao: Embarcacao, campotexto2: string, servico?: string): Promise<void | Uint8Array>{
 
     try{
       const pdfBytes = await fetch('assets/pdfanexos/Anexo3C-N211.pdf').then(res => res.arrayBuffer());
@@ -52,6 +52,9 @@ export class Anexo3CService {
       //form.getTextField('capitania').setText(embarcacao.?); falta tratar capitania
       form.getTextField('numinscricaoembarcacao').setText(embarcacao.numInscricao);
       form.getTextField('cidade').setText(embarcacao.cidade);
+
+      form.getTextField('capitania').setText(campotexto2);
+      form.getTextField('capitania2').setText(campotexto2);
       
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');

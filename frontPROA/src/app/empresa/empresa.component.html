@@ -1,7 +1,7 @@
 <div class="container mt-4">
 
-    <h2>Lista de Acessores</h2>
-    <table class="table table-striped">
+    <h2 hidden>Lista de Acessores</h2>
+    <table hidden class="table table-striped">
       <thead>
         <tr>
           <th>Nome</th>
@@ -23,8 +23,8 @@
       </tbody>
     </table>
   
-    <button class="btn btn-success" (click)="abrirModalCadastrar()">Cadastrar Prestador</button>
-    <br><br>
+    <button hidden class="btn btn-success" (click)="abrirModalCadastrar()">Cadastrar Prestador</button>
+    
 
     <hr /><hr />
 
@@ -54,28 +54,6 @@
   <button class="btn btn-success" (click)="abrirModalOrgMilitar()">Cadastrar Organização Militar</button>
 
 
-  <hr /><hr />
-
-  <div class="mb-3">
-    <label for="procuracaoTexto" class="form-label">Texto da Procuração 01</label>
-    <textarea
-      id="procuracaoTexto"
-      class="form-control"
-      rows="10"
-      [(ngModel)]="procuracao.textoProcuracao"
-      name="procuracaoTexto"
-    ></textarea>
-  </div>
-  <div class="mb-3 text-end">
-    <button class="btn btn-primary" (click)="salvarProcuracao()">Salvar Texto da Procuração</button>
-  </div>
-</div>
-
-  
-  
-
-  <!-- Modal -->
-  <!-- Modal -->
 <!-- Modal -->
 <div class="modal fade" id="modalPrestador" tabindex="-1" aria-labelledby="modalPrestadorLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -204,7 +182,7 @@
                 <label for="telefone" class="form-label">Telefone</label>
                 <input type="text" class="form-control" id="telefone" [(ngModel)]="orgMilitar.telefone" name="telefone" />
               </div>
-              <div class="col-md-6 mb-3">
+              <div hidden class="col-md-6 mb-3">
                 <label for="cep" class="form-label">CEP</label>
                 <input type="text" class="form-control" id="cep" [(ngModel)]="orgMilitar.cep" name="cep" />
               </div>

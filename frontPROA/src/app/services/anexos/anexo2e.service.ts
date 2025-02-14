@@ -118,9 +118,9 @@ export class Anexo2EService {
 
 
       form.getTextField('nome').setText(embarcacao.cliente.nome);
-      form.getTextField('logradouro').setText(embarcacao.cliente.logradouro);
+      form.getTextField('logradouro').setText(embarcacao.cliente.logradouro + ', ' + embarcacao.cliente.complemento);
       form.getTextField('numero').setText(embarcacao.cliente.numero);
-      form.getTextField('aptosala').setText(embarcacao.cliente.complemento);
+      //form.getTextField('aptosala').setText(embarcacao.cliente.complemento);
       form.getTextField('cidade').setText(embarcacao.cliente.cidade);
       form.getTextField('uf').setText(embarcacao.cliente.uf);
       form.getTextField('rg').setText(embarcacao.cliente.rg);
@@ -130,10 +130,16 @@ export class Anexo2EService {
       form.getTextField('cpfcnpj').setText(embarcacao.cliente.cpfcnpj);
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
-      form.getTextField('numinscricao').setText(embarcacao.numInscricao);
+      form.getTextField('numinscricao').setText(embarcacao.numInscricao ?? '');
       form.getTextField('comprimento').setText(embarcacao.compTotal.toString()+"m");
       form.getTextField('numcasco').setText(embarcacao.numCasco);
       form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao);
+
+      const hoje = new Date();
+      const dia = hoje.getDate().toString().padStart(2, '0');
+      const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
+      const ano = hoje.getFullYear().toString();
+      form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
 
 
 

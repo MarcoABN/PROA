@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UserLogin } from "./user.model";
 
@@ -11,6 +11,7 @@ export class AutenticacaoService {
 
   baseUrl = 'http://localhost:3000';
   private userSubject = new BehaviorSubject<any>(null);
+  private usuarioLogadoSubject = new BehaviorSubject<boolean>(false); // Controle de login
   user: any;
   error: any;
 
@@ -18,6 +19,7 @@ export class AutenticacaoService {
     const user = localStorage.getItem('user');
     if (user) {
       this.userSubject.next(JSON.parse(user));
+      this.usuarioLogadoSubject.next(true); // Define como logado ao recarregar a página
     }
   }
 
@@ -26,28 +28,32 @@ export class AutenticacaoService {
       const credential = await this.auth.signInWithEmailAndPassword(userLogin.email, userLogin.senha);
       this.user = credential.user;
       this.setUserSubject(this.user);
+      this.usuarioLogadoSubject.next(true); // Atualiza o estado para logado
       return credential.user;
     } catch (error) {
       this.error = error;
+      this.usuarioLogadoSubject.next(false);
       throw error; // Lança o erro para ser capturado pelo componente
     }
   }
 
   private setUserSubject(user: any): void {
     localStorage.setItem('user', JSON.stringify(user));
-    this.userSubject.next(user); // Corrige para userSubject
+    this.userSubject.next(user);
+    this.usuarioLogadoSubject.next(true); // Atualiza o estado do login
   }
 
-  getUser() {
+  getUser(): Observable<any> {
     return this.userSubject.asObservable();
   }
 
-  getRoles() {
+  getRoles(): any {
     return this.userSubject.getValue();
   }
 
-  logout() {
+  logout(): void {
     this.userSubject.next(null);
+    this.usuarioLogadoSubject.next(false); // Define como deslogado
     localStorage.clear();
     this.auth.signOut();
   }
@@ -67,13 +73,16 @@ export class AutenticacaoService {
     try {
       const credential = await this.auth.createUserWithEmailAndPassword(userLogin.email, userLogin.senha);
       this.user = credential.user;
-      this.setUserSubject(this.user); // Armazena o usuário recém-criado no localStorage
+      this.setUserSubject(this.user);
       return credential.user;
     } catch (error) {
       this.error = error;
-      throw error; // Lança o erro para ser capturado pelo componente
+      throw error;
     }
-}
+  }
 
-  
+  // Getter para verificar se o usuário está logado
+  isUsuarioLogado(): Observable<boolean> {
+    return this.usuarioLogadoSubject.asObservable();
+  }
 }

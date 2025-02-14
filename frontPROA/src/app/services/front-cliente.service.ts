@@ -9,6 +9,8 @@ import { Cliente } from '../model/cliente';
 })
 export class FrontClienteService {
 
+  //private url = "http://localhost:8080/ccliente/cliente";
+
   private url = "http://localhost:8080/ccliente/cliente";
   private url2 = "http://localhost:8080/ccliente/cpfcnpj";
   private url3 = "http://localhost:8080/ccliente/representantes";

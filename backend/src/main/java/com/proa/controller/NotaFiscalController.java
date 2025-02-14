@@ -33,7 +33,7 @@ import com.proa.model.Motor;
 import com.proa.model.NotaFiscal;
 import com.proa.repository.NotaFiscalRepository;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/cnotafiscal/")
 @RestController
 public class NotaFiscalController {

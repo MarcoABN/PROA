@@ -145,7 +145,7 @@ export class ServicoAnexoComponent {
   gerarAnexo3C() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
     if (selectedEmbarcacao) {
-      this.anexo3Cservice.anexo3C(selectedEmbarcacao);
+      this.anexo3Cservice.anexo3C(selectedEmbarcacao, this.campotexto2);
     } else {
       console.error('Embarcação selecionada não encontrada.');
     }

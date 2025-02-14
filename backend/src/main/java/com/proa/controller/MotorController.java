@@ -23,7 +23,7 @@ import com.proa.model.Embarcacao;
 import com.proa.model.Motor;
 import com.proa.repository.MotorRepository;
 
-@CrossOrigin (origins = "http://localhost:4200")
+@CrossOrigin (origins = "*")
 @RequestMapping ("/cmotor/")
 @RestController
 public class MotorController {

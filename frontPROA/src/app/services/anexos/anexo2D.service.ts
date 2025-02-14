@@ -40,21 +40,21 @@ export class AnexosService {
       const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
 
 
-      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
-      form.getTextField('inscricao').setText(embarcacao.numInscricao);
-      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta.toString());
-      form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao);
-      form.getTextField('atividade').setText(embarcacao.tipoAtividade);
-      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida.toString());
-      form.getTextField('comprimento').setText(embarcacao.compTotal.toString());
-      form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString());
-      form.getTextField('anoconstrucao').setText(formattedDtConstrucao);
-      form.getTextField('boca').setText(embarcacao.bocaMoldada.toString());
-      form.getTextField('passageiros').setText(embarcacao.lotacao.toString());
-      form.getTextField('numcasco').setText(embarcacao.numCasco);
-      form.getTextField('contorno').setText(embarcacao.contorno.toString());
-      form.getTextField('pontal').setText(embarcacao.pontalMoldado.toString());
-      form.getTextField('matcasco').setText(embarcacao.matCasco);
+      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
+      form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
+      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta.toString() ?? '');
+      form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao ?? '');
+      form.getTextField('atividade').setText(embarcacao.tipoAtividade ?? '');
+      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida.toString() ?? '');
+      form.getTextField('comprimento').setText(embarcacao.compTotal.toString() ?? '');
+      form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString() ?? '');
+      form.getTextField('anoconstrucao').setText(formattedDtConstrucao ?? '');
+      form.getTextField('boca').setText(embarcacao.bocaMoldada.toString() ?? '');
+      form.getTextField('passageiros').setText(embarcacao.lotacao.toString() ?? '');
+      form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
+      form.getTextField('contorno').setText(embarcacao.contorno.toString() ?? '');
+      form.getTextField('pontal').setText(embarcacao.pontalMoldado.toString() ?? '');
+      form.getTextField('matcasco').setText(embarcacao.matCasco ?? '');
 
       if (natureza === 'Inscrição') {
         form.getCheckBox('check_inscricao').check();
@@ -70,44 +70,44 @@ export class AnexosService {
         form.getCheckBox('check_emissaocertidao').check();
       };
 
-      form.getTextField('nomeproprietario').setText(cliente.nome);
+      form.getTextField('nomeproprietario').setText(cliente.nome ?? '');
       form.getTextField('endereco').setText(`${cliente.logradouro}, ${cliente.numero} - ${cliente.complemento}`);
-      form.getTextField('cidade').setText(cliente.cidade);
-      form.getTextField('bairro').setText(cliente.bairro);
-      form.getTextField('cep').setText(cliente.cep);
-      form.getTextField('rg').setText(cliente.rg);
-      form.getTextField('orgemissor').setText(cliente.orgEmissor);
-      form.getTextField('dtemissao').setText(formattedDtEmissao);
-      form.getTextField('cpfcnpj').setText(cliente.cpfcnpj);
-      form.getTextField('telefone').setText(cliente.telefone);
-      form.getTextField('celular').setText(cliente.celular);
-      form.getTextField('email').setText(cliente.email);
+      form.getTextField('cidade').setText(cliente.cidade ?? '');
+      form.getTextField('bairro').setText(cliente.bairro ?? '');
+      form.getTextField('cep').setText(cliente.cep ?? '');
+      form.getTextField('rg').setText(cliente.rg ?? '');
+      form.getTextField('orgemissor').setText(cliente.orgEmissor ?? '');
+      form.getTextField('dtemissao').setText(formattedDtEmissao ?? '');
+      form.getTextField('cpfcnpj').setText(cliente.cpfcnpj ?? '');
+      form.getTextField('telefone').setText(cliente.telefone ?? '');
+      form.getTextField('celular').setText(cliente.celular ?? '');
+      form.getTextField('email').setText(cliente.email ?? '');
 
       if (this.motores.length === 1) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
       }
 
       if (this.motores.length === 2) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString());
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString());
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString());
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
+        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
+        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
+        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
       }
 
       if (this.motores.length === 3) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString());
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString());
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString());
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString());
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString());
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString());
-        form.getTextField('marcamotor3').setText(this.motores[2].marca.toString());
-        form.getTextField('potmotor3').setText(this.motores[2].potencia.toString());
-        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString());
+        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
+        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
+        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
+        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
+        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
+        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
+        form.getTextField('marcamotor3').setText(this.motores[2].marca.toString() ?? '');
+        form.getTextField('potmotor3').setText(this.motores[2].potencia.toString() ?? '');
+        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString() ?? '');
       }
 
       if (this.notaFiscal) {
@@ -126,6 +126,7 @@ export class AnexosService {
       form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
       
 
+      
 
 
       form.flatten();

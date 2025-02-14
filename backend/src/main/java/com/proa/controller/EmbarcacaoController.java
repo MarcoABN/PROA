@@ -22,7 +22,7 @@ import com.proa.model.Embarcacao;
 import com.proa.repository.EmbarcacaoRepository;
  
 
-@CrossOrigin (origins = "http://localhost:4200")
+@CrossOrigin (origins = "*")
 @RequestMapping ("/cembarcacao/")
 @RestController
 public class EmbarcacaoController {

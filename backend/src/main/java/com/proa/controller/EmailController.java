@@ -27,7 +27,7 @@ public class EmailController {
         return ResponseEntity.ok(resultado);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @PostMapping("/anexos")
     public ResponseEntity<String> enviarEmailComAnexos(
             @RequestParam String destinatario,

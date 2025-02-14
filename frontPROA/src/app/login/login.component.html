@@ -1,39 +1,67 @@
-<div class="container">
-    <div class="flex-container">
-        <div class="login-wrapper">
-            <h1 class="title">Projeto de apoio a Regularização em operações Aquaviárias</h1>
-            <div class="login-container">
-                <mat-card>
-                    <form [formGroup]="formLogin">
-                        <h2>Login</h2>
-                        <mat-form-field class="flex-item" appearance="outline">
+<div class="page-container">
+    <div class="login-card">
+        <div class="login-content">
+            <div class="logo-section">
+                <h1 class="main-title">Projeto de apoio a Regularização em operações Aquaviárias</h1>
+            </div>
+            
+            <div class="form-section">
+                <mat-card class="glass-effect">
+                    <form [formGroup]="formLogin" class="login-form">
+                        <h2 class="form-title">Bem-vindo</h2>
+                        
+                        <mat-form-field class="form-field" appearance="outline">
                             <mat-label>E-mail</mat-label>
-                            <mat-icon matSuffix>email</mat-icon>
-                            <input matInput placeholder="email@email.com" formControlName="email">
+                            <input matInput 
+                                   placeholder="email@email.com" 
+                                   formControlName="email"
+                                   autocomplete="email">
+                            <mat-icon matSuffix class="field-icon">email</mat-icon>
                             <mat-error *ngIf="formLogin.get('email')?.hasError('email')">
                                 E-mail deve conter um valor válido
                             </mat-error>
                         </mat-form-field>
                 
-                        <mat-form-field class="flex-item" appearance="outline">
+                        <mat-form-field class="form-field" appearance="outline">
                             <mat-label>Senha</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha">
-                            <button class="icon-button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Esconder Senha'" [attr.aria-pressed]="hide">
-                                <mat-icon matSuffix>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            <input matInput 
+                                   [type]="hide ? 'password' : 'text'" 
+                                   formControlName="senha"
+                                   autocomplete="current-password">
+                            <button class="visibility-toggle" 
+                                    mat-icon-button 
+                                    matSuffix 
+                                    (click)="hide = !hide" 
+                                    [attr.aria-label]="'Esconder Senha'" 
+                                    [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
                             <mat-error *ngIf="formLogin.get('senha')?.hasError('minlength')">
                                 A senha deve ter no mínimo 6 caracteres
                             </mat-error>
                         </mat-form-field>
                 
-                        <button mat-raised-button color="primary" (click)="login()" [disabled]="!formLogin.valid">Entrar</button>
+                        <button mat-raised-button 
+                                class="login-button" 
+                                (click)="login()" 
+                                [disabled]="!formLogin.valid">
+                            <span>Entrar</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                        
+                        <button mat-button 
+                                class="forgot-password" 
+                                type="button" 
+                                (click)="esqueciMinhaSenha()">
+                            Esqueci minha senha
+                        </button>
                     </form>
-                    
-
                 </mat-card>
             </div>
-            <button mat-button type="button" (click)="esqueciMinhaSenha()">Esqueci minha senha</button>
         </div>
-        <div class="promotional-image"></div>
+        
+        <div class="image-section">
+            <div class="overlay"></div>
+        </div>
     </div>
 </div>

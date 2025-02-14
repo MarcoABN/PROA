@@ -43,6 +43,7 @@ export class AnexosComponent implements AfterViewInit {
     modalAnexo5H: any;
     modalAnexo2M: any;
     modalAnexo3D: any;
+    modalAnexo3C: any;
     modalAnexo3A: any;
     modalAnexo2F: any;
     orgMilitares: OrgMilitar[] = [];
@@ -110,6 +111,11 @@ export class AnexosComponent implements AfterViewInit {
             this.modalAnexo3D = new Modal(modalAnexo3DElement);
         }
 
+        const modalAnexo3CElement = document.getElementById('modalAnexo3C');
+        if (modalAnexo3CElement) {
+            this.modalAnexo3C = new Modal(modalAnexo3CElement);
+        }
+
         const modalAnexo3AElement = document.getElementById('modalAnexo3A');
         if (modalAnexo3AElement) {
             this.modalAnexo3A = new Modal(modalAnexo3AElement);
@@ -169,23 +175,34 @@ export class AnexosComponent implements AfterViewInit {
 
     openModal() {
         if (this.naturezaModal) {
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.naturezaModal.show();
         }
     }
     openModal2E() {
         if (this.modalAnexo2E) {
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo2E.show();
         }
     }
     openModal5H() {
         if (this.modalAnexo5H) {
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo5H.show();
         }
     }
 
     openModal2M() {
         if (this.modalAnexo2M) {
-
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo2M.show();
         }
 
@@ -193,15 +210,30 @@ export class AnexosComponent implements AfterViewInit {
 
     openModal3D() {
         if (this.modalAnexo3D) {
-
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo3D.show();
+        }
+
+    }
+
+
+    openModal3C() {
+        if (this.modalAnexo3C) {
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
+            this.modalAnexo3C.show();
         }
 
     }
 
     openModal3A() {
         if (this.modalAnexo3A) {
-
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo3A.show();
         }
 
@@ -209,7 +241,9 @@ export class AnexosComponent implements AfterViewInit {
 
     openModal2F() {
         if (this.modalAnexo2F) {
-
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
             this.modalAnexo2F.show();
         }
 
@@ -268,6 +302,13 @@ export class AnexosComponent implements AfterViewInit {
         this.gerarAnexo3D();
     }
 
+    confirmarAnexo3C() {
+        if (this.modalAnexo3C) {
+            this.modalAnexo3C.hide();
+        }
+        this.gerarAnexo3C();
+    }
+
     confirmarAnexo3A() {
         if (this.modalAnexo3A) {
             this.modalAnexo3A.hide();
@@ -323,7 +364,7 @@ export class AnexosComponent implements AfterViewInit {
     gerarAnexo3C() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.anexo3Cservice.anexo3C(selectedEmbarcacao);
+            this.anexo3Cservice.anexo3C(selectedEmbarcacao, this.campotexto2);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }

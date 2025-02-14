@@ -83,7 +83,7 @@ public class OrgMilitar {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 	public String getAbreviatura() {
@@ -91,7 +91,7 @@ public class OrgMilitar {
 	}
 
 	public void setAbreviatura(String abreviatura) {
-		this.abreviatura = abreviatura;
+		this.abreviatura = abreviatura.toUpperCase();
 	}
 
 	public String getTelefone() {

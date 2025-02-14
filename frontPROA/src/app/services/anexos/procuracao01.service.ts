@@ -8,6 +8,8 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Procuracao } from 'src/app/model/procuracao';
 import { FrontProcuracaoService } from '../front-procuracao.service';
 
+
+
 @Injectable({
   providedIn: 'root'
 }) 
@@ -30,8 +32,7 @@ export class Procuracao01Service {
       this.stringProcuracao = procuracao.textoProcuracao;
     });
     
-    this.gerarPdf();
-    console.log("Passou na impressao");
+    
 
     
 
@@ -54,10 +55,12 @@ export class Procuracao01Service {
         cidade_cliente: embarcacao.cliente.cidade,
         estado_cliente: embarcacao.cliente.uf,
         identidade_cliente: embarcacao.cliente.rg,
+        orgao_exp: embarcacao.cliente.orgEmissor,
+        cpf_cliente: embarcacao.cliente.cpfcnpj,
       });
 
       form.getTextField('corpocompleto').setText(this.stringProcuracao);
-
+      
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao);
@@ -82,7 +85,7 @@ export class Procuracao01Service {
 
       form.getTextField('localdata').setText(`${embarcacao.cliente.cidade} ${dia}/${mes}/${ano}`);
 
-      form.flatten();
+      //form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
 
 
@@ -156,5 +159,7 @@ export class Procuracao01Service {
       }
     );
   }
+
+  
 
 }

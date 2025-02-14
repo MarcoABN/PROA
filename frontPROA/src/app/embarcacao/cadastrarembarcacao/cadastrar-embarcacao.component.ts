@@ -41,12 +41,13 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
         console.error('Erro ao consultar cliente: ', error);
       }
     );
-    this.embarcacao.areaNavegacao = 'INTERIOR';
-    this.embarcacao.tipoAtividade = 'ESPORTE E LAZER';
+    this.embarcacao.tipoEmbarcacao = '';
+    this.embarcacao.areaNavegacao = '';
+    this.embarcacao.tipoAtividade = '';
     this.embarcacao.tipoPropulsao = 'MOTOR';
     this.embarcacao.qtdTripulantes = 1;
     this.embarcacao.qtdMotores = 1;
-    
+    this.embarcacao.numInscricao = '';    
   }
 
   retornar(){
@@ -63,11 +64,6 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
   onSubmit(){
     if (!this.embarcacao.nomeEmbarcacao || !this.embarcacao.dtConstrucao) {
       alert("Por favor, preencha todos os campos.");
-      return;
-    }
-
-    if (this.embarcacao.pontalMoldado != (this.embarcacao.calado + this.embarcacao.bordaLivre)){
-      alert ("Medidas incorretas. Favor validar os dados inseridos.")
       return;
     }
 

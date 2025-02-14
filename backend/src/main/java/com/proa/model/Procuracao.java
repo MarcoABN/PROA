@@ -19,7 +19,7 @@ public class Procuracao {
 	@Column (name = "modeloProcuracao", unique = true)
 	private String modeloProcuracao;
 	
-	@Column (name = "textoProcuracao", length = 1024)
+	@Column (name = "textoProcuracao", length = 4096)
 	private String textoProcuracao;
 	
 	
