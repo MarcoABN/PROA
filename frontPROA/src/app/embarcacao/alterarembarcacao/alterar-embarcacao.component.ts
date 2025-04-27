@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Embarcacao } from 'src/app/model/embarcacao';
 import { FrontEmbarcacaoService } from 'src/app/services/front-embarcacao.service';
 import { CepService } from 'src/app/services/cep.service';
+import { Alert, Button } from 'bootstrap';
 
 @Component({
   selector: 'app-alterar-embarcacao',
@@ -63,6 +64,7 @@ export class AlterarEmbarcacaoComponent implements OnInit {
       data => {
         console.log('Embarcação alterada com sucesso!', data);
         this.router.navigate(['/embarcacao/listarembarcacao']);
+        const alert = confirm("Embarcação Alterada com sucesso!");
       },
       error => {
         console.error('Erro ao alterar embarcação', error);

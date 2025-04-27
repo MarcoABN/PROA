@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var error = function (msg) {\n  throw new Error(msg);\n};\n//# sourceMappingURL=errors.js.map","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

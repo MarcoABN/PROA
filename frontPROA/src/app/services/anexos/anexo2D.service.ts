@@ -42,20 +42,31 @@ export class AnexosService {
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
-      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta.toString() ?? '');
       form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao ?? '');
       form.getTextField('atividade').setText(embarcacao.tipoAtividade ?? '');
-      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida.toString() ?? '');
-      form.getTextField('comprimento').setText(embarcacao.compTotal.toString() ?? '');
+      
       form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString() ?? '');
       form.getTextField('anoconstrucao').setText(formattedDtConstrucao ?? '');
-      form.getTextField('boca').setText(embarcacao.bocaMoldada.toString() ?? '');
+      
       form.getTextField('passageiros').setText(embarcacao.lotacao.toString() ?? '');
       form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
-      form.getTextField('contorno').setText(embarcacao.contorno.toString() ?? '');
-      form.getTextField('pontal').setText(embarcacao.pontalMoldado.toString() ?? '');
+      
       form.getTextField('matcasco').setText(embarcacao.matCasco ?? '');
 
+      //Medidas
+      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() : '');
+
+      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta ? embarcacao.arqueacaoBruta.toString() : '');
+      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida ? embarcacao.arqueacaoLiquida.toString() : '');
+      form.getTextField('boca').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
+      form.getTextField('contorno').setText(embarcacao.contorno ? embarcacao.contorno.toString() : '');
+      form.getTextField('pontal').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
+
+
+
+      //Medidas
+
+      
       if (natureza === 'Inscrição') {
         form.getCheckBox('check_inscricao').check();
       } else if (natureza === 'Cancelamento') {

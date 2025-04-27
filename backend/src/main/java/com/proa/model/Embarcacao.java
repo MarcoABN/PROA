@@ -104,7 +104,7 @@ public class Embarcacao {
 	private String corPredominante;
 
 	@Column (name = "portebruto")
-	private String porteBruto;
+	private float porteBruto;
 
 	@Column (name = "dtinscricao")
 	private Date dtInscricao;
@@ -143,7 +143,7 @@ public class Embarcacao {
 	private String CEP;
 	
 	@Column (name = "bordalivre")
-	private String bordaLivre;
+	private float bordaLivre;
 
 	
 
@@ -157,9 +157,9 @@ public class Embarcacao {
 			Date dtConstrucao, float capArmazenamento, String matCasco, int qtdTripulantes, float contorno,
 			float compTotal, int lotacao, String tipoPropulsao, String matSuperestrutura, float pontalMoldado,
 			String construtor, float arqueacaoBruta, String tipoEmbarcacao, String nomeEmbarcacao,
-			String corPredominante, String porteBruto, Date dtInscricao, float potenciaMotor, float calado,
+			String corPredominante, float porteBruto, Date dtInscricao, float potenciaMotor, float calado,
 			String numInscricao, String tipoAtividade, String logradouro, String bairro, String numero,
-			String complemento, String uF, String cidade, String cEP, String bordaLivre) {
+			String complemento, String uF, String cidade, String cEP, float bordaLivre) {
 		super();
 		this.orgmilitar = orgmilitar;
 		this.cliente = cliente;
@@ -386,11 +386,11 @@ public class Embarcacao {
 		this.corPredominante = corPredominante.toUpperCase();
 	}
 
-	public String getPorteBruto() {
+	public float getPorteBruto() {
 		return porteBruto;
 	}
 
-	public void setPorteBruto(String porteBruto) {
+	public void setPorteBruto(float porteBruto) {
 		this.porteBruto = porteBruto;
 	}
 
@@ -491,11 +491,9 @@ public class Embarcacao {
 	}
 
 
-
 	public OrgMilitar getOrgmilitar() {
 		return orgmilitar;
 	}
-
 
 
 	public void setOrgmilitar(OrgMilitar orgmilitar) {
@@ -517,13 +515,13 @@ public class Embarcacao {
 
 
 
-	public String getBordaLivre() {
+	public float getBordaLivre() {
 		return bordaLivre;
 	}
 
 
 
-	public void setBordaLivre(String bordaLivre) {
+	public void setBordaLivre(float bordaLivre) {
 		this.bordaLivre = bordaLivre;
 	}
 	

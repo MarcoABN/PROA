@@ -131,7 +131,10 @@ export class Anexo2EService {
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('numinscricao').setText(embarcacao.numInscricao ?? '');
-      form.getTextField('comprimento').setText(embarcacao.compTotal.toString()+"m");
+      //form.getTextField('comprimento').setText(embarcacao.compTotal.toString()+"m");
+
+      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString()+"m" : '');
+
       form.getTextField('numcasco').setText(embarcacao.numCasco);
       form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao);
 

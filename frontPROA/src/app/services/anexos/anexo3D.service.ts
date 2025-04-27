@@ -23,11 +23,14 @@ export class Anexo3DService {
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
       form.getTextField('construida_alterada').setText(opcao.toUpperCase());
       form.getTextField('construida_alterada2').setText(opcao.toUpperCase());
-      form.getTextField('comprimentototal').setText(embarcacao.compTotal.toString());
-      form.getTextField('comprimentoperpend').setText(embarcacao.compPerpendicular.toString());
-      form.getTextField('bocamoldada').setText(embarcacao.bocaMoldada.toString());
-      form.getTextField('pontalmoldado').setText(embarcacao.pontalMoldado.toString());
       form.getTextField('areanavegacao').setText(embarcacao.areaNavegacao);
+
+      //medidas
+      form.getTextField('comprimentototal').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() : '');
+      form.getTextField('comprimentoperpend').setText(embarcacao.compPerpendicular ? embarcacao.compPerpendicular.toString() : '');
+      form.getTextField('bocamoldada').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
+      form.getTextField('pontalmoldado').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
+      //medidas
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
