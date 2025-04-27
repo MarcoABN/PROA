@@ -10,10 +10,11 @@ import { Cliente } from '../model/cliente';
 export class FrontClienteService {
 
   //private url = "http://localhost:8080/ccliente/cliente";
+  //public http://3.214.105.13:8080/
 
-  private url = "http://localhost:8080/ccliente/cliente";
-  private url2 = "http://localhost:8080/ccliente/cpfcnpj";
-  private url3 = "http://localhost:8080/ccliente/representantes";
+  private url = "http://3.214.105.13:8080/ccliente/cliente";
+  private url2 = "http://3.214.105.13:8080/ccliente/cpfcnpj";
+  private url3 = "http://3.214.105.13:8080/ccliente/representantes";
 
   constructor(private httpClient: HttpClient) { }
 

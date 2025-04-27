@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FrontEmailService {
-  private apiUrl = 'http://localhost:8080/api/email'; // Ajuste o endereço conforme necessário
+  private apiUrl = 'http://3.214.105.13:8080/api/email'; // Ajuste o endereço conforme necessário
 
   constructor(private http: HttpClient) {}
 

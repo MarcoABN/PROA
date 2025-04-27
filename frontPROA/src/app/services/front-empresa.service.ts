@@ -10,7 +10,7 @@ export class FrontEmpresaService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private url = "http://localhost:8080/cempresa/empresa";
+  private url = "http://3.214.105.13:8080/cempresa/empresa";
 
   listarEmpresa(): Observable<Empresa[]>{
     return this.httpClient.get<Empresa[]>(`${this.url}`)

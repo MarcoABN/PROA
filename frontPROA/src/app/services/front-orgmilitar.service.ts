@@ -7,7 +7,7 @@ import { OrgMilitar } from '../model/orgmilitar' // ajuste o caminho conforme su
   providedIn: 'root'
 })
 export class FrontOrgmilitarService {
-  private baseUrl = 'http://localhost:8080/corgmilitar/orgmilitar'; // URL do seu backend
+  private baseUrl = 'http://3.214.105.13:8080/corgmilitar/orgmilitar'; // URL do seu backend
 
   constructor(private http: HttpClient) {}
 

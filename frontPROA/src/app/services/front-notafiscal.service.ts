@@ -7,8 +7,8 @@ import { Notafiscal } from '../model/notafiscal';
   providedIn: 'root'
 })
 export class FrontNotafiscalService {
-  private url = "http://localhost:8080/cnotafiscal/notafiscal";
-  private url2 = "http://localhost:8080/cnotafiscal/embarcacao";
+  private url = "http://3.214.105.13:8080/cnotafiscal/notafiscal";
+  private url2 = "http://3.214.105.13:8080/cnotafiscal/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 

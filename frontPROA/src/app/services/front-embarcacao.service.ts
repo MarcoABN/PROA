@@ -9,8 +9,8 @@ import { Embarcacao } from '../model/embarcacao';
 })
 export class FrontEmbarcacaoService {
 
-  private url = "http://localhost:8080/cembarcacao/embarcacao";
-  private url2 = "http://localhost:8080/cembarcacao/cliente";
+  private url = "http://3.214.105.13:8080/cembarcacao/embarcacao";
+  private url2 = "http://3.214.105.13:8080/cembarcacao/cliente";
 
   constructor(private httpClient: HttpClient) { }
 

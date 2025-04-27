@@ -8,8 +8,8 @@ import { Motor } from '../model/motor';
 })
 export class FrontMotorService {
 
-  private url = "http://localhost:8080/cmotor/motor";
-  private url2 = "http://localhost:8080/cmotor/embarcacao";
+  private url = "http://3.214.105.13:8080/cmotor/motor";
+  private url2 = "http://3.214.105.13:8080/cmotor/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 
