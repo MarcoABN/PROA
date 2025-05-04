@@ -5,6 +5,7 @@ import { Motor } from 'src/app/model/motor';
 import { FrontMotorService } from '../front-motor.service';
 import { Cliente } from 'src/app/model/cliente';
 import { FrontClienteService } from '../front-cliente.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -131,7 +132,7 @@ export class Anexo2MService {
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
-
+/*
   async carregarDados (embarcacao: Embarcacao, campotexto1: string){
     this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
       this.motores = motores;
@@ -142,5 +143,12 @@ export class Anexo2MService {
     this.clienteService.consultarClienteCPFCNPJ(campotexto1).subscribe(cliente => {
       this.cliente = cliente;
     });
+  }*/
+  async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
+    this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
+    this.qtdmotores = this.motores.length;
+    console.log("QTD MOTORES: ", this.qtdmotores);
+    
+    this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1));
   }
 }

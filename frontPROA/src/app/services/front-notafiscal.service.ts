@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Notafiscal } from '../model/notafiscal';
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FrontNotafiscalService {
-  private url = "http://3.214.105.13:8080/cnotafiscal/notafiscal";
-  private url2 = "http://3.214.105.13:8080/cnotafiscal/embarcacao";
+  private url = `${AppConfig.API_BASE_URL}/cnotafiscal/notafiscal`; //"http://3.214.105.13:8080/cnotafiscal/notafiscal";
+  private url2 = `${AppConfig.API_BASE_URL}/cnotafiscal/embarcacao`; //"http://3.214.105.13:8080/cnotafiscal/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 

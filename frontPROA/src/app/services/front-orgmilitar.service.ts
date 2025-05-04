@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { OrgMilitar } from '../model/orgmilitar' // ajuste o caminho conforme sua estrutura de pastas
+import { OrgMilitar } from '../model/orgmilitar' // ajuste o caminho conforme sua estrutura de pastas,
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FrontOrgmilitarService {
-  private baseUrl = 'http://3.214.105.13:8080/corgmilitar/orgmilitar'; // URL do seu backend
+  private baseUrl = `${AppConfig.API_BASE_URL}/corgmilitar/orgmilitar`; //'http://3.214.105.13:8080/corgmilitar/orgmilitar'; // URL do seu backend
 
   constructor(private http: HttpClient) {}
 

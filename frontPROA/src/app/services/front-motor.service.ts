@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Motor } from '../model/motor';
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FrontMotorService {
 
-  private url = "http://3.214.105.13:8080/cmotor/motor";
-  private url2 = "http://3.214.105.13:8080/cmotor/embarcacao";
+  private url = `${AppConfig.API_BASE_URL}/cmotor/motor`; //"http://3.214.105.13:8080/cmotor/motor";
+  private url2 = `${AppConfig.API_BASE_URL}/cmotor/embarcacao`; //"http://3.214.105.13:8080/cmotor/embarcacao";
 
   constructor(private httpClient: HttpClient) { }
 

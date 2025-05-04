@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Cliente } from '../model/cliente';
-
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,9 @@ export class FrontClienteService {
   //private url = "http://localhost:8080/ccliente/cliente";
   //public http://3.214.105.13:8080/
 
-  private url = "http://3.214.105.13:8080/ccliente/cliente";
-  private url2 = "http://3.214.105.13:8080/ccliente/cpfcnpj";
-  private url3 = "http://3.214.105.13:8080/ccliente/representantes";
+  private url = `${AppConfig.API_BASE_URL}/ccliente/cliente`;  //"http://3.214.105.13:8080/ccliente/cliente";
+  private url2 = `${AppConfig.API_BASE_URL}/ccliente/cpfcnpj`; //"http://3.214.105.13:8080/ccliente/cpfcnpj";
+  private url3 = `${AppConfig.API_BASE_URL}/ccliente/representantes`; //"http://3.214.105.13:8080/ccliente/representantes";
 
   constructor(private httpClient: HttpClient) { }
 

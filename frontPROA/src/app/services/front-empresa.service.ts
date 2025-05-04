@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Empresa } from '../model/empresa';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class FrontEmpresaService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private url = "http://3.214.105.13:8080/cempresa/empresa";
+  private url = `${AppConfig.API_BASE_URL}/cempresa/empresa`; //"http://3.214.105.13:8080/cempresa/empresa";
 
   listarEmpresa(): Observable<Empresa[]>{
     return this.httpClient.get<Empresa[]>(`${this.url}`)

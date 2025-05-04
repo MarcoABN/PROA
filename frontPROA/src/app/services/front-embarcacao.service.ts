@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Embarcacao } from '../model/embarcacao';
+import { AppConfig } from '../config/app-config';
 
 
 @Injectable({
@@ -9,8 +10,8 @@ import { Embarcacao } from '../model/embarcacao';
 })
 export class FrontEmbarcacaoService {
 
-  private url = "http://3.214.105.13:8080/cembarcacao/embarcacao";
-  private url2 = "http://3.214.105.13:8080/cembarcacao/cliente";
+  private url = `${AppConfig.API_BASE_URL}/cembarcacao/embarcacao`; //"http://3.214.105.13:8080/cembarcacao/embarcacao";
+  private url2 = `${AppConfig.API_BASE_URL}/cembarcacao/cliente`; //"http://3.214.105.13:8080/cembarcacao/cliente";
 
   constructor(private httpClient: HttpClient) { }
 

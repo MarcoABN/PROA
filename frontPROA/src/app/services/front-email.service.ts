@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FrontEmailService {
-  private apiUrl = 'http://3.214.105.13:8080/api/email'; // Ajuste o endereço conforme necessário
+  private apiUrl = `${AppConfig.API_BASE_URL}/api/email`; //'http://3.214.105.13:8080/api/email'; // Ajuste o endereço conforme necessário
+  
 
   constructor(private http: HttpClient) {}
 
