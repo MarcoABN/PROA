@@ -144,11 +144,28 @@ export class Anexo2MService {
       this.cliente = cliente;
     });
   }*/
-  async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
-    this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
-    this.qtdmotores = this.motores.length;
-    console.log("QTD MOTORES: ", this.qtdmotores);
+    async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
+      try {
+        this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
+        this.qtdmotores = this.motores.length;
+        console.log("QTD MOTORES: ", this.qtdmotores);
+      } catch (error: any) {
+        if (error.status === 404) {
+          console.warn(`Nenhum motor encontrado para a embarcação com ID: ${embarcacao.id}`);
+          this.motores = [];
+          this.qtdmotores = 0;
+        } else {
+          console.error("Erro ao buscar motores:", error);
+          throw error;
+        }
+      }
     
-    this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1));
-  }
+      try {
+        this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1));
+      } catch (error) {
+        console.error("Erro ao buscar cliente comprador:", error);
+        throw error;
+      }
+    }
+    
 }

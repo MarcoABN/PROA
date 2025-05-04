@@ -15,6 +15,7 @@ import { Anexo2MService } from "../services/anexos/anexo2M.service";
 import { Anexo3DService } from "../services/anexos/anexo3D.service";
 import { Anexo3AService } from "../services/anexos/anexo3A.service";
 import { Anexo2FService } from "../services/anexos/anexo2F.service";
+import { Anexo2BService } from "../services/anexos/anexo2B.service";
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
 import { OrgMilitar } from '../model/orgmilitar';
 import { Procuracao01Service } from "../services/anexos/procuracao01.service";
@@ -33,6 +34,7 @@ export class AnexosComponent implements AfterViewInit {
     cliente!: Cliente;
     nomeCliente: string = '';
     natureza!: string;
+    natureza2B!: string;
     opcao: string = '';
     campotexto1: string = '';
     campotexto2: string = '';
@@ -46,6 +48,7 @@ export class AnexosComponent implements AfterViewInit {
     modalAnexo3C: any;
     modalAnexo3A: any;
     modalAnexo2F: any;
+    modalAnexo2B: any;
     orgMilitares: OrgMilitar[] = [];
     selectedOrgMilitar: OrgMilitar | null = null;
     
@@ -60,6 +63,7 @@ export class AnexosComponent implements AfterViewInit {
         private anexo3Dservice: Anexo3DService,
         private anexo3Aservice: Anexo3AService,
         private anexo2Fservice: Anexo2FService,
+        private anexo2Bservice: Anexo2BService,
         private clienteService: FrontClienteService,
         private embarcacaoService: FrontEmbarcacaoService,
         private orgMilitarService: FrontOrgmilitarService,
@@ -126,6 +130,11 @@ export class AnexosComponent implements AfterViewInit {
             this.modalAnexo2F = new Modal(modalAnexo2FElement);
         }
 
+        const modalAnexo2BElement = document.getElementById('modalAnexo2B');
+        if (modalAnexo2BElement) {
+            this.modalAnexo2B = new Modal(modalAnexo2BElement);
+        }
+
     }
 
     consultarAnexo() {
@@ -175,6 +184,7 @@ export class AnexosComponent implements AfterViewInit {
 
     openModal() {
         if (this.naturezaModal) {
+            this.natureza = '';
             this.campotexto1 = '';
             this.campotexto2 = '';
             this.campotexto3 = '';
@@ -245,6 +255,17 @@ export class AnexosComponent implements AfterViewInit {
             this.campotexto2 = '';
             this.campotexto3 = '';
             this.modalAnexo2F.show();
+        }
+
+    }
+
+    openModal2B() {
+        if (this.modalAnexo2B) {
+            this.natureza = '';
+            this.campotexto1 = '';
+            this.campotexto2 = '';
+            this.campotexto3 = '';
+            this.modalAnexo2B.show();
         }
 
     }
@@ -321,6 +342,19 @@ export class AnexosComponent implements AfterViewInit {
             this.modalAnexo2F.hide();
         }
         this.gerarAnexo2F();
+    }
+
+    confirmarAnexo2B() {
+        if (!this.modalAnexo2B) {
+            this.mostrarErroNatureza = true;
+            return;
+        }
+
+        this.mostrarErroNatureza = false;
+        if (this.modalAnexo2B) {
+            this.modalAnexo2B.hide();
+        }
+        this.gerarAnexo2B();
     }
 //aqui
     gerarProcuracao01() {
@@ -412,6 +446,15 @@ export class AnexosComponent implements AfterViewInit {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
             this.anexo2Fservice.anexo2F(selectedEmbarcacao, this.campotexto1, this.campotexto2);
+        } else {
+            console.error('Embarcação selecionada não encontrada.');
+        }
+    }
+
+    gerarAnexo2B() {
+        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+        if (selectedEmbarcacao) {
+            this.anexo2Bservice.anexo2B(selectedEmbarcacao, this.cliente, this.natureza2B);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }

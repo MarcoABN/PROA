@@ -168,9 +168,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Gerar Anexo 2B</h5>
+                            <h5 class="card-title">(BDMOTO)</h5>
+                            <div class="mt-3">
+                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2B()">Visualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            
         </div>
     </div>
 </div>
@@ -736,3 +745,50 @@
         </div>
     </div>
 </div>
+
+<!-- Modal anexo 2B-->
+<div class="modal fade" id="modalAnexo2B" tabindex="-1" aria-labelledby="modalAnexo2BLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2BLabel">Selecionar Natureza</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Natureza</label>
+                    <div>
+                        <input type="radio" id="naturezaInscricao" name="natureza2B" value="Inscrição"
+                            [(ngModel)]="natureza2B" required>
+                        <label for="naturezaInscricao">Inscrição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaCancelamento" name="natureza2B" value="Cancelamento"
+                            [(ngModel)]="natureza2B">
+                        <label for="naturezaCancelamento">Cancelamento</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaTransfProprietario" name="natureza2B" value="Transf. Propriedade"
+                            [(ngModel)]="natureza2B">
+                        <label for="naturezaTransfProprietario">Transf. Propriedade</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza2B" value="Transf. Jurisdição"
+                            [(ngModel)]="natureza2B">
+                        <label for="naturezaTransfJurisdicao">Transf. Jurisdição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="naturezaAtualizacao" name="natureza2B" value="Atualização de Dados"
+                            [(ngModel)]="natureza2B">
+                        <label for="naturezaAtualizacao">Atualização de Dados</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2B()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
