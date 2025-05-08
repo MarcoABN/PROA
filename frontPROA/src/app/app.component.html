@@ -1,11 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-navy" *ngIf="isAuthenticated">
+<!-- Cabeçalho fixo -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-navy fixed-top" *ngIf="isAuthenticated">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="inicio" routerLinkActive="active">PROA</a>
-
     <button class="navbar-toggler" type="button" (click)="toggleMenu()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
     <div id="navbarNav" class="collapse navbar-collapse" [ngClass]="{'show': !isMenuCollapsed}">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
@@ -33,13 +32,15 @@
   </div>
 </nav>
 
-<div class="content-wrapper">
+<!-- Conteúdo com rolagem entre header e footer -->
+<div class="main-content">
   <router-outlet></router-outlet>
 </div>
 
-<footer class="footer bg-navy text-white" *ngIf="isAuthenticated">
-  <div class="container text-center">
+<!-- Rodapé fixo -->
+<footer class="footer bg-navy text-white text-center py-3 fixed-bottom" *ngIf="isAuthenticated">
+  <div class="container">
     <span class="footer-title">PROA</span>
-    <p class="footer-description">Projeto de apoio a Regularização em Operações Aquaviárias</p>
+    <p class="footer-description">Projeto de apoio à Regularização em Operações Aquaviárias</p>
   </div>
 </footer>

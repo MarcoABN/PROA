@@ -18,3 +18,24 @@
 .scrollable-content::-webkit-scrollbar-track {
     background: #f1f1f1; /* Cor do fundo da barra de rolagem */
 }
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* para não colar no topo */
+    padding: 2rem;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-wrapper {
+    max-width: 900px;
+    width: 100%;
+  }
+  
+  @media (min-height: 700px) {
+    :host {
+      align-items: center; /* centraliza verticalmente só se houver espaço */
+    }
+  }
+  

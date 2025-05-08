@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+    justify-content: center; /* centralização horizontal */
+    padding: 2rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 900px;
+  }
+  
