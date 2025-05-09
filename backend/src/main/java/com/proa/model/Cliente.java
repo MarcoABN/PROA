@@ -44,7 +44,7 @@ public class Cliente {
 	@Column (name = "dtemissao")
 	private Date dtEmissao;
 	
-	@Column (name="cpfcnpj")
+	@Column (name="cpfcnpj", unique = true)
 	private String CPFCNPJ;
 	
 	@Column (name="nacionalidade")

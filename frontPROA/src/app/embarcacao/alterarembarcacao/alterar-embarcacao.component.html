@@ -34,152 +34,195 @@
                 <h4 class="mb-0">Detalhes da Embarcação</h4>
             </div>
             <div class="card-body">
-                
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="nomeEmbarcacao">Nome da Embarcação</label>
-                                <input type="text" class="form-control" id="nomeEmbarcacao"
-                                    [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" required>
-                            </div>
+                <h4 class="mb-0">Detalhes da Embarcação</h4>
+                <div class="row">
+                    <!-- 1ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nomeEmbarcacao"><span class="text-danger">*</span>Nome da Embarcação:</label>
+                            <input type="text" id="nomeEmbarcacao" class="form-control"
+                                [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" required>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="numCasco">Número do Casco</label>
-                                <input type="text" class="form-control" id="numCasco" [(ngModel)]="embarcacao.numCasco"
-                                    name="numCasco" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="numCasco"><span class="text-danger">*</span>Número do Casco:</label>
+                            <input type="text" id="numCasco" class="form-control" [(ngModel)]="embarcacao.numCasco"
+                                name="numCasco" required>
+                        </div>
+                    </div>
+
+                    <!-- 2ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tipoEmbarcacao"><span class="text-danger">*</span>Tipo de Embarcação:</label>
+                            <select id="tipoEmbarcacao" class="form-control" [(ngModel)]="embarcacao.tipoEmbarcacao"
+                                name="tipoEmbarcacao" #tipoEmbarcacao="ngModel" required>
+                                <option value="">Selecione um tipo</option>
+                                <option value="MOTO AQUÁTICA">MOTO AQUÁTICA</option>
+                                <option value="CANOA">CANOA</option>
+                                <option value="LANCHA">LANCHA</option>
+                                <option value="FLUTUANTE">FLUTUANTE</option>
+                                <option value="CATAMARÃ">CATAMARÃ</option>
+                                <option value="MULTI CASCO">MULTI CASCO</option>
+                            </select>
+                            <div class="invalid-feedback"
+                                *ngIf="tipoEmbarcacao.invalid && (tipoEmbarcacao.dirty || tipoEmbarcacao.touched)">
+                                <div *ngIf="tipoEmbarcacao.errors?.['required']">Tipo de embarcação é obrigatório</div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="numInscricao">Número de Inscrição</label>
-                                <input type="text" class="form-control" id="numInscricao"
-                                    [(ngModel)]="embarcacao.numInscricao" name="numInscricao">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tipoEmbarcacao">Tipo de Embarcação</label>
-                                <input type="text" class="form-control" id="tipoEmbarcacao"
-                                    [(ngModel)]="embarcacao.tipoEmbarcacao" name="tipoEmbarcacao" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tipoAtividade">Tipo de Atividade</label>
-                                <input type="text" class="form-control" id="tipoAtividade"
-                                    [(ngModel)]="embarcacao.tipoAtividade" name="tipoAtividade" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="areaNavegacao">Área de Navegação</label>
-                                <input type="text" class="form-control" id="areaNavegacao"
-                                    [(ngModel)]="embarcacao.areaNavegacao" name="areaNavegacao" required>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tipoAtividade"><span class="text-danger">*</span>Tipo de Atividade:</label>
+                            <select id="tipoAtividade" class="form-control" [(ngModel)]="embarcacao.tipoAtividade"
+                                name="tipoAtividade" #tipoAtividade="ngModel" required>
+                                <option value="">Selecione um tipo</option>
+                                <option value="ESPORTE E LAZER">ESPORTE E LAZER</option>
+                                <option value="COMERCIAL">COMERCIAL</option>
+                            </select>
+                            <div class="invalid-feedback"
+                                *ngIf="tipoAtividade.invalid && (tipoAtividade.dirty || tipoAtividade.touched)">
+                                <div *ngIf="tipoAtividade.errors?.['required']">Tipo de atividade é obrigatório</div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dtConstrucao">Data de Construção</label>
-                                <input type="date" class="form-control" id="dtConstrucao"
-                                    [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dtInscricao">Data de Inscrição</label>
-                                <input type="date" class="form-control" id="dtInscricao"
-                                    [(ngModel)]="embarcacao.dtInscricao" name="dtInscricao">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="capArmazenamento">Capacidade de Armazenamento</label>
-                                <input type="number" class="form-control" id="capArmazenamento"
-                                    [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="matCasco">Material do Casco</label>
-                                <input type="text" class="form-control" id="matCasco" [(ngModel)]="embarcacao.matCasco"
-                                    name="matCasco" required>
+
+                    <!-- 3ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="areaNavegacao"><span class="text-danger">*</span>Área de Navegação:</label>
+                            <select id="areaNavegacao" class="form-control" [(ngModel)]="embarcacao.areaNavegacao"
+                                name="areaNavegacao" #areaNavegacao="ngModel" required>
+                                <option value="">Selecione uma área</option>
+                                <option value="INTERIOR">INTERIOR</option>
+                                <option value="COSTEIRA">COSTEIRA</option>
+                            </select>
+                            <div class="invalid-feedback"
+                                *ngIf="areaNavegacao.invalid && (areaNavegacao.dirty || areaNavegacao.touched)">
+                                <div *ngIf="areaNavegacao.errors?.['required']">Área de navegação é obrigatória</div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="qtdTripulantes">Quantidade de Tripulantes</label>
-                                <input type="number" class="form-control" id="qtdTripulantes"
-                                    [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="lotacao">Lotação</label>
-                                <input type="number" class="form-control" id="lotacao" [(ngModel)]="embarcacao.lotacao"
-                                    name="lotacao" required>
-                            </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dtConstrucao"><span class="text-danger">*</span>Data de Construção:</label>
+                            <input type="date" id="dtConstrucao" class="form-control"
+                                [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao" required>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tipoPropulsao">Tipo de Propulsão</label>
-                                <input type="text" class="form-control" id="tipoPropulsao"
-                                    [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="qtdMotores">Quantidade de Motores</label>
-                                <input type="number" class="form-control" id="qtdMotores"
-                                    [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores" required>
-                            </div>
+
+                    <!-- 4ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="capArmazenamento"><span class="text-danger">*</span>*Capacidade de Armazenamento (KG):</label>
+                            <input type="number" id="capArmazenamento" class="form-control"
+                                [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento" required>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="potenciaMotor">Potência do Motor</label>
-                                <input type="number" class="form-control" id="potenciaMotor"
-                                    [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="matSuperestrutura">Material da Superestrutura</label>
-                                <input type="text" class="form-control" id="matSuperestrutura"
-                                    [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura" required>
-                            </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="matCasco"><span class="text-danger">*</span>Material do Casco:</label>
+                            <input type="text" id="matCasco" class="form-control" [(ngModel)]="embarcacao.matCasco"
+                                name="matCasco" required>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="construtor">Construtor</label>
-                                <input type="text" class="form-control" id="construtor"
-                                    [(ngModel)]="embarcacao.construtor" name="construtor" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="corPredominante">Cor Predominante</label>
-                                <input type="text" class="form-control" id="corPredominante"
-                                    [(ngModel)]="embarcacao.corPredominante" name="corPredominante" required>
-                            </div>
+
+                    <!-- 5ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="qtdTripulantes"><span class="text-danger">*</span>Quantidade de Tripulantes:</label>
+                            <input type="number" id="qtdTripulantes" class="form-control"
+                                [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes" required>
                         </div>
                     </div>
-                
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lotacao"><span class="text-danger">*</span>Lotação:</label>
+                            <input type="number" id="lotacao" class="form-control" [(ngModel)]="embarcacao.lotacao"
+                                name="lotacao" required>
+                        </div>
+                    </div>
+
+                    <!-- 6ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tipoPropulsao"><span class="text-danger">*</span>Tipo de Propulsão:</label>
+                            <input list="tipoPropulsaoOptions" id="tipoPropulsao" class="form-control"
+                                [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao" required>
+                            <datalist id="tipoPropulsaoOptions">
+                                <option value="MOTOR"></option>
+                                <option value="VELA"></option>
+                                <option value="REMO"></option>
+                                <option value="MISTO"></option>
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="qtdMotores"><span class="text-danger">*</span>Quantidade de Motores:</label>
+                            <input type="number" id="qtdMotores" class="form-control"
+                                [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores" required>
+                        </div>
+                    </div>
+
+                    <!-- 7ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="potenciaMotor"><span class="text-danger">*</span>Potência máxima de cada Motor:</label>
+                            <input type="number" id="potenciaMotor" class="form-control"
+                                [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="matSuperestrutura"><span class="text-danger">*</span>Material da Superestrutura:</label>
+                            <input type="text" id="matSuperestrutura" class="form-control"
+                                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura" required>
+                        </div>
+                    </div>
+
+                    <!-- 8ª Linha -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="construtor"><span class="text-danger">*</span>Construtor:</label>
+                            <input type="text" id="construtor" class="form-control" [(ngModel)]="embarcacao.construtor"
+                                name="construtor" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corPredominante"><span class="text-danger">*</span>Cor Predominante:</label>
+                            <input type="text" id="corPredominante" class="form-control"
+                                [(ngModel)]="embarcacao.corPredominante" name="corPredominante" required>
+                        </div>
+                    </div>
+
+                    <!-- 9ª Linha (novos campos no final) -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="numInscricao">Número de Inscrição:</label>
+                            <input type="text" id="numInscricao" class="form-control"
+                                [(ngModel)]="embarcacao.numInscricao" name="numInscricao">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dtInscricao">Data de Inscrição:</label>
+                            <input type="date" id="dtInscricao" class="form-control"
+                                [(ngModel)]="embarcacao.dtInscricao" name="dtInscricao">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -283,7 +326,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="CEP">CEP</label>
+                            <label for="CEP"><span class="text-danger">*</span>CEP</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="CEP" [(ngModel)]="embarcacao.cep" name="CEP"
                                     required>
@@ -296,7 +339,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="logradouro">Logradouro</label>
+                            <label for="logradouro"><span class="text-danger">*</span>Logradouro</label>
                             <input type="text" class="form-control" id="logradouro" [(ngModel)]="embarcacao.logradouro"
                                 name="logradouro" required>
                         </div>
@@ -305,14 +348,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="numero">Número</label>
+                            <label for="numero"><span class="text-danger">*</span>Número</label>
                             <input type="number" class="form-control" id="numero" [(ngModel)]="embarcacao.numero"
                                 name="numero" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="bairro">Bairro</label>
+                            <label for="bairro"><span class="text-danger">*</span>Bairro</label>
                             <input type="text" class="form-control" id="bairro" [(ngModel)]="embarcacao.bairro"
                                 name="bairro" required>
                         </div>
@@ -322,21 +365,21 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="complemento">Complemento</label>
+                            <label for="complemento"><span class="text-danger">*</span>Complemento</label>
                             <input type="text" class="form-control" id="complemento"
                                 [(ngModel)]="embarcacao.complemento" name="complemento">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="cidade">Cidade</label>
+                            <label for="cidade"><span class="text-danger">*</span>Cidade</label>
                             <input type="text" class="form-control" id="cidade" [(ngModel)]="embarcacao.cidade"
                                 name="cidade" required>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="UF">UF</label>
+                            <label for="UF"><span class="text-danger">*</span>UF</label>
                             <input type="text" class="form-control" id="UF" [(ngModel)]="embarcacao.uf" name="UF"
                                 required>
                         </div>

@@ -60,9 +60,9 @@ onSubmit() {
       this.retornar();
     },
     error => {
-      if (error.error && error.error.message && error.error.message.includes("duplicate key value violates unique constraint \"cpfcnpj\"")) {
-        alert("O CPF/CNPJ informado já está cadastrado.");
-      } else {
+      if (error.status === 409) {
+        alert(error.error); // mostrará: "Erro: CPF/CNPJ já cadastrado."
+      }else {
         alert("Ocorreu um erro ao realizar o cadastro. Tente novamente.");
       }
       console.error("Erro ao cadastrar cliente: ", error);

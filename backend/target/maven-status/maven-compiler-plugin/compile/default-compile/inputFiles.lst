@@ -9,6 +9,7 @@ D:\PROA\backend\src\main\java\com\proa\repository\ClienteRepository.java
 D:\PROA\backend\src\main\java\com\proa\model\NotaFiscal.java
 D:\PROA\backend\src\main\java\com\proa\model\Cliente.java
 D:\PROA\backend\src\main\java\com\proa\repository\MotorRepository.java
+D:\PROA\backend\src\main\java\com\proa\exception\GlobalExceptionHandler.java
 D:\PROA\backend\src\main\java\com\proa\BackendApplication.java
 D:\PROA\backend\src\main\java\com\proa\controller\ClienteController.java
 D:\PROA\backend\src\main\java\com\proa\model\Embarcacao.java

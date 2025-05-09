@@ -7,6 +7,7 @@ com\proa\model\Motor.class
 com\proa\repository\ClienteRepository.class
 com\proa\model\Prestador.class
 com\proa\controller\EmailController.class
+com\proa\exception\GlobalExceptionHandler.class
 com\proa\repository\PrestadorRepository.class
 com\proa\controller\EmbarcacaoController.class
 com\proa\controller\MotorController.class

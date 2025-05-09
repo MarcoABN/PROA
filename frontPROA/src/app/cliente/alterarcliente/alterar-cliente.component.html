@@ -3,88 +3,97 @@
     <br>
     <h4>Detalhes do Cliente</h4>
     <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" class="form-control" [(ngModel)]="cliente.nome" name="nome" required>
-                        </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <!-- Nome -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nome"><span class="text-danger">*</span>Nome:</label>
+                        <input type="text" id="nome" class="form-control" [(ngModel)]="cliente.nome" name="nome" required>
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="rg">RG:</label>
-                            <input type="text" id="rg" class="form-control" [(ngModel)]="cliente.rg" name="rg" required>
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="orgEmissor">Orgão Emissor:</label>
-                            <input type="text" id="orgEmissor" class="form-control" [(ngModel)]="cliente.orgEmissor" name="orgEmissor" required>
-                        </div>
+                <!-- CPF/CNPJ -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cpfcnpj"><span class="text-danger">*</span>CPF/CNPJ:</label>
+                        <input type="text" id="cpfcnpj" class="form-control" [(ngModel)]="cliente.cpfcnpj" name="cpfcnpj" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dtEmissao">Data de Emissão:</label>
-                            <input type="date" id="dtEmissao" class="form-control" [(ngModel)]="cliente.dtEmissao" name="dtEmissao" required>
-                        </div>
+                <!-- RG -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="rg"><span class="text-danger">*</span>RG:</label>
+                        <input type="text" id="rg" class="form-control" [(ngModel)]="cliente.rg" name="rg" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="cpfcnpj">CPF/CNPJ:</label>
-                            <input type="text" id="cpfcnpj" class="form-control" [(ngModel)]="cliente.cpfcnpj" name="cpfcnpj" required>
-                        </div>
+                <!-- Órgão Emissor e Data de Emissão -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="orgEmissor"><span class="text-danger">*</span>Órgão Emissor:</label>
+                        <input type="text" id="orgEmissor" class="form-control" [(ngModel)]="cliente.orgEmissor" name="orgEmissor" required>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="nacionalidade">Nacionalidade:</label>
-                            <input type="text" id="nacionalidade" class="form-control" [(ngModel)]="cliente.nacionalidade" name="nacionalidade" required>
-                        </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dtEmissao"><span class="text-danger">*</span>Data de Emissão:</label>
+                        <input type="date" id="dtEmissao" class="form-control" [(ngModel)]="cliente.dtEmissao" name="dtEmissao" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="naturalidade">Naturalidade:</label>
-                            <input type="text" id="naturalidade" class="form-control" [(ngModel)]="cliente.naturalidade" name="naturalidade" required>
-                        </div>
+                <!-- Data de Nascimento -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dtNasc"><span class="text-danger">*</span>Data de Nascimento:</label>
+                        <input type="date" id="dtNasc" class="form-control" [(ngModel)]="cliente.dataNasc" name="dtNasc" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dtNasc">Data de Nascimento:</label>
-                            <input type="date" id="dtNasc" class="form-control" [(ngModel)]="cliente.dataNasc" name="dtNasc" required>
-                        </div>
+                <!-- Nacionalidade -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nacionalidade"><span class="text-danger">*</span>Nacionalidade:</label>
+                        <input type="text" id="nacionalidade" class="form-control" [(ngModel)]="cliente.nacionalidade" name="nacionalidade" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="telefone">Telefone:</label>
-                            <input type="text" id="telefone" class="form-control" [(ngModel)]="cliente.telefone" name="telefone" required>
-                        </div>
+                <!-- Naturalidade -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="naturalidade"><span class="text-danger">*</span>Naturalidade:</label>
+                        <input type="text" id="naturalidade" class="form-control" [(ngModel)]="cliente.naturalidade" name="naturalidade" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="celular">Celular:</label>
-                            <input type="text" id="celular" class="form-control" [(ngModel)]="cliente.celular" name="celular" required>
-                        </div>
+                <!-- Telefone -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="text" id="telefone" class="form-control" [(ngModel)]="cliente.telefone" name="telefone" required>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" class="form-control" [(ngModel)]="cliente.email" name="email" required>
-                        </div>
+                <!-- Celular -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="celular">Celular:</label>
+                        <input type="text" id="celular" class="form-control" [(ngModel)]="cliente.celular" name="celular" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" class="form-control" [(ngModel)]="cliente.email" name="email" required>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
  
         <div class="card mb-4">
             <div class="card-header bg-light">
@@ -94,7 +103,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="CEP">CEP</label>
+                            <label for="CEP"><span class="text-danger">*</span>CEP</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="CEP" [(ngModel)]="cliente.cep" name="CEP"
                                     required>
@@ -107,7 +116,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="logradouro">Logradouro</label>
+                            <label for="logradouro"><span class="text-danger">*</span>Logradouro</label>
                             <input type="text" class="form-control" id="logradouro" [(ngModel)]="cliente.logradouro"
                                 name="logradouro" required>
                         </div>
@@ -116,14 +125,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="numero">Número</label>
+                            <label for="numero"><span class="text-danger">*</span>Número</label>
                             <input type="number" class="form-control" id="numero" [(ngModel)]="cliente.numero"
                                 name="numero" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="bairro">Bairro</label>
+                            <label for="bairro"><span class="text-danger">*</span>Bairro</label>
                             <input type="text" class="form-control" id="bairro" [(ngModel)]="cliente.bairro"
                                 name="bairro" required>
                         </div>
@@ -133,21 +142,21 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="complemento">Complemento</label>
+                            <label for="complemento"><span class="text-danger">*</span>Complemento</label>
                             <input type="text" class="form-control" id="complemento"
                                 [(ngModel)]="cliente.complemento" name="complemento">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="cidade">Cidade</label>
+                            <label for="cidade"><span class="text-danger">*</span>Cidade</label>
                             <input type="text" class="form-control" id="cidade" [(ngModel)]="cliente.cidade"
                                 name="cidade" required>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="UF">UF</label>
+                            <label for="UF"><span class="text-danger">*</span>UF</label>
                             <input type="text" class="form-control" id="UF" [(ngModel)]="cliente.uf" name="UF"
                                 required>
                         </div>
