@@ -46,9 +46,9 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="numCasco"><span class="text-danger">*</span>Número do Casco:</label>
+                            <label for="numCasco">Número do Casco:</label>
                             <input type="text" id="numCasco" class="form-control" [(ngModel)]="embarcacao.numCasco"
-                                name="numCasco" required>
+                                name="numCasco" >
                         </div>
                     </div>
 
@@ -108,52 +108,52 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="dtConstrucao"><span class="text-danger">*</span>Data de Construção:</label>
+                            <label for="dtConstrucao">Data de Construção:</label>
                             <input type="date" id="dtConstrucao" class="form-control"
-                                [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao" required>
+                                [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao">
                         </div>
                     </div>
 
                     <!-- 4ª Linha -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="capArmazenamento"><span class="text-danger">*</span>Capacidade de Armazenamento (KG):</label>
+                            <label for="capArmazenamento">Capacidade de Armazenamento (KG):</label>
                             <input type="number" id="capArmazenamento" class="form-control"
-                                [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento" required>
+                                [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="matCasco"><span class="text-danger">*</span>Material do Casco:</label>
+                            <label for="matCasco">Material do Casco:</label>
                             <input type="text" id="matCasco" class="form-control" [(ngModel)]="embarcacao.matCasco"
-                                name="matCasco" required>
+                                name="matCasco">
                         </div>
                     </div>
 
                     <!-- 5ª Linha -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="qtdTripulantes"><span class="text-danger">*</span>Quantidade de Tripulantes:</label>
+                            <label for="qtdTripulantes">Quantidade de Tripulantes:</label>
                             <input type="number" id="qtdTripulantes" class="form-control"
-                                [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes" required>
+                                [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lotacao"><span class="text-danger">*</span>Lotação:</label>
+                            <label for="lotacao">Lotação:</label>
                             <input type="number" id="lotacao" class="form-control" [(ngModel)]="embarcacao.lotacao"
-                                name="lotacao" required>
+                                name="lotacao">
                         </div>
                     </div>
 
                     <!-- 6ª Linha -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tipoPropulsao"><span class="text-danger">*</span>Tipo de Propulsão:</label>
+                            <label for="tipoPropulsao">Tipo de Propulsão:</label>
                             <input list="tipoPropulsaoOptions" id="tipoPropulsao" class="form-control"
-                                [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao" required>
+                                [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao">
                             <datalist id="tipoPropulsaoOptions">
                                 <option value="MOTOR"></option>
                                 <option value="VELA"></option>
@@ -165,43 +165,43 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="qtdMotores"><span class="text-danger">*</span>Quantidade de Motores:</label>
+                            <label for="qtdMotores">Quantidade de Motores:</label>
                             <input type="number" id="qtdMotores" class="form-control"
-                                [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores" required>
+                                [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores">
                         </div>
                     </div>
 
                     <!-- 7ª Linha -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="potenciaMotor"><span class="text-danger">*</span>Potência máxima de cada Motor:</label>
+                            <label for="potenciaMotor">Potência máxima de cada Motor:</label>
                             <input type="number" id="potenciaMotor" class="form-control"
-                                [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor" required>
+                                [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="matSuperestrutura"><span class="text-danger">*</span>Material da Superestrutura:</label>
+                            <label for="matSuperestrutura">Material da Superestrutura:</label>
                             <input type="text" id="matSuperestrutura" class="form-control"
-                                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura" required>
+                                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura">
                         </div>
                     </div>
 
                     <!-- 8ª Linha -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="construtor"><span class="text-danger">*</span>Construtor:</label>
+                            <label for="construtor">Construtor:</label>
                             <input type="text" id="construtor" class="form-control" [(ngModel)]="embarcacao.construtor"
-                                name="construtor" required>
+                                name="construtor">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="corPredominante"><span class="text-danger">*</span>Cor Predominante:</label>
+                            <label for="corPredominante">Cor Predominante:</label>
                             <input type="text" id="corPredominante" class="form-control"
-                                [(ngModel)]="embarcacao.corPredominante" name="corPredominante" required>
+                                [(ngModel)]="embarcacao.corPredominante" name="corPredominante">
                         </div>
                     </div>
 
@@ -355,7 +355,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="numero"><span class="text-danger">*</span>*Número</label>
+                            <label for="numero"><span class="text-danger">*</span>Número</label>
                             <input type="number" class="form-control" id="numero" [(ngModel)]="embarcacao.numero"
                                 name="numero" required>
                         </div>
@@ -372,7 +372,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="complemento"><span class="text-danger">*</span>Complemento</label>
+                            <label for="complemento">Complemento</label>
                             <input type="text" class="form-control" id="complemento"
                                 [(ngModel)]="embarcacao.complemento" name="complemento">
                         </div>

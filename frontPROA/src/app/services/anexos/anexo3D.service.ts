@@ -18,18 +18,18 @@ export class Anexo3DService {
 
       const form = pdfDoc.getForm();
 
-      form.getTextField('orgmilitar').setText(orgMilitar.toUpperCase());
-      form.getTextField('nomeconstrutor').setText(construtor.toUpperCase());
-      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
-      form.getTextField('construida_alterada').setText(opcao.toUpperCase());
-      form.getTextField('construida_alterada2').setText(opcao.toUpperCase());
-      form.getTextField('areanavegacao').setText(embarcacao.areaNavegacao);
+      form.getTextField('orgmilitar').setText(orgMilitar ? orgMilitar.toUpperCase() : '');
+      form.getTextField('nomeconstrutor').setText(construtor ? construtor.toUpperCase() : '');
+      form.getTextField('nomeembarcacao').setText(embarcacao?.nomeEmbarcacao ?? '');
+      form.getTextField('construida_alterada').setText(opcao ? opcao.toUpperCase() : '');
+      form.getTextField('construida_alterada2').setText(opcao ? opcao.toUpperCase() : '');
+      form.getTextField('areanavegacao').setText(embarcacao?.areaNavegacao ?? '');
 
       //medidas
-      form.getTextField('comprimentototal').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() : '');
-      form.getTextField('comprimentoperpend').setText(embarcacao.compPerpendicular ? embarcacao.compPerpendicular.toString() : '');
-      form.getTextField('bocamoldada').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
-      form.getTextField('pontalmoldado').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
+      form.getTextField('comprimentototal').setText(embarcacao?.compTotal ? embarcacao.compTotal.toString() : '');
+      form.getTextField('comprimentoperpend').setText(embarcacao?.compPerpendicular ? embarcacao.compPerpendicular.toString() : '');
+      form.getTextField('bocamoldada').setText(embarcacao?.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
+      form.getTextField('pontalmoldado').setText(embarcacao?.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
       //medidas
 
       const hoje = new Date();
@@ -37,9 +37,9 @@ export class Anexo3DService {
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();
 
-      switch (mes){
+      switch (mes) {
         case '01':
-           this.mesextenso = 'Janeiro';
+          this.mesextenso = 'Janeiro';
           break;
         case '02':
           this.mesextenso = 'Fevereiro';
@@ -75,15 +75,15 @@ export class Anexo3DService {
           this.mesextenso = 'Dezembro';
           break;
       }
-      
+
       form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + ' de ' + this.mesextenso + ' de ' + ano);
- 
+
 
 
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      if (!servico){
+      if (!servico) {
         this.abrirPDFemJanela(modifiedPdfBytes);
         console.log('PDF Criado!');
       } else {

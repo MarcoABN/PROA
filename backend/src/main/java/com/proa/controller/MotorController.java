@@ -43,9 +43,7 @@ public class MotorController {
     @GetMapping("/embarcacao/{idEmbarcacao}")
     public ResponseEntity<List<Motor>> listarPorEmbarcacao(@PathVariable Long idEmbarcacao) {
 		List<Motor> motores = this.motorRep.findByEmbarcacaoId(idEmbarcacao);
-        if (motores.isEmpty()) {
-            throw new ResourceNotFoundException("Nenhuma embarcação encontrada para o cliente: " + idEmbarcacao);
-        }
+        
         return ResponseEntity.ok(motores);
     }
     

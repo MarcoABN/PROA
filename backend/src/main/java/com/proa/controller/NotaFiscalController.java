@@ -54,13 +54,19 @@ public class NotaFiscalController {
         return ResponseEntity.ok(prest);
     }
     
-    
+    /*
     @GetMapping("/embarcacao/{idEmbarcacao}")
     public ResponseEntity<List<NotaFiscal>> listarPorEmbarcacao(@PathVariable Long idEmbarcacao) {
 		List<NotaFiscal> notaFiscal = this.notaFiscalRep.findByEmbarcacaoId(idEmbarcacao);
         if (notaFiscal.isEmpty()) {
             throw new ResourceNotFoundException("Nenhuma embarcação encontrada para o cliente: " + idEmbarcacao);
         }
+        return ResponseEntity.ok(notaFiscal);
+    }
+    */
+    @GetMapping("/embarcacao/{idEmbarcacao}")
+    public ResponseEntity<List<NotaFiscal>> listarNotaFiscalPorEmbarcacao(@PathVariable Long idEmbarcacao) {
+        List<NotaFiscal> notaFiscal = this.notaFiscalRep.findByEmbarcacaoId(idEmbarcacao);
         return ResponseEntity.ok(notaFiscal);
     }
     

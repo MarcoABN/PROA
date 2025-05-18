@@ -7,6 +7,7 @@ import { Motor } from 'src/app/model/motor';
 import { FrontMotorService } from '../front-motor.service';
 import { Notafiscal } from 'src/app/model/notafiscal';
 import { FrontNotafiscalService } from '../front-notafiscal.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +21,10 @@ export class AnexosService {
     //Função para gerar o Anexo 2D. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
   //Se for uma chamada do serviço-anexo é necessário passar algo no último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
   async anexo2D(embarcacao: Embarcacao, cliente: Cliente, natureza: string, servico?: string): Promise<void | Uint8Array> {
-
-    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
-      this.motores = motores;
-    });
-
-    this.notaFiscalService.listarNotaFiscalPorEmbarcacao(embarcacao.id).subscribe(notasFiscais => {
-      this.notaFiscal = notasFiscais[0];
-    });
+    
+    const motores = await lastValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
+      const notasFiscais = await lastValueFrom(this.notaFiscalService.listarNotaFiscalPorEmbarcacao(embarcacao.id));
+      const notaFiscal = notasFiscais[0];
 
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2D-N211.pdf').then(res => res.arrayBuffer());
@@ -36,8 +33,8 @@ export class AnexosService {
       const form = pdfDoc.getForm();
 
       //Formatação das datas:
-      const formattedDtConstrucao = this.datePipe.transform(embarcacao.dtConstrucao, 'dd/MM/yyyy') || '';
-      const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
+      const formattedDtConstrucao = this.datePipe.transform((embarcacao.dtConstrucao?? ''), 'dd/MM/yyyy') || '';
+      const formattedDtEmissao = this.datePipe.transform((cliente.dtEmissao?? ''), 'dd/MM/yyyy') || '';
 
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
@@ -82,7 +79,7 @@ export class AnexosService {
       };
 
       form.getTextField('nomeproprietario').setText(cliente.nome ?? '');
-      form.getTextField('endereco').setText(`${cliente.logradouro}, ${cliente.numero} - ${cliente.complemento}`);
+      form.getTextField('endereco').setText(`${cliente.logradouro?? ''}, ${cliente.numero?? ''} - ${cliente.complemento?? ''}`);
       form.getTextField('cidade').setText(cliente.cidade ?? '');
       form.getTextField('bairro').setText(cliente.bairro ?? '');
       form.getTextField('cep').setText(cliente.cep ?? '');
@@ -94,47 +91,27 @@ export class AnexosService {
       form.getTextField('celular').setText(cliente.celular ?? '');
       form.getTextField('email').setText(cliente.email ?? '');
 
-      if (this.motores.length === 1) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-      }
+      motores.slice(0, 3).forEach((motor, i) => {
+        const idx = i + 1;
+        form.getTextField(`marcamotor${idx}`).setText(motor.marca?.toString() ?? '');
+        form.getTextField(`potmotor${idx}`).setText(motor.potencia?.toString() ?? '');
+        form.getTextField(`numseriemotor${idx}`).setText(motor.numSerie?.toString() ?? '');
+      });
 
-      if (this.motores.length === 2) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
-      }
-
-      if (this.motores.length === 3) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
-        form.getTextField('marcamotor3').setText(this.motores[2].marca.toString() ?? '');
-        form.getTextField('potmotor3').setText(this.motores[2].potencia.toString() ?? '');
-        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString() ?? '');
-      }
-
-      if (this.notaFiscal) {
-        const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
-        form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString());
-        form.getTextField('dtvenda').setText(formattedDtvenda);
-        form.getTextField('local').setText(this.notaFiscal.local.toString());
-        form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString());
-        form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString());
+      if (notaFiscal) {
+        const formattedDtvenda = this.datePipe.transform((notaFiscal.dtVenda?? ''), 'dd/MM/yyyy') || '';
+        form.getTextField('numnota').setText(notaFiscal.numeroNotaFiscal?.toString() ?? '');
+        form.getTextField('dtvenda').setText(formattedDtvenda?? '');
+        form.getTextField('local').setText(notaFiscal.local?.toString() ?? '');
+        form.getTextField('vendedor').setText(notaFiscal.razaoSocial?.toString() ?? '');
+        form.getTextField('cpfcnpj_vendedor').setText(notaFiscal.cnpjvendedor?.toString() ?? '');
       }
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();
-      form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
+      form.getTextField('localdata').setText((embarcacao.cidade?? '') + ', ' + dia + '/' + mes + '/' + ano);
       
 
       

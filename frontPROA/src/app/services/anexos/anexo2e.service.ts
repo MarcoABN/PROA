@@ -10,8 +10,6 @@ export class Anexo2EService {
 
   constructor(private datePipe: DatePipe) { }
 
-  //Função para gerar o Anexo 2E. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
-  //Se for uma chamada do serviço é necessário passar algo como último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
   async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array>{
 
     try{
@@ -20,7 +18,6 @@ export class Anexo2EService {
 
       const form = pdfDoc.getForm(); 
 
-      
       switch (solicitacao){
         case "inscricao":
           form.getCheckBox('check_inscricao').check();
@@ -48,9 +45,9 @@ export class Anexo2EService {
         break;
         case "mudancanome":
           form.getCheckBox('check_mudancanome').check();
-          form.getTextField('nomeembarcacao1').setText(campotexto1.toUpperCase());
-          form.getTextField('nomeembarcacao2').setText(campotexto2.toUpperCase());
-          form.getTextField('nomeembarcacao3').setText(campotexto3.toUpperCase());
+          form.getTextField('nomeembarcacao1').setText(campotexto1?.toUpperCase() ?? '');
+          form.getTextField('nomeembarcacao2').setText(campotexto2?.toUpperCase() ?? '');
+          form.getTextField('nomeembarcacao3').setText(campotexto3?.toUpperCase() ?? '');
         break;
         case "renovacaotie_sim":
           form.getCheckBox('check_renovacaotie').check();
@@ -105,46 +102,34 @@ export class Anexo2EService {
         break;
         case "outrosservicos":
           form.getCheckBox('check_outrosservicos').check();
-          //form.getTextField('outrosservicos1').setText(campotexto1.toUpperCase());
-          const [part1, part2] = this.divideString(campotexto1, 70);
-          form.getTextField('outrosservicos1').setText(part1.toUpperCase());
-          form.getTextField('outrosservicos2').setText(part2.toUpperCase());
+          const [part1, part2] = this.divideString(campotexto1 ?? '', 70);
+          form.getTextField('outrosservicos1').setText(part1?.toUpperCase() ?? '');
+          form.getTextField('outrosservicos2').setText(part2?.toUpperCase() ?? '');
         break;
       }
 
-      
+      form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
+      form.getTextField('logradouro').setText((embarcacao.cliente?.logradouro ?? '') + ', ' + (embarcacao.cliente?.complemento ?? ''));
+      form.getTextField('numero').setText(embarcacao.cliente?.numero ?? '');
+      form.getTextField('cidade').setText(embarcacao.cliente?.cidade ?? '');
+      form.getTextField('uf').setText(embarcacao.cliente?.uf ?? '');
+      form.getTextField('rg').setText(embarcacao.cliente?.rg ?? '');
+      form.getTextField('orgexpedidor').setText(embarcacao.cliente?.orgEmissor ?? '');
+      form.getTextField('cep').setText(embarcacao.cliente?.cep ?? '');
+      form.getTextField('telefone').setText(embarcacao.cliente?.telefone ?? '');
+      form.getTextField('cpfcnpj').setText(embarcacao.cliente?.cpfcnpj ?? '');
 
-      
-
-
-      form.getTextField('nome').setText(embarcacao.cliente.nome);
-      form.getTextField('logradouro').setText(embarcacao.cliente.logradouro + ', ' + embarcacao.cliente.complemento);
-      form.getTextField('numero').setText(embarcacao.cliente.numero);
-      //form.getTextField('aptosala').setText(embarcacao.cliente.complemento);
-      form.getTextField('cidade').setText(embarcacao.cliente.cidade);
-      form.getTextField('uf').setText(embarcacao.cliente.uf);
-      form.getTextField('rg').setText(embarcacao.cliente.rg);
-      form.getTextField('orgexpedidor').setText(embarcacao.cliente.orgEmissor);
-      form.getTextField('cep').setText(embarcacao.cliente.cep);
-      form.getTextField('telefone').setText(embarcacao.cliente.telefone);
-      form.getTextField('cpfcnpj').setText(embarcacao.cliente.cpfcnpj);
-
-      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
+      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('numinscricao').setText(embarcacao.numInscricao ?? '');
-      //form.getTextField('comprimento').setText(embarcacao.compTotal.toString()+"m");
-
       form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString()+"m" : '');
-
-      form.getTextField('numcasco').setText(embarcacao.numCasco);
-      form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao);
+      form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
+      form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao ?? '');
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
-      const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
+      const mes = (hoje.getMonth() + 1).toString().padStart(2, '0');
       const ano = hoje.getFullYear().toString();
-      form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
-
-
+      form.getTextField('localdata').setText((embarcacao.cidade ?? '') + ', ' + dia + '/' + mes + '/' + ano);
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
@@ -155,8 +140,7 @@ export class Anexo2EService {
         return modifiedPdfBytes;
       }
 
-
-    }catch (err) {
+    } catch (err) {
       console.error(err);
     }
   }
@@ -176,7 +160,7 @@ export class Anexo2EService {
     } else {
       let breakPoint = input.lastIndexOf(' ', limit);
       if (breakPoint === -1) {
-        breakPoint = limit; // Nenhum espaço encontrado, quebra no limite
+        breakPoint = limit;
       }
       part1 = input.substring(0, breakPoint);
       part2 = input.substring(breakPoint).trim();

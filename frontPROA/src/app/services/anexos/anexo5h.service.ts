@@ -74,43 +74,43 @@ export class Anexo5HService {
       });
 
       if (embarcacao) {
-        form.getTextField('nome').setText(embarcacao.cliente.nome);
-        form.getTextField('cpf1').setText(embarcacao.cliente.cpfcnpj);
-        form.getTextField('cpf2').setText(embarcacao.cliente.cpfcnpj);
-        form.getTextField('rg').setText(embarcacao.cliente.rg);
-        form.getTextField('orgexpedidor').setText(embarcacao.cliente.orgEmissor);
-        form.getTextField('logradouro').setText(embarcacao.cliente.logradouro);
-        form.getTextField('numero').setText(embarcacao.cliente.numero);
-        form.getTextField('complemento').setText(embarcacao.cliente.complemento);
-        form.getTextField('bairro').setText(embarcacao.cliente.bairro);
-        form.getTextField('cidade').setText(embarcacao.cliente.cidade);
-        form.getTextField('uf').setText(embarcacao.cliente.uf);
-        form.getTextField('cep').setText(embarcacao.cliente.cep);
-        form.getTextField('dddtelefone').setText(embarcacao.cliente.telefone.substring(0, 2));
-        form.getTextField('telefone').setText(embarcacao.cliente.telefone.substring(2));
-        form.getTextField('dddcelular').setText(embarcacao.cliente.celular.substring(0, 2));
-        form.getTextField('celular').setText(embarcacao.cliente.celular.substring(2));
-        form.getTextField('email').setText(embarcacao.cliente.email);
-        form.getTextField('local').setText(embarcacao.cliente.cidade);
+        form.getTextField('nome').setText(embarcacao?.cliente?.nome ?? '');
+        form.getTextField('cpf1').setText(embarcacao?.cliente?.cpfcnpj ?? '');
+        form.getTextField('cpf2').setText(embarcacao?.cliente?.cpfcnpj ?? '');
+        form.getTextField('rg').setText(embarcacao?.cliente?.rg ?? '');
+        form.getTextField('orgexpedidor').setText(embarcacao?.cliente?.orgEmissor ?? '');
+        form.getTextField('logradouro').setText(embarcacao?.cliente?.logradouro ?? '');
+        form.getTextField('numero').setText(embarcacao?.cliente?.numero ?? '');
+        form.getTextField('complemento').setText(embarcacao?.cliente?.complemento ?? '');
+        form.getTextField('bairro').setText(embarcacao?.cliente?.bairro ?? '');
+        form.getTextField('cidade').setText(embarcacao?.cliente?.cidade ?? '');
+        form.getTextField('uf').setText(embarcacao?.cliente?.uf ?? '');
+        form.getTextField('cep').setText(embarcacao?.cliente?.cep ?? '');
+        form.getTextField('dddtelefone').setText(embarcacao?.cliente?.telefone ? embarcacao.cliente.telefone.substring(0, 2) : '');
+        form.getTextField('telefone').setText(embarcacao?.cliente?.telefone ? embarcacao.cliente.telefone.substring(2) : '');
+        form.getTextField('dddcelular').setText(embarcacao?.cliente?.celular ? embarcacao.cliente.celular.substring(0, 2) : '');
+        form.getTextField('celular').setText(embarcacao?.cliente?.celular ? embarcacao.cliente.celular.substring(2) : '');
+        form.getTextField('email').setText(embarcacao?.cliente?.email ?? '');
+        form.getTextField('local').setText(embarcacao?.cliente?.cidade ?? '');
       } else if (cliente) {
-        form.getTextField('nome').setText(cliente.nome);
-        form.getTextField('cpf1').setText(cliente.cpfcnpj);
-        form.getTextField('cpf2').setText(cliente.cpfcnpj);
-        form.getTextField('rg').setText(cliente.rg);
-        form.getTextField('orgexpedidor').setText(cliente.orgEmissor);
-        form.getTextField('logradouro').setText(cliente.logradouro);
-        form.getTextField('numero').setText(cliente.numero);
-        form.getTextField('complemento').setText(cliente.complemento);
-        form.getTextField('bairro').setText(cliente.bairro);
-        form.getTextField('cidade').setText(cliente.cidade);
-        form.getTextField('uf').setText(cliente.uf);
-        form.getTextField('cep').setText(cliente.cep);
-        form.getTextField('dddtelefone').setText(cliente.telefone.substring(0, 2));
-        form.getTextField('telefone').setText(cliente.telefone.substring(2));
-        form.getTextField('dddcelular').setText(cliente.celular.substring(0, 2));
-        form.getTextField('celular').setText(cliente.celular.substring(2));
-        form.getTextField('email').setText(cliente.email);
-        form.getTextField('local').setText(cliente.cidade);
+        form.getTextField('nome').setText(cliente?.nome ?? '');
+        form.getTextField('cpf1').setText(cliente?.cpfcnpj ?? '');
+        form.getTextField('cpf2').setText(cliente?.cpfcnpj ?? '');
+        form.getTextField('rg').setText(cliente?.rg ?? '');
+        form.getTextField('orgexpedidor').setText(cliente?.orgEmissor ?? '');
+        form.getTextField('logradouro').setText(cliente?.logradouro ?? '');
+        form.getTextField('numero').setText(cliente?.numero ?? '');
+        form.getTextField('complemento').setText(cliente?.complemento ?? '');
+        form.getTextField('bairro').setText(cliente?.bairro ?? '');
+        form.getTextField('cidade').setText(cliente?.cidade ?? '');
+        form.getTextField('uf').setText(cliente?.uf ?? '');
+        form.getTextField('cep').setText(cliente?.cep ?? '');
+        form.getTextField('dddtelefone').setText(cliente?.telefone ? cliente.telefone.substring(0, 2) : '');
+        form.getTextField('telefone').setText(cliente?.telefone ? cliente.telefone.substring(2) : '');
+        form.getTextField('dddcelular').setText(cliente?.celular ? cliente.celular.substring(0, 2) : '');
+        form.getTextField('celular').setText(cliente?.celular ? cliente.celular.substring(2) : '');
+        form.getTextField('email').setText(cliente?.email ?? '');
+        form.getTextField('local').setText(cliente?.cidade ?? '');
       }
 
       const hoje = new Date();
@@ -121,16 +121,16 @@ export class Anexo5HService {
       form.getTextField('mes').setText(mes);
       form.getTextField('ano').setText(ano);
 
-      console.log(campotexto1);
+      console.log(campotexto1 ?? '');
 
-      this.texto = this.divideString(campotexto1);
-      form.getTextField('descricao1').setText(this.texto[0]);
-      form.getTextField('descricao2').setText(this.texto[1]);
-      form.getTextField('descricao3').setText(this.texto[2]);
-      form.getTextField('descricao4').setText(this.texto[3]);
-      form.getTextField('descricao5').setText(this.texto[4]);
-      form.getTextField('descricao6').setText(this.texto[5]);
-      form.getTextField('descricao7').setText(this.texto[6]);
+      this.texto = this.divideString(campotexto1 ?? '');
+      form.getTextField('descricao1').setText(this.texto?.[0] ?? '');
+      form.getTextField('descricao2').setText(this.texto?.[1] ?? '');
+      form.getTextField('descricao3').setText(this.texto?.[2] ?? '');
+      form.getTextField('descricao4').setText(this.texto?.[3] ?? '');
+      form.getTextField('descricao5').setText(this.texto?.[4] ?? '');
+      form.getTextField('descricao6').setText(this.texto?.[5] ?? '');
+      form.getTextField('descricao7').setText(this.texto?.[6] ?? '');
 
 
 
@@ -140,7 +140,7 @@ export class Anexo5HService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      if (!servico){
+      if (!servico) {
         this.abrirPDFemJanela(modifiedPdfBytes);
         console.log('PDF Criado!');
       } else {

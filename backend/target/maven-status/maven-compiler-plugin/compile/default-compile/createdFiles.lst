@@ -14,6 +14,7 @@ com\proa\controller\MotorController.class
 com\proa\controller\NotaFiscalController.class
 com\proa\repository\EmbarcacaoRepository.class
 com\proa\repository\NotaFiscalRepository.class
+com\proa\service\ProcuracaoService.class
 com\proa\controller\ClienteController.class
 com\proa\model\NotaFiscal.class
 com\proa\model\OrgMilitar.class

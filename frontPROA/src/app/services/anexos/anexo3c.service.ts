@@ -17,44 +17,43 @@ export class Anexo3CService {
 
       const form = pdfDoc.getForm();
 
-      form.getTextField('nome').setText(embarcacao.cliente.nome);
-      form.getTextField('nacionalidade').setText(embarcacao.cliente.nacionalidade.toUpperCase());
+      form.getTextField('nome').setText(embarcacao?.cliente?.nome ?? '');
+      form.getTextField('nacionalidade').setText(embarcacao?.cliente?.nacionalidade ? embarcacao.cliente.nacionalidade.toUpperCase() : '');
 
-      let partesData = embarcacao.cliente.dataNasc.toString().split('-');
-      form.getTextField('dianasc').setText(partesData[2]);
-      form.getTextField('mesnasc').setText(partesData[1]);
-      form.getTextField('anonasc').setText(partesData[0]);
+      let partesData = embarcacao?.cliente?.dataNasc ? embarcacao.cliente.dataNasc.toString().split('-') : ['', '', ''];
+      form.getTextField('dianasc').setText(partesData[2] ?? '');
+      form.getTextField('mesnasc').setText(partesData[1] ?? '');
+      form.getTextField('anonasc').setText(partesData[0] ?? '');
 
-      form.getTextField('rg').setText(embarcacao.cliente.rg);
-      form.getTextField('orgexpedidor').setText(embarcacao.cliente.orgEmissor);
+      form.getTextField('rg').setText(embarcacao?.cliente?.rg ?? '');
+      form.getTextField('orgexpedidor').setText(embarcacao?.cliente?.orgEmissor ?? '');
 
-      let partesData2 = embarcacao.cliente.dtEmissao.toString().split('-');
-      form.getTextField('diaexprg').setText(partesData2[2]);
-      form.getTextField('mesexprg').setText(partesData2[1]);
-      form.getTextField('anoexprg').setText(partesData2[0]);
-      form.getTextField('cpf').setText(embarcacao.cliente.cpfcnpj);
+      let partesData2 = embarcacao?.cliente?.dtEmissao ? embarcacao.cliente.dtEmissao.toString().split('-') : ['', '', ''];
+      form.getTextField('diaexprg').setText(partesData2[2] ?? '');
+      form.getTextField('mesexprg').setText(partesData2[1] ?? '');
+      form.getTextField('anoexprg').setText(partesData2[0] ?? '');
+      form.getTextField('cpf').setText(embarcacao?.cliente?.cpfcnpj ?? '');
 
-      const endereco = embarcacao.cliente.logradouro + ', ' +embarcacao.cliente.complemento;
+      const endereco = (embarcacao?.cliente?.logradouro ?? '') + ', ' + (embarcacao?.cliente?.complemento ?? '');
       const [part1, part2] = this.divideString(endereco, 28);
-      form.getTextField('logradouro').setText(part1.toUpperCase());
-      form.getTextField('logradouro2').setText(part2.toUpperCase());
+      form.getTextField('logradouro').setText(part1 ? part1.toUpperCase() : '');
+      form.getTextField('logradouro2').setText(part2 ? part2.toUpperCase() : '');
 
+      form.getTextField('logradouro').setText(endereco ?? '');
 
-      form.getTextField('logradouro').setText(endereco);
+      form.getTextField('bairro').setText(embarcacao?.cliente?.bairro ?? '');
+      form.getTextField('cep').setText(embarcacao?.cliente?.cep ?? '');
+      form.getTextField('cidade_uf').setText((embarcacao?.cliente?.cidade ?? '') + ' / ' + (embarcacao?.cliente?.uf ?? ''));
+      form.getTextField('telefone').setText(embarcacao?.cliente?.telefone ? embarcacao.cliente.telefone : (embarcacao?.cliente?.celular ?? ''));
 
-      form.getTextField('bairro').setText(embarcacao.cliente.bairro);
-      form.getTextField('cep').setText(embarcacao.cliente.cep);
-      form.getTextField('cidade_uf').setText(embarcacao.cliente.cidade + ' / ' + embarcacao.cliente.uf);
-      form.getTextField('telefone').setText(embarcacao.cliente.telefone ? embarcacao.cliente.telefone : embarcacao.cliente.celular);
-
-      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
-      form.getTextField('classificacaoembarcacao').setText(embarcacao.tipoEmbarcacao);
+      form.getTextField('nomeembarcacao').setText(embarcacao?.nomeEmbarcacao ?? '');
+      form.getTextField('classificacaoembarcacao').setText(embarcacao?.tipoEmbarcacao ?? '');
       //form.getTextField('capitania').setText(embarcacao.?); falta tratar capitania
-      form.getTextField('numinscricaoembarcacao').setText(embarcacao.numInscricao);
-      form.getTextField('cidade').setText(embarcacao.cidade);
+      form.getTextField('numinscricaoembarcacao').setText(embarcacao?.numInscricao ?? '');
+      form.getTextField('cidade').setText(embarcacao?.cidade ?? '');
 
-      form.getTextField('capitania').setText(campotexto2);
-      form.getTextField('capitania2').setText(campotexto2);
+      form.getTextField('capitania').setText(campotexto2 ?? '');
+      form.getTextField('capitania2').setText(campotexto2 ?? '');
       
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
@@ -129,19 +128,19 @@ export class Anexo3CService {
   divideString(input: string, limit: number): [string, string] {
     let part1 = '';
     let part2 = '';
-    console.log("tamanho: ", input.length)
-    if (input.length <= limit) {
-      part1 = input;
+    console.log("tamanho: ", input?.length ?? 0)
+    if ((input?.length ?? 0) <= limit) {
+      part1 = input ?? '';
     } else {
-      let breakPoint = input.lastIndexOf(' ', limit);
+      let breakPoint = input?.lastIndexOf(' ', limit) ?? -1;
       if (breakPoint === -1) {
         breakPoint = limit; // Nenhum espaço encontrado, quebra no limite
       }
-      part1 = input.substring(0, breakPoint);
+      part1 = input?.substring(0, breakPoint) ?? '';
       
-      part2 = input.substring(breakPoint).trim();
-      if (part2.length > limit) {
-        part2 = part2.substring(0, limit);
+      part2 = (input?.substring(breakPoint) ?? '').trim();
+      if ((part2?.length ?? 0) > limit) {
+        part2 = part2?.substring(0, limit) ?? '';
       }
     }
 

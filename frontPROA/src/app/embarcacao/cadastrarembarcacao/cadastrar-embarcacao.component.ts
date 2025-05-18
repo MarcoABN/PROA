@@ -41,9 +41,9 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
         console.error('Erro ao consultar cliente: ', error);
       }
     );
-    this.embarcacao.tipoEmbarcacao = '';
-    this.embarcacao.areaNavegacao = '';
-    this.embarcacao.tipoAtividade = '';
+    this.embarcacao.tipoEmbarcacao = 'LANCHA';
+    this.embarcacao.areaNavegacao = 'INTERIOR';
+    this.embarcacao.tipoAtividade = 'ESPORTE E LAZER';
     this.embarcacao.tipoPropulsao = 'MOTOR';
     this.embarcacao.qtdTripulantes = 1;
     this.embarcacao.qtdMotores = 1;

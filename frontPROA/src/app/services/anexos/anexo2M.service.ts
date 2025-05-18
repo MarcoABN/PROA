@@ -31,26 +31,24 @@ export class Anexo2MService {
 
       const form = pdfDoc.getForm();
 
-      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao);
-      form.getTextField('inscricao').setText(embarcacao.numInscricao);
-      form.getTextField('nomeproprietario').setText(embarcacao.cliente.nome);
-      form.getTextField('cpfcnpjproprietario').setText(embarcacao.cliente.cpfcnpj);
-      form.getTextField('telefoneproprietario').setText(embarcacao.cliente.telefone);
-      form.getTextField('emailproprietario').setText(embarcacao.cliente.email);
+      form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
+      form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
+      form.getTextField('nomeproprietario').setText(embarcacao.cliente?.nome ?? '');
+      form.getTextField('cpfcnpjproprietario').setText(embarcacao.cliente?.cpfcnpj ?? '');
+      form.getTextField('telefoneproprietario').setText(embarcacao.cliente?.telefone ?? '');
+      form.getTextField('emailproprietario').setText(embarcacao.cliente?.email ?? '');
 
-      form.getTextField('nomecomprador').setText(this.cliente.nome);
-      form.getTextField('cpfcnpjcomprador').setText(this.cliente.cpfcnpj);
-      form.getTextField('telefone').setText(this.cliente.celular);
-      form.getTextField('logradourocomprador').setText(this.cliente.logradouro);
-      form.getTextField('bairrocomprador').setText(this.cliente.bairro);
-      form.getTextField('cidadecomprador').setText(this.cliente.cidade);
-      form.getTextField('numerocomprador').setText(this.cliente.numero);
-      form.getTextField('complementocomprador').setText(this.cliente.complemento);
-      form.getTextField('cepcomprador').setText(this.cliente.cep);
-      form.getTextField('emailcomprador').setText(this.cliente.email);
-      form.getTextField('valorcomprador').setText("R$ " + campotexto2);
-      //form.getTextField('localdata').setText(this.cliente.nome);
-      
+      form.getTextField('nomecomprador').setText(this.cliente?.nome ?? '');
+      form.getTextField('cpfcnpjcomprador').setText(this.cliente?.cpfcnpj ?? '');
+      form.getTextField('telefone').setText(this.cliente?.celular ?? '');
+      form.getTextField('logradourocomprador').setText(this.cliente?.logradouro ?? '');
+      form.getTextField('bairrocomprador').setText(this.cliente?.bairro ?? '');
+      form.getTextField('cidadecomprador').setText(this.cliente?.cidade ?? '');
+      form.getTextField('numerocomprador').setText(this.cliente?.numero ?? '');
+      form.getTextField('complementocomprador').setText(this.cliente?.complemento ?? '');
+      form.getTextField('cepcomprador').setText(this.cliente?.cep ?? '');
+      form.getTextField('emailcomprador').setText(this.cliente?.email ?? '');
+      form.getTextField('valorcomprador').setText("R$ " + (campotexto2 ?? ''));
 
 
 
@@ -82,25 +80,25 @@ export class Anexo2MService {
           form.getCheckBox('motor4_sim').check();
           break;
       };
-      if (this.qtdmotores >= 1){
-        form.getTextField('marcamotor1').setText(this.motores[0].marca);
-        form.getTextField('potenciamotor1').setText(this.motores[0].potencia.toString());
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie);
+      if (this.qtdmotores >= 1 && this.motores.length >= 1){
+        form.getTextField('marcamotor1').setText(this.motores[0]?.marca ?? '');
+        form.getTextField('potenciamotor1').setText(this.motores[0]?.potencia?.toString() ?? '');
+        form.getTextField('numseriemotor1').setText(this.motores[0]?.numSerie ?? '');
       };
-      if (this.qtdmotores >= 2){
-        form.getTextField('marcamotor2').setText(this.motores[1].marca);
-        form.getTextField('potenciamotor2').setText(this.motores[1].potencia.toString());
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie);
+      if (this.qtdmotores >= 2 && this.motores.length >= 2){
+        form.getTextField('marcamotor2').setText(this.motores[1]?.marca ?? '');
+        form.getTextField('potenciamotor2').setText(this.motores[1]?.potencia?.toString() ?? '');
+        form.getTextField('numseriemotor2').setText(this.motores[1]?.numSerie ?? '');
       };
-      if (this.qtdmotores >= 3){
-        form.getTextField('marcamotor3').setText(this.motores[2].marca);
-        form.getTextField('potenciamotor3').setText(this.motores[2].potencia.toString());
-        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie);
+      if (this.qtdmotores >= 3 && this.motores.length >= 3){
+        form.getTextField('marcamotor3').setText(this.motores[2]?.marca ?? '');
+        form.getTextField('potenciamotor3').setText(this.motores[2]?.potencia?.toString() ?? '');
+        form.getTextField('numseriemotor3').setText(this.motores[2]?.numSerie ?? '');
       }
-      if (this.qtdmotores >= 4){
-        form.getTextField('marcamotor4').setText(this.motores[3].marca);
-        form.getTextField('potenciamotor4').setText(this.motores[3].potencia.toString());
-        form.getTextField('numseriemotor4').setText(this.motores[3].numSerie);
+      if (this.qtdmotores >= 4 && this.motores.length >= 4){
+        form.getTextField('marcamotor4').setText(this.motores[3]?.marca ?? '');
+        form.getTextField('potenciamotor4').setText(this.motores[3]?.potencia?.toString() ?? '');
+        form.getTextField('numseriemotor4').setText(this.motores[3]?.numSerie ?? '');
       };
 
 
@@ -108,7 +106,7 @@ export class Anexo2MService {
       const dia = hoje.getDate().toString().padStart(2, '0');
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();
-      form.getTextField('localdata').setText(embarcacao.cidade + ', ' + dia + '/' + mes + '/' + ano);
+      form.getTextField('localdata').setText((embarcacao.cidade ?? '') + ', ' + dia + '/' + mes + '/' + ano);
 
 
 
@@ -132,40 +130,28 @@ export class Anexo2MService {
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
-/*
-  async carregarDados (embarcacao: Embarcacao, campotexto1: string){
-    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
-      this.motores = motores;
-    });   
-    this.qtdmotores = this.motores.length;
-    console.log("QTD MOTORES: ", this.qtdmotores);
-    
-    this.clienteService.consultarClienteCPFCNPJ(campotexto1).subscribe(cliente => {
-      this.cliente = cliente;
-    });
-  }*/
-    async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
-      try {
-        this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
-        this.qtdmotores = this.motores.length;
-        console.log("QTD MOTORES: ", this.qtdmotores);
-      } catch (error: any) {
-        if (error.status === 404) {
-          console.warn(`Nenhum motor encontrado para a embarcação com ID: ${embarcacao.id}`);
-          this.motores = [];
-          this.qtdmotores = 0;
-        } else {
-          console.error("Erro ao buscar motores:", error);
-          throw error;
-        }
-      }
-    
-      try {
-        this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1));
-      } catch (error) {
-        console.error("Erro ao buscar cliente comprador:", error);
+
+  async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
+    try {
+      this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao?.id ?? ''));
+      this.qtdmotores = this.motores?.length ?? 0;
+      console.log("QTD MOTORES: ", this.qtdmotores);
+    } catch (error: any) {
+      if (error.status === 404) {
+        console.warn(`Nenhum motor encontrado para a embarcação com ID: ${embarcacao?.id ?? 'não definido'}`);
+        this.motores = [];
+        this.qtdmotores = 0;
+      } else {
+        console.error("Erro ao buscar motores:", error);
         throw error;
       }
     }
-    
+  
+    try {
+      this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1 ?? ''));
+    } catch (error) {
+      console.error("Erro ao buscar cliente comprador:", error);
+      throw error;
+    }
+  }
 }

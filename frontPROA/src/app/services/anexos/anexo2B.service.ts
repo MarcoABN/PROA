@@ -36,36 +36,16 @@ export class Anexo2BService {
       const form = pdfDoc.getForm();
 
       //Formatação das datas:
-      const formattedDtConstrucao = this.datePipe.transform(embarcacao.dtConstrucao, 'dd/MM/yyyy') || '';
-      const formattedDtEmissao = this.datePipe.transform(cliente.dtEmissao, 'dd/MM/yyyy') || '';
+      const formattedDtConstrucao = this.datePipe.transform((embarcacao.dtConstrucao?? ''), 'dd/MM/yyyy') || '';
+      const formattedDtEmissao = this.datePipe.transform((cliente.dtEmissao?? ''), 'dd/MM/yyyy') || '';
 
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
-      //form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao ?? '');
-      //form.getTextField('atividade').setText(embarcacao.tipoAtividade ?? '');
-      
-      //form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString() ?? '');
       form.getTextField('anoconstrucao').setText(formattedDtConstrucao ?? '');
-      
       form.getTextField('passageiros').setText(embarcacao.lotacao.toString() ?? '');
       form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
       
-      //form.getTextField('matcasco').setText(embarcacao.matCasco ?? '');
-
-      //Medidas
-      //form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() : '');
-
-      //form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta ? embarcacao.arqueacaoBruta.toString() : '');
-      //form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida ? embarcacao.arqueacaoLiquida.toString() : '');
-      //form.getTextField('boca').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
-      //form.getTextField('contorno').setText(embarcacao.contorno ? embarcacao.contorno.toString() : '');
-     // form.getTextField('pontal').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
-
-
-
-      //Medidas
-
       
       if (natureza === 'Inscrição') {
         form.getCheckBox('check_inscricao').check();
@@ -97,7 +77,7 @@ export class Anexo2BService {
         form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
         form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
       }
-      /*
+      
       if (this.motores.length === 2) {
         form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
         form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
@@ -118,14 +98,14 @@ export class Anexo2BService {
         form.getTextField('potmotor3').setText(this.motores[2].potencia.toString() ?? '');
         form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString() ?? '');
       }
-      */
+      
       if (this.notaFiscal) {
         const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
-        form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString());
+        form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString()?? '');
         form.getTextField('dtvenda').setText(formattedDtvenda);
-        form.getTextField('local').setText(this.notaFiscal.local.toString());
-        form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString());
-        form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString());
+        form.getTextField('local').setText(this.notaFiscal.local.toString()?? '');
+        form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString()?? '');
+        form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString()?? '');
       }
 
       const hoje = new Date();

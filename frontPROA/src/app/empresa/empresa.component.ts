@@ -5,8 +5,6 @@ import { ValidadorcpfcnpjService } from '../services/validacao/validadorcpfcnpj.
 import { CepService } from '../services/cep.service';
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
 import { OrgMilitar } from '../model/orgmilitar';
-import { Procuracao } from '../model/procuracao';
-import { FrontProcuracaoService } from '../services/front-procuracao.service';
 
 declare var bootstrap: any;
 
@@ -20,7 +18,6 @@ export class EmpresaComponent implements OnInit {
   prestador: Prestador = new Prestador();
   modalTitulo: string = '';
   cpfCnpjInvalido: boolean = false;
-  procuracao: Procuracao = new Procuracao();
 
   // Organizações Militares
   orgMilitares: OrgMilitar[] = [];
@@ -32,26 +29,14 @@ export class EmpresaComponent implements OnInit {
     private validadorCpfCnpj: ValidadorcpfcnpjService,
     private cepService: CepService,
     private orgMilitarService: FrontOrgmilitarService,
-    private procuracaoService: FrontProcuracaoService
   ) {}
 
   ngOnInit(): void {
     this.carregarPrestadores();
     this.carregarOrgMilitares();
-    this.carregarProcuracao01();
   }
 
-  carregarProcuracao01(): void {
-    this.procuracaoService.consultarProcuracao("procuracao01").subscribe((dados: Procuracao) => {
-      this.procuracao = dados || new Procuracao(); // Carrega o texto ou inicializa vazio
-    });
-  }
 
-  salvarProcuracao(): void {
-    this.procuracaoService.alterarProcuracao(this.procuracao.id!, this.procuracao).subscribe(() => {
-      alert('Texto da procuração salvo com sucesso!');
-    });
-  }
 
 
   carregarPrestadores(): void {

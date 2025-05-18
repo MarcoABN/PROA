@@ -18,7 +18,7 @@ import { Anexo2FService } from "../services/anexos/anexo2F.service";
 import { Anexo2BService } from "../services/anexos/anexo2B.service";
 import { FrontOrgmilitarService } from '../services/front-orgmilitar.service';
 import { OrgMilitar } from '../model/orgmilitar';
-import { Procuracao01Service } from "../services/anexos/procuracao01.service";
+import { FrontProcuracaoService } from "../services/front-procuracao.service";
  
 @Component({
     selector: 'app-anexos',
@@ -27,6 +27,7 @@ import { Procuracao01Service } from "../services/anexos/procuracao01.service";
 })
 export class AnexosComponent implements AfterViewInit {
     @ViewChild('clienteInput') clienteInput!: ElementRef;
+    
     idEmbarcacao!: number;
     embarcacoes: Embarcacao[] = [];
     cpfcnpjCliente!: string;
@@ -40,7 +41,7 @@ export class AnexosComponent implements AfterViewInit {
     campotexto2: string = '';
     campotexto3: string = '';
     charCount: number = 0;
-    naturezaModal: any;
+    modalAnexo2D: any;
     modalAnexo2E: any;
     modalAnexo5H: any;
     modalAnexo2M: any;
@@ -52,9 +53,10 @@ export class AnexosComponent implements AfterViewInit {
     orgMilitares: OrgMilitar[] = [];
     selectedOrgMilitar: OrgMilitar | null = null;
     
+    
 
     constructor(
-        private anexosService: AnexosService,
+        private anexos2DService: AnexosService,
         private anexo2EService: Anexo2EService,
         private anexo5Hservice: Anexo5HService,
         private anexo3Cservice: Anexo3CService,
@@ -67,9 +69,9 @@ export class AnexosComponent implements AfterViewInit {
         private clienteService: FrontClienteService,
         private embarcacaoService: FrontEmbarcacaoService,
         private orgMilitarService: FrontOrgmilitarService,
-        private procuracao01Service: Procuracao01Service,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private procuracao01Service: FrontProcuracaoService
     ) { }
 
     mostrarErroNatureza: boolean = false;
@@ -90,10 +92,11 @@ export class AnexosComponent implements AfterViewInit {
       }
 
     ngAfterViewInit() {
-        const naturezaModalElement = document.getElementById('naturezaModal');
-        if (naturezaModalElement) {
-            this.naturezaModal = new Modal(naturezaModalElement);
+        const modalAnexo2DElement = document.getElementById('modalAnexo2D');
+        if (modalAnexo2DElement) {
+            this.modalAnexo2D = new Modal(modalAnexo2DElement);
         }
+        
 
         const modalAnexo2EElement = document.getElementById('modalAnexo2E');
         if (modalAnexo2EElement) {
@@ -134,6 +137,8 @@ export class AnexosComponent implements AfterViewInit {
         if (modalAnexo2BElement) {
             this.modalAnexo2B = new Modal(modalAnexo2BElement);
         }
+
+        
 
     }
 
@@ -182,13 +187,13 @@ export class AnexosComponent implements AfterViewInit {
         this.charCount = this.campotexto1.length;
     }
 
-    openModal() {
-        if (this.naturezaModal) {
+    openModal2D() {
+        if (this.modalAnexo2D) {
             this.natureza = '';
             this.campotexto1 = '';
             this.campotexto2 = '';
             this.campotexto3 = '';
-            this.naturezaModal.show();
+            this.modalAnexo2D.show();
         }
     }
     openModal2E() {
@@ -277,8 +282,8 @@ export class AnexosComponent implements AfterViewInit {
         }
 
         this.mostrarErroNatureza = false;
-        if (this.naturezaModal) {
-            this.naturezaModal.hide();
+        if (this.modalAnexo2D) {
+            this.modalAnexo2D.hide();
         }
         this.gerarPdf();
     }
@@ -356,20 +361,23 @@ export class AnexosComponent implements AfterViewInit {
         }
         this.gerarAnexo2B();
     }
+
 //aqui
+
     gerarProcuracao01() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.procuracao01Service.procuracao01(selectedEmbarcacao, this.cliente);
+            this.procuracao01Service.procuracao01(selectedEmbarcacao.id);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
     }
 
+
     gerarPdf() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.anexosService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza);
+            this.anexos2DService.anexo2D(selectedEmbarcacao, this.cliente, this.natureza);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
