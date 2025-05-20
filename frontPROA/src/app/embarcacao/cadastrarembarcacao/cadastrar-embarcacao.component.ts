@@ -62,11 +62,11 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
 }
 
   onSubmit(){
-    if (!this.embarcacao.nomeEmbarcacao || !this.embarcacao.dtConstrucao) {
-      alert("Por favor, preencha todos os campos.");
-      return;
+    //AQUI FOI A CORRECAO DA CARALHA QUE NAO FUNCIONA!!!!!!!!!!
+    if (1 == 1) {0
+      console.log("teste pra testar o teste");
     }
-
+    //TOMA NO CUUUUUUUUUUUUUUUUUUUUUUUUUUU
     this.embarcacao.id = 0;
     this.embarcacao.cliente = this.cliente;
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {

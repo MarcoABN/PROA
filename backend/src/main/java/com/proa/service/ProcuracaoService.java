@@ -54,10 +54,14 @@ public class ProcuracaoService {
         String localData = "Goiânia, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         vars.put("${nomecliente1}", cliente.getNome());
+        
         vars.put("${nacionalidade}", cliente.getNacionalidade());
         vars.put("${enderecocompleto}", enderecoCompleto);
+        //vars.put("${enderecocompleto}", cliente.getLogradouro());
+        System.out.println(enderecoCompleto);
         vars.put("${identidade}", cliente.getRG());
         vars.put("${orgaoexpedidor}", cliente.getOrgEmissor());
+        System.out.println(cliente.getOrgEmissor());
         vars.put("${cpfcliente1}", cliente.getCPFCNPJ());
 
         vars.put("${nomeemb}", embarcacao.getNomeEmbarcacao());
