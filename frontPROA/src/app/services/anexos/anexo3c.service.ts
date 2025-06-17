@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { PDFDocument } from 'pdf-lib';
 import { Embarcacao } from 'src/app/model/embarcacao';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo3CService {
 
-  constructor() { }
+  constructor(private maskcpf: ValidadorcpfcnpjService) { }
 
   async anexo3C (embarcacao: Embarcacao, campotexto2: string, servico?: string): Promise<void | Uint8Array>{
 
@@ -32,7 +33,7 @@ export class Anexo3CService {
       form.getTextField('diaexprg').setText(partesData2[2] ?? '');
       form.getTextField('mesexprg').setText(partesData2[1] ?? '');
       form.getTextField('anoexprg').setText(partesData2[0] ?? '');
-      form.getTextField('cpf').setText(embarcacao?.cliente?.cpfcnpj ?? '');
+      form.getTextField('cpf').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
 
       const endereco = (embarcacao?.cliente?.logradouro ?? '') + ', ' + (embarcacao?.cliente?.complemento ?? '');
       const [part1, part2] = this.divideString(endereco, 28);

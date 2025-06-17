@@ -1,404 +1,339 @@
-<div class="form-wrapper">
-    <h2 class="text-center">Cadastrar Embarcação</h2>
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto">
+    <h2 class="text-center mb-3 mb-md-4">
+      <i class="fas fa-ship me-2"></i>Cadastrar Embarcação
+    </h2>
 
     <form (ngSubmit)="onSubmit()" #embarcacaoForm="ngForm">
-        <!-- Dados do Cliente // -->
-        <div class="card mb-4">
-            <div class="card-header bg-light">
-                <h4 class="mb-0">Informações do Cliente</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="cpfcnpj">CPF/CNPJ do Cliente:</label>
-                            <input type="text" id="cpfcnpj" class="form-control-plaintext" [value]="cliente.cpfcnpj"
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="nome">Nome do Cliente:</label>
-                            <input type="text" id="nome" class="form-control-plaintext" [value]="cliente.nome" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Dados do Cliente -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-user me-2"></i>Informações do Cliente</h5>
         </div>
-
-
-        <!-- detalhes da embarcaçaõ -->
-        <div class="card mb-4">
-            <div class="card-header bg-light">
-                <h4 class="mb-0">Detalhes da Embarcação</h4>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+              <label for="cpfcnpj" class="form-label small">CPF/CNPJ do Cliente</label>
+              <input type="text" id="cpfcnpj" class="form-control form-control-plaintext form-control-sm" 
+                     [value]="cliente.cpfcnpj" readonly>
             </div>
-            <div class="card-body">
-                <h4 class="mb-0">Detalhes da Embarcação</h4>
-                <div class="row">
-                    <!-- 1ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="nomeEmbarcacao"><span class="text-danger">*</span>Nome da Embarcação:</label>
-                            <input type="text" id="nomeEmbarcacao" class="form-control"
-                                [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="numCasco">Número do Casco:</label>
-                            <input type="text" id="numCasco" class="form-control" [(ngModel)]="embarcacao.numCasco"
-                                name="numCasco" >
-                        </div>
-                    </div>
-
-                    <!-- 2ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="tipoEmbarcacao"><span class="text-danger">*</span>Tipo de Embarcação:</label>
-                            <select id="tipoEmbarcacao" class="form-control" [(ngModel)]="embarcacao.tipoEmbarcacao"
-                                name="tipoEmbarcacao" #tipoEmbarcacao="ngModel" required>
-                                <option value="">Selecione um tipo</option>
-                                <option value="MOTO AQUÁTICA">MOTO AQUÁTICA</option>
-                                <option value="CANOA">CANOA</option>
-                                <option value="LANCHA">LANCHA</option>
-                                <option value="FLUTUANTE">FLUTUANTE</option>
-                                <option value="CATAMARÃ">CATAMARÃ</option>
-                                <option value="MULTI CASCO">MULTI CASCO</option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="tipoEmbarcacao.invalid && (tipoEmbarcacao.dirty || tipoEmbarcacao.touched)">
-                                <div *ngIf="tipoEmbarcacao.errors?.['required']">Tipo de embarcação é obrigatório</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="tipoAtividade"><span class="text-danger">*</span>Tipo de Atividade:</label>
-                            <select id="tipoAtividade" class="form-control" [(ngModel)]="embarcacao.tipoAtividade"
-                                name="tipoAtividade" #tipoAtividade="ngModel" required>
-                                <option value="">Selecione um tipo</option>
-                                <option value="ESPORTE E LAZER">ESPORTE E LAZER</option>
-                                <option value="COMERCIAL">COMERCIAL</option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="tipoAtividade.invalid && (tipoAtividade.dirty || tipoAtividade.touched)">
-                                <div *ngIf="tipoAtividade.errors?.['required']">Tipo de atividade é obrigatório</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="areaNavegacao"><span class="text-danger">*</span>Área de Navegação:</label>
-                            <select id="areaNavegacao" class="form-control" [(ngModel)]="embarcacao.areaNavegacao"
-                                name="areaNavegacao" #areaNavegacao="ngModel" required>
-                                <option value="">Selecione uma área</option>
-                                <option value="INTERIOR">INTERIOR</option>
-                                <option value="COSTEIRA">COSTEIRA</option>
-                            </select>
-                            <div class="invalid-feedback"
-                                *ngIf="areaNavegacao.invalid && (areaNavegacao.dirty || areaNavegacao.touched)">
-                                <div *ngIf="areaNavegacao.errors?.['required']">Área de navegação é obrigatória</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dtConstrucao">Data de Construção:</label>
-                            <input type="date" id="dtConstrucao" class="form-control"
-                                [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao">
-                        </div>
-                    </div>
-
-                    <!-- 4ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="capArmazenamento">Capacidade de Armazenamento (KG):</label>
-                            <input type="number" id="capArmazenamento" class="form-control"
-                                [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="matCasco">Material do Casco:</label>
-                            <input type="text" id="matCasco" class="form-control" [(ngModel)]="embarcacao.matCasco"
-                                name="matCasco">
-                        </div>
-                    </div>
-
-                    <!-- 5ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="qtdTripulantes">Quantidade de Tripulantes:</label>
-                            <input type="number" id="qtdTripulantes" class="form-control"
-                                [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="lotacao">Lotação:</label>
-                            <input type="number" id="lotacao" class="form-control" [(ngModel)]="embarcacao.lotacao"
-                                name="lotacao">
-                        </div>
-                    </div>
-
-                    <!-- 6ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="tipoPropulsao">Tipo de Propulsão:</label>
-                            <input list="tipoPropulsaoOptions" id="tipoPropulsao" class="form-control"
-                                [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao">
-                            <datalist id="tipoPropulsaoOptions">
-                                <option value="MOTOR"></option>
-                                <option value="VELA"></option>
-                                <option value="REMO"></option>
-                                <option value="MISTO"></option>
-                            </datalist>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="qtdMotores">Quantidade de Motores:</label>
-                            <input type="number" id="qtdMotores" class="form-control"
-                                [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores">
-                        </div>
-                    </div>
-
-                    <!-- 7ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="potenciaMotor">Potência máxima de cada Motor:</label>
-                            <input type="number" id="potenciaMotor" class="form-control"
-                                [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="matSuperestrutura">Material da Superestrutura:</label>
-                            <input type="text" id="matSuperestrutura" class="form-control"
-                                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura">
-                        </div>
-                    </div>
-
-                    <!-- 8ª Linha -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="construtor">Construtor:</label>
-                            <input type="text" id="construtor" class="form-control" [(ngModel)]="embarcacao.construtor"
-                                name="construtor">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="corPredominante">Cor Predominante:</label>
-                            <input type="text" id="corPredominante" class="form-control"
-                                [(ngModel)]="embarcacao.corPredominante" name="corPredominante">
-                        </div>
-                    </div>
-
-                    <!-- 9ª Linha (novos campos no final) -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="numInscricao">Número de Inscrição:</label>
-                            <input type="text" id="numInscricao" class="form-control"
-                                [(ngModel)]="embarcacao.numInscricao" name="numInscricao">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="dtInscricao">Data de Inscrição:</label>
-                            <input type="date" id="dtInscricao" class="form-control"
-                                [(ngModel)]="embarcacao.dtInscricao" name="dtInscricao">
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6">
+              <label for="nome" class="form-label small">Nome do Cliente</label>
+              <input type="text" id="nome" class="form-control form-control-plaintext form-control-sm" 
+                     [value]="cliente.nome" readonly>
             </div>
+          </div>
         </div>
+      </div>
 
-
-
-        <!-- Medidas -->
-
-
-        <div class="card mb-4">
-            <div class="card-header bg-light">
-                <h4 class="mb-0">Medidas</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="compTotal">Comprimento Total:</label>
-                            <input type="number" id="compTotal" class="form-control" [(ngModel)]="embarcacao.compTotal"
-                                name="compTotal">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="compPerpendicular">Comprimento Perpendicular:</label>
-                            <input type="number" id="compPerpendicular" class="form-control"
-                                [(ngModel)]="embarcacao.compPerpendicular" name="compPerpendicular">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="arqueacaoBruta">Arqueação Bruta:</label>
-                            <input type="number" id="arqueacaoBruta" class="form-control"
-                                [(ngModel)]="embarcacao.arqueacaoBruta" name="arqueacaoBruta">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="arqueacaoLiquida">Arqueação Líquida:</label>
-                            <input type="number" id="arqueacaoLiquida" class="form-control"
-                                [(ngModel)]="embarcacao.arqueacaoLiquida" name="arqueacaoLiquida">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="bocaMoldada">Boca Moldada:</label>
-                            <input type="number" id="bocaMoldada" class="form-control"
-                                [(ngModel)]="embarcacao.bocaMoldada" name="bocaMoldada">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="contorno">Contorno:</label>
-                            <input type="number" id="contorno" class="form-control" [(ngModel)]="embarcacao.contorno"
-                                name="contorno">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="porteBruto">Porte Bruto:</label>
-                            <input type="text" id="porteBruto" class="form-control" [(ngModel)]="embarcacao.porteBruto"
-                                name="porteBruto">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="calado">Calado:</label>
-                            <input type="number" id="calado" class="form-control" [(ngModel)]="embarcacao.calado"
-                                name="calado">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="pontalMoldado">Pontal Moldado:</label>
-                            <input type="number" id="pontalMoldado" class="form-control"
-                                [(ngModel)]="embarcacao.pontalMoldado" [(ngModel)]="embarcacao.pontalMoldado"
-                                name="pontalMoldado">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="bordaLivre">Borda Livre:</label>
-                            <input type="number" id="bordaLivre" class="form-control"
-                                [(ngModel)]="embarcacao.bordaLivre" [(ngModel)]="embarcacao.bordaLivre"
-                                name="bordaLivre">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+      <!-- Detalhes da Embarcação -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Detalhes da Embarcação</h5>
         </div>
-
-
-        <!-- Endereço -->
-        <div class="card mb-4">
-            <div class="card-header bg-light">
-                <h4 class="mb-0">Endereço</h4>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <!-- 1ª Linha -->
+            <div class="col-md-6">
+              <label for="nomeEmbarcacao" class="form-label small">Nome da Embarcação*</label>
+              <input type="text" id="nomeEmbarcacao" class="form-control form-control-sm"
+                     [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" appUppercase required>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="CEP"><span class="text-danger">*</span>CEP</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="CEP" [(ngModel)]="embarcacao.cep" name="CEP"
-                                    required>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary"
-                                        (click)="buscarEndereco()">Buscar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="logradouro"><span class="text-danger">*</span>Logradouro</label>
-                            <input type="text" class="form-control" id="logradouro" [(ngModel)]="embarcacao.logradouro"
-                                name="logradouro" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="numero"><span class="text-danger">*</span>Número</label>
-                            <input type="number" class="form-control" id="numero" [(ngModel)]="embarcacao.numero"
-                                name="numero" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="bairro"><span class="text-danger">*</span>Bairro</label>
-                            <input type="text" class="form-control" id="bairro" [(ngModel)]="embarcacao.bairro"
-                                name="bairro" required>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="complemento">Complemento</label>
-                            <input type="text" class="form-control" id="complemento"
-                                [(ngModel)]="embarcacao.complemento" name="complemento">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="cidade"><span class="text-danger">*</span>Cidade</label>
-                            <input type="text" class="form-control" id="cidade" [(ngModel)]="embarcacao.cidade"
-                                name="cidade" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="UF"><span class="text-danger">*</span>UF</label>
-                            <input type="text" class="form-control" id="UF" [(ngModel)]="embarcacao.uf" name="UF"
-                                required>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6">
+              <label for="numCasco" class="form-label small">Número do Casco</label>
+              <input type="text" id="numCasco" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.numCasco" name="numCasco">
             </div>
-        </div>
 
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary" [disabled]="!embarcacaoForm.form.valid">Salvar</button>
-            <button type="button" class="btn btn-secondary" (click)="confirmCancel()"
-                style="margin-left: 10px;">Cancelar</button>
+            <!-- 2ª Linha -->
+            <div class="col-md-6">
+              <label for="tipoEmbarcacao" class="form-label small">Tipo de Embarcação*</label>
+              <input id="tipoEmbarcacao" class="form-control form-control-sm" [(ngModel)]="embarcacao.tipoEmbarcacao"
+                name="tipoEmbarcacao" #tipoEmbarcacao="ngModel" appUppercase required list="tipoEmbarcacaoOptions"
+                placeholder="Selecione ou digite um tipo" autocomplete="off">
+
+              <datalist id="tipoEmbarcacaoOptions">
+                <option value="MOTO AQUÁTICA">
+                <option value="CANOA">
+                <option value="LANCHA">
+                <option value="FLUTUANTE">
+                <option value="CATAMARÃ">
+                <option value="MULTI CASCO">
+              </datalist>
+
+              <div class="invalid-feedback small"
+                *ngIf="tipoEmbarcacao.invalid && (tipoEmbarcacao.dirty || tipoEmbarcacao.touched)">
+                <div *ngIf="tipoEmbarcacao.errors?.['required']">Tipo de embarcação é obrigatório</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="tipoAtividade" class="form-label small">Tipo de Atividade*</label>
+              <select id="tipoAtividade" class="form-control form-control-sm" 
+                      [(ngModel)]="embarcacao.tipoAtividade" name="tipoAtividade" 
+                      #tipoAtividade="ngModel" required>
+                <option value="">Selecione um tipo</option>
+                <option value="ESPORTE LAZER">ESPORTE LAZER</option>
+                <option value="COMERCIAL">COMERCIAL</option>
+              </select>
+              <div class="invalid-feedback small" 
+                   *ngIf="tipoAtividade.invalid && (tipoAtividade.dirty || tipoAtividade.touched)">
+                <div *ngIf="tipoAtividade.errors?.['required']">Tipo de atividade é obrigatório</div>
+              </div>
+            </div>
+
+            <!-- 3ª Linha -->
+            <div class="col-md-6">
+              <label for="areaNavegacao" class="form-label small">Área de Navegação*</label>
+              <select id="areaNavegacao" class="form-control form-control-sm" 
+                      [(ngModel)]="embarcacao.areaNavegacao" name="areaNavegacao" 
+                      #areaNavegacao="ngModel" required>
+                <option value="">Selecione uma área</option>
+                <option value="INTERIOR">INTERIOR</option>
+                <option value="COSTEIRA">COSTEIRA</option>
+              </select>
+              <div class="invalid-feedback small" 
+                   *ngIf="areaNavegacao.invalid && (areaNavegacao.dirty || areaNavegacao.touched)">
+                <div *ngIf="areaNavegacao.errors?.['required']">Área de navegação é obrigatória</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="dtConstrucao" class="form-label small">Data de Construção</label>
+              <input type="date" id="dtConstrucao" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.dtConstrucao" name="dtConstrucao">
+            </div>
+
+            <!-- 4ª Linha -->
+            <div class="col-md-6">
+              <label for="capArmazenamento" class="form-label small">Capacidade de Armazenamento (KG)</label>
+              <input type="number" id="capArmazenamento" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.capArmazenamento" name="capArmazenamento">
+            </div>
+
+            <div class="col-md-6">
+              <label for="matCasco" class="form-label small">Material do Casco</label>
+              <input type="text" id="matCasco" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.matCasco" name="matCasco" appUppercase>
+            </div>
+
+            <!-- 5ª Linha -->
+            <div class="col-md-6">
+              <label for="qtdTripulantes" class="form-label small">Quantidade de Tripulantes</label>
+              <input type="number" id="qtdTripulantes" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.qtdTripulantes" name="qtdTripulantes">
+            </div>
+
+            <div class="col-md-6">
+              <label for="lotacao" class="form-label small">Lotação</label>
+              <input type="number" id="lotacao" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.lotacao" name="lotacao">
+            </div>
+
+            <!-- 6ª Linha -->
+            <div class="col-md-6">
+              <label for="tipoPropulsao" class="form-label small">Tipo de Propulsão</label>
+              <input list="tipoPropulsaoOptions" id="tipoPropulsao" class="form-control form-control-sm"
+                [(ngModel)]="embarcacao.tipoPropulsao" name="tipoPropulsao" placeholder="Selecione ou digite um tipo"
+                autocomplete="off" appUppercase>
+
+              <datalist id="tipoPropulsaoOptions">
+                <option value="MOTOR">
+                <option value="VELA">
+                <option value="REMO">
+                <option value="MISTO">
+              </datalist>
+            </div>
+
+            <div class="col-md-6">
+              <label for="qtdMotores" class="form-label small">Quantidade de Motores</label>
+              <input type="number" id="qtdMotores" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.qtdMotores" name="qtdMotores">
+            </div>
+
+            <!-- 7ª Linha -->
+            <div class="col-md-6">
+              <label for="potenciaMotor" class="form-label small">Potência máxima de cada Motor</label>
+              <input type="number" id="potenciaMotor" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.potenciaMotor" name="potenciaMotor">
+            </div>
+
+            <div class="col-md-6">
+              <label for="matSuperestrutura" class="form-label small">Material da Superestrutura</label>
+              <input list="matSuperestrutura" id=list class="form-control form-control-sm"
+                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura" placeholder="Selecione ou digite um tipo"
+                autocomplete="off" appUppercase>
+
+                <datalist id="matSuperestrutura">
+                <option value="ALUMÍNIO">
+                <option value="DURALUMINIO">
+                <option value="FIBRA DE VIDRO">
+                <option value="AÇO INOXIDÁVEL">
+                <option value="MADEIRA">
+              </datalist>
+            </div>
+
+            <!-- 8ª Linha -->
+            <div class="col-md-6">
+              <label for="construtor" class="form-label small">Construtor</label>
+              <input type="text" id="construtor" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.construtor" name="construtor" appUppercase>
+            </div>
+
+            <div class="col-md-6">
+              <label for="corPredominante" class="form-label small">Cor Predominante</label>
+              <input type="text" id="corPredominante" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.corPredominante" name="corPredominante" appUppercase>
+            </div>
+
+            <!-- 9ª Linha -->
+            <div class="col-md-6">
+              <label for="numInscricao" class="form-label small">Número de Inscrição</label>
+              <input type="text" id="numInscricao" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.numInscricao" name="numInscricao">
+            </div>
+
+            <div class="col-md-6">
+              <label for="dtInscricao" class="form-label small">Data de Inscrição</label>
+              <input type="date" id="dtInscricao" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.dtInscricao" name="dtInscricao">
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Medidas -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-ruler-combined me-2"></i>Medidas</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+              <label for="compTotal" class="form-label small">Comprimento Total</label>
+              <input type="number" id="compTotal" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.compTotal" name="compTotal">
+            </div>
+
+            <div class="col-md-6">
+              <label for="compPerpendicular" class="form-label small">Comprimento Perpendicular</label>
+              <input type="number" id="compPerpendicular" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.compPerpendicular" name="compPerpendicular">
+            </div>
+
+            <div class="col-md-6">
+              <label for="arqueacaoBruta" class="form-label small">Arqueação Bruta</label>
+              <input type="number" id="arqueacaoBruta" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.arqueacaoBruta" name="arqueacaoBruta">
+            </div>
+
+            <div class="col-md-6">
+              <label for="arqueacaoLiquida" class="form-label small">Arqueação Líquida</label>
+              <input type="number" id="arqueacaoLiquida" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.arqueacaoLiquida" name="arqueacaoLiquida">
+            </div>
+
+            <div class="col-md-6">
+              <label for="bocaMoldada" class="form-label small">Boca Moldada</label>
+              <input type="number" id="bocaMoldada" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.bocaMoldada" name="bocaMoldada">
+            </div>
+
+            <div class="col-md-6">
+              <label for="contorno" class="form-label small">Contorno</label>
+              <input type="number" id="contorno" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.contorno" name="contorno">
+            </div>
+
+            <div class="col-md-6">
+              <label for="porteBruto" class="form-label small">Porte Bruto</label>
+              <input type="number" id="porteBruto" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.porteBruto" name="porteBruto">
+            </div>
+
+            <div class="col-md-6">
+              <label for="calado" class="form-label small">Calado</label>
+              <input type="number" id="calado" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.calado" name="calado">
+            </div>
+
+            <div class="col-md-6">
+              <label for="pontalMoldado" class="form-label small">Pontal Moldado</label>
+              <input type="number" id="pontalMoldado" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.pontalMoldado" name="pontalMoldado">
+            </div>
+
+            <div class="col-md-6">
+              <label for="bordaLivre" class="form-label small">Borda Livre</label>
+              <input type="number" id="bordaLivre" class="form-control form-control-sm" 
+                     [(ngModel)]="embarcacao.bordaLivre" name="bordaLivre">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endereço -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Endereço</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+              <label for="CEP" class="form-label small">CEP*</label>
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="CEP" [(ngModel)]="embarcacao.cep" name="CEP" required>
+                <button type="button" class="btn btn-primary btn-sm" (click)="buscarEndereco()">Buscar</button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="logradouro" class="form-label small">Logradouro*</label>
+              <input type="text" class="form-control form-control-sm" id="logradouro" 
+                     [(ngModel)]="embarcacao.logradouro" name="logradouro" appUppercase required>
+            </div>
+            <div class="col-md-6">
+              <label for="numero" class="form-label small">Número*</label>
+              <input type="number" class="form-control form-control-sm" id="numero" 
+                     [(ngModel)]="embarcacao.numero" name="numero" required>
+            </div>
+            <div class="col-md-6">
+              <label for="bairro" class="form-label small">Bairro*</label>
+              <input type="text" class="form-control form-control-sm" id="bairro" 
+                     [(ngModel)]="embarcacao.bairro" name="bairro" appUppercase required>
+            </div>
+            <div class="col-md-6">
+              <label for="complemento" class="form-label small">Complemento</label>
+              <input type="text" class="form-control form-control-sm" id="complemento" 
+                     [(ngModel)]="embarcacao.complemento" name="complemento" appUppercase>
+            </div>
+            <div class="col-md-3">
+              <label for="cidade" class="form-label small">Cidade*</label>
+              <input type="text" class="form-control form-control-sm" id="cidade" 
+                     [(ngModel)]="embarcacao.cidade" name="cidade" appUppercase required>
+            </div>
+            <div class="col-md-3">
+              <label for="UF" class="form-label small">UF*</label>
+              <input type="text" class="form-control form-control-sm" id="UF" 
+                     [(ngModel)]="embarcacao.uf" name="UF" appUppercase required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-end">
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!embarcacaoForm.form.valid">
+              <i class="fas fa-save me-1"></i>Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="confirmCancel()">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
+  </div>
 </div>

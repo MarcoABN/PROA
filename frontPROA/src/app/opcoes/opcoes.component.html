@@ -1,0 +1,503 @@
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto">
+    <!-- Seção de Organizações Militares (única visível) -->
+    <div class="card mb-4">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-building me-2"></i>Organizações Militares</h5>
+        <button class="btn btn-success btn-sm" (click)="abrirModalOrgMilitar()">
+          <i class="fas fa-plus me-1"></i>Cadastrar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-hover">
+            <thead class="small">
+              <tr>
+                <th>Nome</th>
+                <th>Abreviatura</th>
+                <th>Telefone</th>
+                <th class="text-end">Ações</th>
+              </tr>
+            
+            </thead>
+            <tbody>
+              <tr *ngFor="let orgMilitar of orgMilitares">
+                <td>{{ orgMilitar.nome }}</td>
+                <td>{{ orgMilitar.abreviatura }}</td>
+                <td>{{ orgMilitar.telefone }}</td>
+                <td class="text-end">
+                  <button class="btn btn-primary btn-sm me-1" (click)="abrirModalOrgMilitar(orgMilitar)">
+                    <i class="fas fa-edit me-1"></i>Alterar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="excluirOrgMilitar(orgMilitar.id)">
+                    <i class="fas fa-trash-alt me-1"></i>Excluir
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="orgMilitares.length === 0">
+                <td colspan="4" class="text-center text-muted small">Nenhuma organização militar cadastrada</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-wrapper mx-auto">
+    <div class="card mb-4">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-building me-2"></i>Instrutores / Procuradores</h5>
+        <button class="btn btn-success btn-sm" (click)="abrirModalCadastrar()">
+          <i class="fas fa-plus me-1"></i>Cadastrar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-hover">
+            <thead class="small">
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Instrutor</th>
+                <th>Procurador</th>
+                <th class="text-end">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prestador of prestadores">
+                <td>{{ prestador.nome }}</td>
+                <td>{{ prestador.cpfcnpj }}</td>
+                <td>
+                  <input type="checkbox" [checked]="prestador.instrutor" disabled>
+                </td>
+                <td>
+                  <input type="checkbox" [checked]="prestador.procurador" disabled>
+                </td>
+                <td class="text-end">
+                  <button class="btn btn-primary btn-sm me-1" (click)="abrirModalAlterar(prestador)">
+                    <i class="fas fa-edit me-1"></i>Alterar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="excluirPrestador(prestador.id)">
+                    <i class="fas fa-trash-alt me-1"></i>Excluir
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="prestadores.length === 0">
+                <td colspan="4" class="text-center text-muted small">Nenhum instrutor ou procurador cadastrado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="form-wrapper mx-auto">
+    <div class="card mb-4">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-ship me-2"></i>Escolas Náuticas</h5>
+        <!-- CORRIGIDO: Chamada do método correto -->
+        <button class="btn btn-success btn-sm" (click)="abrirModalCadastrarEscola()">
+          <i class="fas fa-plus me-1"></i>Cadastrar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-hover">
+            <thead class="small">
+              <tr>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Instrutor</th>
+                <th>Responsável</th>
+                <th class="text-end">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let escolanautica of escolas">
+                <td>{{ escolanautica.razaoSocial }}</td>
+                <td>{{ escolanautica.cnpj }}</td>
+                <!-- CORRIGIDO: Exibindo o nome do instrutor -->
+                <td>{{ escolanautica.instrutor?.nome || 'Não definido' }}</td>
+                <!-- CORRIGIDO: Exibindo o nome do responsável -->
+                <td>{{ escolanautica.responsavel?.nome || 'Não definido' }}</td>
+                <td class="text-end">
+                  <button class="btn btn-primary btn-sm me-1" (click)="abrirModalAlterarEscola(escolanautica)">
+                    <i class="fas fa-edit me-1"></i>Alterar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="excluirEscolaNautica(escolanautica.id)">
+                    <i class="fas fa-trash-alt me-1"></i>Excluir
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="escolas.length === 0">
+                <td colspan="5" class="text-center text-muted small">Nenhuma Escola Náutica cadastrada</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal para Organizações Militares -->
+<div class="modal fade" id="modalOrgMilitar" tabindex="-1" aria-labelledby="modalOrgMilitarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalOrgMilitarLabel">{{ modalTituloOrgMilitar }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="salvarOrgMilitar()" #orgMilitarForm="ngForm">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+              <label for="nome" class="form-label small">Nome*</label>
+              <input type="text" class="form-control form-control-sm" id="nome" [(ngModel)]="orgMilitar.nome"
+                name="nome" required>
+            </div>
+            <div class="col-md-6">
+              <label for="abreviatura" class="form-label small">Abreviatura*</label>
+              <input type="text" class="form-control form-control-sm" id="abreviatura"
+                [(ngModel)]="orgMilitar.abreviatura" name="abreviatura" required>
+            </div>
+            <div class="col-md-6">
+              <label for="telefone" class="form-label small">Telefone</label>
+              <input type="text" class="form-control form-control-sm" id="telefone" [(ngModel)]="orgMilitar.telefone"
+                name="telefone">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!orgMilitarForm.form.valid">
+              <i class="fas fa-save me-1"></i>Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Prestadores (hidden) -->
+<div class="modal fade" id="modalPrestador" tabindex="-1" aria-labelledby="modalPrestadorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPrestadorLabel">{{ modalTitulo }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="salvarPrestador()" #prestadorForm="ngForm">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-6">
+              <label for="nome" class="form-label small">Nome*</label>
+              <input type="text" class="form-control form-control-sm" id="nome" [(ngModel)]="prestador.nome" name="nome"
+                appUppercase required>
+            </div>
+            <div class="col-md-6">
+              <label for="cpf" class="form-label small">CPF/CNPJ*</label>
+              <input type="text" class="form-control form-control-sm" id="cpf" [(ngModel)]="prestador.cpfcnpj"
+                name="cpf" (blur)="validarCpfCnpj(prestador.cpfcnpj)" required>
+              <small class="text-danger small" *ngIf="cpfCnpjInvalido">CPF/CNPJ inválido!</small>
+            </div>
+            <div class="col-md-6">
+              <label for="rg" class="form-label small">RG</label>
+              <input type="text" class="form-control form-control-sm" id="rg" [(ngModel)]="prestador.rg" name="rg">
+            </div>
+            <div class="col-md-6">
+              <label for="orgEmissor" class="form-label small">Órgão Emissor</label>
+              <input type="text" class="form-control form-control-sm" id="orgEmissor" [(ngModel)]="prestador.orgEmissor"
+                name="orgEmissor" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="dtEmissao" class="form-label small">Data de Emissão</label>
+              <input type="date" id="dtEmissao" class="form-control form-control-sm" 
+                     [(ngModel)]="prestador.dtEmissao" name="dtEmissao">
+            </div>
+            <div class="col-md-6">
+              <label for="nacionalidade" class="form-label small">Nacionalidade</label>
+              <input type="text" class="form-control form-control-sm" id="nacionalidade"
+                [(ngModel)]="prestador.nacionalidade" name="nacionalidade" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="estadoCivil" class="form-label small">Estado Civil</label>
+              <input type="text" class="form-control form-control-sm" id="estadoCivil"
+                [(ngModel)]="prestador.estadoCivil" name="estadoCivil" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="telefone" class="form-label small">Telefone</label>
+              <input type="text" class="form-control form-control-sm" id="telefone" [(ngModel)]="prestador.telefone"
+                name="telefone">
+            </div>
+            <div class="col-md-6">
+              <label for="celular" class="form-label small">Celular</label>
+              <input type="text" class="form-control form-control-sm" id="celular" [(ngModel)]="prestador.celular"
+                name="celular">
+            </div>
+
+
+
+            <div class="col-md-6">
+              <label for="cep" class="form-label small">CEP</label>
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="cep" [(ngModel)]="prestador.cep" name="cep">
+                <button type="button" class="btn btn-primary btn-sm"
+                  (click)="buscarEndereco(prestador.cep)">Buscar</button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="logradouro" class="form-label small">Logradouro</label>
+              <input type="text" class="form-control form-control-sm" id="logradouro" [(ngModel)]="prestador.logradouro"
+                name="logradouro" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="numero" class="form-label small">Número</label>
+              <input type="number" class="form-control form-control-sm" id="numero" 
+                     [(ngModel)]="prestador.numero" name="numero">
+            </div>
+            <div class="col-md-6">
+              <label for="bairro" class="form-label small">Bairro</label>
+              <input type="text" class="form-control form-control-sm" id="bairro" [(ngModel)]="prestador.bairro"
+                name="bairro" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="cidade" class="form-label small">Cidade</label>
+              <input type="text" class="form-control form-control-sm" id="cidade" [(ngModel)]="prestador.cidade"
+                name="cidade" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="uf" class="form-label small">UF</label>
+              <input type="text" class="form-control form-control-sm" id="uf" [(ngModel)]="prestador.uf" name="uf" appUppercase>
+            </div>
+            <div class="col-md-6">
+              <label for="complemento" class="form-label small">Complemento</label>
+              <input type="text" class="form-control form-control-sm" id="complemento"
+                [(ngModel)]="prestador.complemento" name="complemento" appUppercase>
+            </div>
+
+            <!-- Carteira de Habilitação Amador (CHA) -->
+            <div class="card mb-3">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="fas fa-id-badge me-2"></i>Carteira de Habilitação Amador (CHA)
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="row g-2 g-md-3">
+                  <!-- Número da CHA -->
+                  <div class="col-md-4">
+                    <label for="chaNumero" class="form-label small">Número da CHA</label>
+                    <input type="text" id="chaNumero" class="form-control form-control-sm"
+                      [(ngModel)]="prestador.cha_numero" name="cha_numero" >
+                  </div>
+                  <!-- Categoria da CHA -->
+                  <div class="col-md-4">
+                    <label for="chaCategoria" class="form-label small">Categoria</label>
+                    <input type="text" id="chaCategoria" class="form-control form-control-sm"
+                      [(ngModel)]="prestador.cha_categoria" name="cha_categoria" appUppercase>
+                  </div>
+                  <!-- Data de Emissão da CHA -->
+                  <div class="col-md-4">
+                    <label for="chaDtEmissao" class="form-label small">Data de Emissão</label>
+                    <input type="date" id="chaDtEmissao" class="form-control form-control-sm"
+                      [(ngModel)]="prestador.cha_dtemissao" name="cha_dtemissao">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div hidden class="card mb-3">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="fas fa-id-badge me-2"></i>Estabelecimento
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="row g-2 g-md-3">
+                  <!-- Número da CHA -->
+                  <div class="col-md-4">
+                    <input type="text" id="estabelecimento" class="form-control form-control-sm"
+                      [(ngModel)]="prestador.estabelecimento" name="estabelecimento" appUppercase>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center mt-2">
+              <div class="form-check me-4">
+                <input class="form-check-input" type="checkbox" id="instrutor" [(ngModel)]="prestador.instrutor"
+                  name="instrutor">
+                <label class="form-check-label" for="instrutor">Instrutor</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="procurador" [(ngModel)]="prestador.procurador"
+                  name="procurador">
+                <label class="form-check-label" for="procurador">Procurador</label>
+              </div>
+            </div>
+
+            <!-- Exibe opções de procuração apenas se 'procurador' estiver marcado -->
+            <div class="col-md-12 mt-2" *ngIf="prestador.procurador">
+              <label class="form-label small mb-1">Dados Procuração</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="procCompleto" name="tipoProcuracao"
+                  [(ngModel)]="prestador.tipoProcuracao" [value]="'COMPLETO'">
+                <label class="form-check-label" for="procCompleto">Completo</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="procReduzido" name="tipoProcuracao"
+                  [(ngModel)]="prestador.tipoProcuracao" [value]="'REDUZIDO'">
+                <label class="form-check-label" for="procReduzido">Reduzido</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!prestadorForm.form.valid">
+              <i class="fas fa-save me-1"></i>Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+          </div>
+        </form>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Escolas Náuticas -->
+<div class="modal fade" id="modalEscolaNautica" tabindex="-1" aria-labelledby="modalEscolaNauticaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEscolaNauticaLabel">{{ modalTitulo }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="salvarEscolaNautica()" #escolaNauticaForm="ngForm">
+          <div class="row g-2 g-md-3">
+            <!-- Dados da Escola -->
+            <div class="col-md-8">
+              <label for="razaoSocial" class="form-label small">Razão Social*</label>
+              <input type="text" class="form-control form-control-sm" id="razaoSocial" 
+                     [(ngModel)]="escolanautica.razaoSocial" name="razaoSocial" appUppercase required>
+            </div>
+            <div class="col-md-4">
+              <label for="cnpjEscola" class="form-label small">CNPJ*</label>
+              <input type="text" class="form-control form-control-sm" id="cnpjEscola" 
+                     [(ngModel)]="escolanautica.cnpj" name="cnpjEscola" required>
+            </div>
+
+            <!-- Seleção do Instrutor -->
+            <div class="col-md-6">
+              <label for="instrutorSelect" class="form-label small">Instrutor*</label>
+              <select class="form-control form-control-sm" id="instrutorSelect" 
+                      [(ngModel)]="escolanautica.instrutor" name="instrutorSelect" required>
+                <option value="">Selecione um instrutor</option>
+                <option *ngFor="let prestador of prestadores" 
+                        [ngValue]="prestador" 
+                        [disabled]="!prestador.instrutor">
+                  {{ prestador.nome }} - {{ prestador.cpfcnpj }}
+                </option>
+              </select>
+              <small class="text-muted">*Apenas prestadores marcados como instrutor aparecem na lista</small>
+            </div>
+
+            <!-- Seleção do Responsável -->
+            <div class="col-md-6">
+              <label for="responsavelSelect" class="form-label small">Responsável*</label>
+              <select class="form-control form-control-sm" id="responsavelSelect" 
+                      [(ngModel)]="escolanautica.responsavel" name="responsavelSelect" required>
+                <option value="">Selecione um responsável</option>
+                <option *ngFor="let prestador of prestadores" [ngValue]="prestador">
+                  {{ prestador.nome }} - {{ prestador.cpfcnpj }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Informações do Instrutor Selecionado -->
+            <div class="col-12" *ngIf="escolanautica.instrutor">
+              <div class="card mt-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0">
+                    <i class="fas fa-user-tie me-2"></i>Dados do Instrutor
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-2">
+                    <div class="col-md-4">
+                      <small class="text-muted">Nome:</small>
+                      <div class="fw-bold">{{ escolanautica.instrutor.nome }}</div>
+                    </div>
+                    <div class="col-md-3">
+                      <small class="text-muted">CPF:</small>
+                      <div>{{ escolanautica.instrutor.cpfcnpj }}</div>
+                    </div>
+                    <div class="col-md-3">
+                      <small class="text-muted">CHA:</small>
+                      <div>{{ escolanautica.instrutor.cha_numero || 'Não informado' }}</div>
+                    </div>
+                    <div class="col-md-2">
+                      <small class="text-muted">Categoria:</small>
+                      <div>{{ escolanautica.instrutor.cha_categoria || 'N/A' }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Informações do Responsável Selecionado -->
+            <div class="col-12" *ngIf="escolanautica.responsavel">
+              <div class="card mt-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0">
+                    <i class="fas fa-user-shield me-2"></i>Dados do Responsável
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-2">
+                    <div class="col-md-4">
+                      <small class="text-muted">Nome:</small>
+                      <div class="fw-bold">{{ escolanautica.responsavel.nome }}</div>
+                    </div>
+                    <div class="col-md-3">
+                      <small class="text-muted">CPF:</small>
+                      <div>{{ escolanautica.responsavel.cpfcnpj }}</div>
+                    </div>
+                    <div class="col-md-3">
+                      <small class="text-muted">Telefone:</small>
+                      <div>{{ escolanautica.responsavel.telefone || 'Não informado' }}</div>
+                    </div>
+                    <div class="col-md-2">
+                      <small class="text-muted">Celular:</small>
+                      <div>{{ escolanautica.responsavel.celular || 'N/A' }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!escolaNauticaForm.form.valid">
+              <i class="fas fa-save me-1"></i>Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,46 +1,99 @@
-<!-- Cabeçalho fixo -->
+<!-- Cabeçalho fixo otimizado para resoluções menores -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-navy fixed-top" *ngIf="isAuthenticated">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="inicio" routerLinkActive="active">PROA</a>
-    <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+    <a class="navbar-brand d-flex align-items-center" routerLink="inicio" routerLinkActive="active">
+      <span class="nav-logo">PROA</span>
+    </a>
+    
+    <button class="navbar-toggler border-0 p-1" 
+            type="button" 
+            (click)="toggleMenu()" 
+            aria-label="Toggle navigation"
+            [attr.aria-expanded]="!isMenuCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div id="navbarNav" class="collapse navbar-collapse" [ngClass]="{'show': !isMenuCollapsed}">
+    
+    <div id="navbarNav" 
+         class="collapse navbar-collapse" 
+         [ngClass]="{'show': !isMenuCollapsed}">
+      
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="cliente/listar-cliente" routerLinkActive="active">Clientes</a>
+          <a class="nav-link" 
+             routerLink="cliente/listar-cliente" 
+             routerLinkActive="active"
+             title="Gerenciar Clientes">
+            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+            <span class="nav-text">Clientes</span>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="embarcacao/listarembarcacao" routerLinkActive="active">Embarcações</a>
+          <a class="nav-link" 
+             routerLink="embarcacao/listarembarcacao" 
+             routerLinkActive="active"
+             title="Gerenciar Embarcações">
+            <i class="nav-icon fas fa-ship" aria-hidden="true"></i>
+            <span class="nav-text">Embarcações</span>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="anexos/anexos" routerLinkActive="active">Anexos</a>
+          <a class="nav-link" 
+             routerLink="anexos/anexos" 
+             routerLinkActive="active"
+             title="Gerenciar Anexos">
+            <i class="nav-icon fas fa-paperclip" aria-hidden="true"></i>
+            <span class="nav-text">Anexos</span>
+          </a>
         </li>
-        <li class="nav-item" hidden>
-          <a class="nav-link" routerLink="servico-anexo/servico-anexo" routerLinkActive="active">Serviços</a>
+        <li hidden class="nav-item">
+          <a class="nav-link" 
+             routerLink="servico-anexo/servico-anexo" 
+             routerLinkActive="active"
+             title="Gerenciar Serviços">
+            <i class="nav-icon fas fa-tools" aria-hidden="true"></i>
+            <span class="nav-text">Serviços</span>
+          </a>
         </li>
       </ul>
+      
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="empresa/empresa" routerLinkActive="active">Opções</a>
+          <a class="nav-link" 
+             routerLink="empresa/empresa" 
+             routerLinkActive="active"
+             title="Configurações">
+            <i class="nav-icon fas fa-cog" aria-hidden="true"></i>
+            <span class="nav-text">Opções</span>
+          </a>
         </li>
         <li class="nav-item">
-          <button class="btn btn-outline-light" (click)="logout()">Logout</button>
+          <button class="btn btn-logout" 
+                  (click)="logout()"
+                  title="Sair do Sistema"
+                  type="button">
+            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+            <span class="logout-text">Sair</span>
+          </button>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Conteúdo com rolagem entre header e footer -->
-<div class="main-content">
+<!-- Conteúdo principal com área otimizada -->
+<main class="main-content" role="main">
   <router-outlet></router-outlet>
-</div>
+</main>
 
-<!-- Rodapé fixo -->
-<footer class="footer bg-navy text-white text-center py-3 fixed-bottom" *ngIf="isAuthenticated">
-  <div class="container">
-    <span class="footer-title">PROA</span>
-    <p class="footer-description">Projeto de apoio à Regularização em Operações Aquaviárias</p>
+<!-- Rodapé fixo otimizado -->
+<footer class="footer bg-navy text-white text-center fixed-bottom" 
+        *ngIf="isAuthenticated"
+        role="contentinfo">
+  <div class="container-fluid">
+    <div class="footer-content">
+      <span class="footer-title">PROA</span>
+      <span class="footer-separator" aria-hidden="true">|</span>
+      <span class="footer-description">Projeto de apoio à Regularização em Operações Aquaviárias</span>
+    </div>
   </div>
 </footer>

@@ -14,6 +14,7 @@ export class AlterarEmbarcacaoComponent implements OnInit {
 
   idEmbarcacao!: number;
   embarcacao!: Embarcacao;
+  editandoOutroTipo = false;
 
   constructor(
     private embarcacaoService: FrontEmbarcacaoService, 
@@ -71,4 +72,24 @@ export class AlterarEmbarcacaoComponent implements OnInit {
       }
     );
   }
+
+
+
+verificaOutroTipo() {
+  // Troca para o input se escolheu "OUTRO"
+  if (this.embarcacao.tipoEmbarcacao === '_OUTRO') {
+    this.embarcacao.tipoEmbarcacao = '';
+    this.editandoOutroTipo = true;
+  } else {
+    this.editandoOutroTipo = false;
+  }
+}
+
+voltarSelectSeVazio() {
+  if (!this.embarcacao.tipoEmbarcacao || !this.embarcacao.tipoEmbarcacao.trim()) {
+    this.editandoOutroTipo = false;
+    this.embarcacao.tipoEmbarcacao = '';
+  }
+}
+
 }

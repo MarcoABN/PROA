@@ -26,8 +26,9 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
-import { EmpresaComponent } from './empresa/empresa.component';
+import { OpcoesComponent } from './opcoes/opcoes.component';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { UppercaseDirective } from './config/uppercase.directive';
 
 
 
@@ -52,8 +53,9 @@ import { SafeUrlPipe } from './safe-url.pipe';
     ManterMotorComponent,
      NotafiscalComponent,
      ServicoAnexoComponent,
-     EmpresaComponent,
+     OpcoesComponent,
      SafeUrlPipe,
+     UppercaseDirective
     
   ],
   imports: [
@@ -79,7 +81,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
       appId: "1:814719286160:web:e71dc61f1b09a8bf311115",
       measurementId: "G-MWRRS9GZ8G"
       }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    
   ],
   providers: [DatePipe, provideNgxMask()
   ], 

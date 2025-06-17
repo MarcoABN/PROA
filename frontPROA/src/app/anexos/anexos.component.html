@@ -1,180 +1,453 @@
-<div class="form-wrapper">
-    <h2 class="text-center">Anexos</h2>
-    <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
-        <div class="form-group">
-            <label for="cliente">Cliente (CPF ou CNPJ)</label>
-            <br>
-            <input type="text" class="form-control" id="cliente" #clienteInput [(ngModel)]="cpfcnpjCliente"
-                name="cliente" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="false" required
-                style="width: 200px; display: inline-block; margin-right: 10px;">
-            <input type="text" class="form-control" [(ngModel)]="nomeCliente" name="nomeCliente" readonly
-                style="width: 400px; display: inline-block;">
+<div class="container-fluid p-2 p-md-3">
+    <div class="form-wrapper mx-auto">
+        <h2 class="text-center mb-3 mb-md-4">
+            <i class="fas fa-file-alt me-2"></i>Anexos
+        </h2>
+
+        <!-- Formulário de Pesquisa Compacto -->
+        <div class="search-form">
+            <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
+                <div class="row g-2 g-md-3">
+                    <div class="col-12 col-md-4">
+                        <label for="cliente" class="form-label small">Cliente (CPF ou CNPJ)</label>
+                        <input type="text" class="form-control form-control-sm" id="cliente" #clienteInput
+                            [(ngModel)]="cpfcnpjCliente" name="cliente" mask="000.000.000-00 || 00.000.000/0000-00"
+                            [dropSpecialCharacters]="false" required />
+                    </div>
+
+                    <div class="col-12 col-md-5">
+                        <label for="nomeCliente" class="form-label small">Nome</label>
+                        <input type="text" class="form-control form-control-sm" id="nomeCliente"
+                            [(ngModel)]="nomeCliente" name="nomeCliente" readonly />
+                    </div>
+
+                    <div class="col-12 col-md-3 d-flex align-items-end">
+                        <div class="col-12 col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-search me-1"></i>Pesquisar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="limparDados(clienteForm)">
+                                <i class="fas fa-eraser me-1"></i>Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mt-md-3">
+                    <div class="col-12">
+                        <label for="embarcacao" class="form-label small">Embarcação</label>
+                        <select class="form-select form-select-sm" id="embarcacao" [(ngModel)]="idEmbarcacao"
+                            name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
+                            <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">
+                                {{ embarcacao.nomeEmbarcacao }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
+
         <br>
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
-            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
-        </div>
-        <br><br>
-        <div class="form-group">
-            <label for="embarcacao">Embarcação</label>
-            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao"
-                (change)="onEmbarcacaoChange($event)" required>
-                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}
-                </option>
-            </select>
-        </div>
-    </form>
-    <br>
+        <!-- Seções de Anexos Reorganizadas -->
+        <div class="row">
+            <!-- COLUNA 1: NORMAM 211 - CHA e NORMAM 212 -->
 
-    <div class="row">
-        <div class="col">
-            
-            <h4>Normam 211</h4>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 5H - </h5>
-                            <h5 class="card-title">(Requerimento CHA)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente" type="button" class="btn btn-primary" (click)="openModal5H()">Visualizar</button>
-                            </div>
-                        </div>
+            <div class="col-12 col-lg-6 mb-4">
+                <!-- NORMAM 211 - CHA (Carteira de Habilitação Amador/Motonauta) -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-id-card me-2"></i>Normam 211 - CHA (Habilitação
+                            Amador/Motonauta)</h5>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2L</h5>
-                            <h5 class="card-title">(Declaração de Residência)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente" type="button" class="btn btn-primary" (click)="gerarAnexo2L()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2D</h5>
-                            <h5 class="card-title">(BSADE)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2D()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2E</h5>
-                            <h5 class="card-title">(Requerimento TIE)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2E()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 3C</h5>
-                            <h5 class="card-title">(Termo de Responsabilidade Inscrição/Transferência)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal3C()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2M</h5>
-                            <h5 class="card-title">(Autorização de Transferência)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2M()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 3D</h5>
-                            <h5 class="card-title">(Termo de Responsabilidade Construção/Alteração)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal3D()">Visualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <br><br>
-            <div hidden class="row">
-                <div class="col">
-                    <h4>Procurações</h4>
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <!-- Procurações -->
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">Procuração 01</h5>
-                                    <div class="mt-3">
-                                        <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="gerarProcuracao01()">Visualizar</button>
+                    <div class="card-body">
+                        <div class="row g-2 g-md-3">
+                            <!-- Anexo 5H -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-certificate text-primary me-1"></i>
+                                            Requerimento CHA
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 5H</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal5H()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">Procuração 02</h5>
-                                    <div class="mt-3">
-                                        <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="null">Visualizar</button>
+
+                            <!-- Anexo 3B -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-success me-1"></i>
+                                            Atestado Motonauta (!)
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 3B</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal3B()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 5D -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-file-text text-info me-1"></i>
+                                            Declaração de Extravio
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 5D</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal5D()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 5E -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-certificate text-warning me-1"></i>
+                                            Atestado Arrais-Amador
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 5E</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal5E()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 3A -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-id-card text-primary me-1"></i>
+                                            Requerimento CHA MA
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 3A</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal3A()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- NORMAM 212 - TIE (Título de Inscrição de Embarcação Motoaquática) -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-motorcycle me-2"></i>Normam 212 - TIE (Motoaquática)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-2 g-md-3">
+                            <!-- Anexo 1C -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Declaração de Residência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 1C</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="gerarAnexo1C()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2A -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Requerimento
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2A</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                            type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2A()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2B -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            BDMOTO - Moto Aquatíca
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2B</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                            type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2B()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2D -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Declaração de Perda ou Roubo
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2D</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                            type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="gerarAnexo2D212()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2E -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Autorização de Transferência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2E</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                            type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="openModal2E212()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2F -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-paper-plane text-success me-1"></i>
+                                            Comun. Transf. Moto Aquática
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2F</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                            type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2F()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-    
-        <div class="col">
-            <h4>Normam 212</h4>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 3A</h5>
-                            <h5 class="card-title">(Requerimento CHA MA)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal3A()">Visualizar</button>
+
+            <!-- COLUNA 2: NORMAM 211 - TIE e PROCURAÇÕES -->
+            <div class="col-12 col-lg-6 mb-4">
+                <!-- NORMAM 211 - TIE (Título de Inscrição de Embarcação Esp. Recreio) -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-ship me-2"></i>Normam 211 - TIE (Esporte Recreio)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-2 g-md-3">
+                            <!-- Anexo 2D -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-list text-info me-1"></i>
+                                            BSADE
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2D</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal2D()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2E -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-file-contract text-warning me-1"></i>
+                                            Requerimento TIE
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2E</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal2E()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2J -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Declaração de Perda/Extravio
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2J</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal2J()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2K -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-info me-1"></i>
+                                            Comunicado de Transferência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2K</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal2K()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2L -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-home text-success me-1"></i>
+                                            Declaração de Residência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2L</p>
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="gerarAnexo2L()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 2M -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-exchange-alt text-secondary me-1"></i>
+                                            Autorização de Transferência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 2M</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal2M()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 3C -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-handshake text-danger me-1"></i>
+                                            Termo de Responsabilidade Inscrição/Transferência
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 3C</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal3C()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Anexo 3D -->
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-tools text-dark me-1"></i>
+                                            Termo de Responsabilidade Construção/Alteração
+                                        </h5>
+                                        <p class="card-subtitle small text-muted mb-2">Anexo 3D</p>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="openModal3D()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2F</h5>
-                            <h5 class="card-title">(Comunicado de Transferência Moto Aquática)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2F()">Visualizar</button>
-                            </div>
-                        </div>
+
+                <!-- Procurações -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-file-signature me-2"></i>Procurações</h5>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gerar Anexo 2B</h5>
-                            <h5 class="card-title">(BDMOTO)</h5>
-                            <div class="mt-3">
-                                <button [disabled]="!cliente || !embarcacoes.length" type="button" class="btn btn-primary" (click)="openModal2B()">Visualizar</button>
+                    <div class="card-body">
+                        <div class="row g-2 g-md-3">
+                            <div class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-stamp text-primary me-1"></i>
+                                            Procuração 01
+                                        </h5>
+                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                            class="btn btn-primary btn-sm w-100" (click)="gerarProcuracao01()">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div hidden class="col-12 col-sm-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-stamp text-primary me-1"></i>
+                                            Procuração 02 (CHA)
+                                        </h5>
+                                        <button [disabled]="true" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="null">
+                                            <i class="fas fa-eye me-1"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,9 +459,10 @@
 
 
 
+
 <!-- Modal anexo 2D-->
 <div class="modal fade" id="modalAnexo2D" tabindex="-1" aria-labelledby="naturezaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="naturezaModalLabel">Selecionar Natureza</h5>
@@ -198,32 +472,32 @@
                 <div class="form-group">
                     <label>Natureza</label>
                     <div>
-                        <input type="radio" id="naturezaInscricao" name="natureza" value="Inscrição"
+                        <input type="radio" id="naturezaInscricao" name="natureza2d1" value="inscricao"
                             [(ngModel)]="natureza" required>
                         <label for="naturezaInscricao">Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaCancelamento" name="natureza" value="Cancelamento"
+                        <input type="radio" id="naturezaCancelamento" name="natureza2d2" value="cancelamento"
                             [(ngModel)]="natureza">
                         <label for="naturezaCancelamento">Cancelamento</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfProprietario" name="natureza" value="Transf. Propriedade"
+                        <input type="radio" id="naturezaTransfProprietario" name="natureza2d3" value="transfpropriedade"
                             [(ngModel)]="natureza">
                         <label for="naturezaTransfProprietario">Transf. Propriedade</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza" value="Transf. Jurisdição"
+                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza2d4" value="transfjurisdicao"
                             [(ngModel)]="natureza">
                         <label for="naturezaTransfJurisdicao">Transf. Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaAtualizacao" name="natureza" value="Atualização de Dados"
+                        <input type="radio" id="naturezaAtualizacao" name="natureza2d5" value="atualizacaodados"
                             [(ngModel)]="natureza">
                         <label for="naturezaAtualizacao">Atualização de Dados</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaEmissao" name="natureza" value="Emissão de Certidão"
+                        <input type="radio" id="naturezaEmissao" name="natureza2d6" value="emissaocertidao"
                             [(ngModel)]="natureza">
                         <label for="naturezaEmissao">Emissão de Certidão</label>
                     </div>
@@ -239,7 +513,7 @@
 
 <!-- Modal anexo 2E-->
 <div class="modal fade" id="modalAnexo2E" tabindex="-1" aria-labelledby="modalAnexo2ELabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo2ELabel">Selecionar Requerimento</h5>
@@ -249,47 +523,47 @@
                 <div class="form-group">
                     <label>Tipo Requerimento</label>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="inscricao" [(ngModel)]="opcao"
+                        <input type="radio" id="Requerimento2E1" name="opcao2E1" value="inscricao" [(ngModel)]="opcao"
                             required>
                         <label for="Requerimento">Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="cancelamento" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E2" name="opcao2E2" value="cancelamento"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Canc. de Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencaconstrucao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E3" name="opcao2E3" value="licencaconstrucao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Licença de Construção</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencaalteracao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E4" name="opcao2E4" value="licencaalteracao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Licença de Alteracao</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="licencareclassificacao"
+                        <input type="radio" id="Requerimento2E5" name="opcao2E5" value="licencareclassificacao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Licença de Reclassificação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfpropriedade" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E6" name="opcao2E6" value="transfpropriedade"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Transferência de Propriedade</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfjurisdicao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E7" name="opcao2E7" value="transfjurisdicao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Transferência de Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="transfpropjurisdicao"
+                        <input type="radio" id="Requerimento2E8" name="opcao2E8" value="transfpropjurisdicao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Transferência de Propriedade e Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="mudancanome" [(ngModel)]="opcao"
+                        <input type="radio" id="Requerimento2E9" name="opcao2E9" value="mudancanome" [(ngModel)]="opcao"
                             required>
                         <label for="Requerimento">Mudança de nome da Embarcação</label>
                     </div>
@@ -309,83 +583,83 @@
                             name="campotexto3" required>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_sim" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E10" name="opcao2E10" value="renovacaotie_sim"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Renovação TIE/TIEM COM Alteração</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="renovacaotie_nao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E11" name="opcao2E11" value="renovacaotie_nao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Renovação TIE/TIEM SEM Alteração</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_perda" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E12" name="opcao2E12" value="segviatie_perda"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Perda)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_roubo" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E13" name="opcao2E13" value="segviatie_roubo"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Roubo)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_extravio"
+                        <input type="radio" id="Requerimento2E14" name="opcao2E14" value="segviatie_extravio"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Extravio)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="segviatie_mauestado"
+                        <input type="radio" id="Requerimento2E15" name="opcao2E15" value="segviatie_mauestado"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Segunda Via TIE/TIEM (Mau estado de conservação)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosembarcacao"
+                        <input type="radio" id="Requerimento2E16" name="opcao2E16" value="alteracaodadosembarcacao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Alteração de dados cadastrais da embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="alteracaodadosproprietario"
+                        <input type="radio" id="Requerimento2E17" name="opcao2E17" value="alteracaodadosproprietario"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Alteração de dados cadastrais do proprietário</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="trocamotor" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E18" name="opcao2E18" value="trocamotor"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento"> Troca do Motor Propulsor</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="certidaoembarcacao"
+                        <input type="radio" id="Requerimento2E19" name="opcao2E19" value="certidaoembarcacao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Certidão Relativa a Situação da Embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="registroaverbacao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E20" name="opcao2E20" value="registroaverbacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Registro de Ônus e Averbações relativos a embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="cancaverbacao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E21" name="opcao2E21" value="cancaverbacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Cancelamento do Registro de Ônus e Averbações (embarcação)</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaarqueacao" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E22" name="opcao2E22" value="vistoriaarqueacao"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Vistoria de Arqueação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriarearqueacao"
+                        <input type="radio" id="Requerimento2E23" name="opcao2E23" value="vistoriarearqueacao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Vistoria de Rearqueação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="vistoriaclassificacao"
+                        <input type="radio" id="Requerimento2E24" name="opcao2E24" value="vistoriaclassificacao"
                             [(ngModel)]="opcao" required>
                         <label for="Requerimento">Vistoria para alterar a classificação da embarcação</label>
                     </div>
                     <div>
-                        <input type="radio" id="Requerimento" name="opcao" value="outrosservicos" [(ngModel)]="opcao"
-                            required>
+                        <input type="radio" id="Requerimento2E25" name="opcao2E25" value="outrosservicos"
+                            [(ngModel)]="opcao" required>
                         <label for="Requerimento">Outros serviços (Justificar)</label>
                     </div>
                     <div class="form-group" *ngIf="opcao === 'outrosservicos'">
@@ -407,9 +681,10 @@
     </div>
 </div>
 
+
 <!-- Modal anexo 5H-->
 <div class="modal fade" id="modalAnexo5H" tabindex="-1" aria-labelledby="modalAnexo5HLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo5HLabel">Selecionar Requerimento</h5>
@@ -419,73 +694,73 @@
                 <div class="form-group">
                     <label>Requerimento:</label>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="1"
+                        <input type="checkbox" id="Requerimento5h1" name="opcao5h1" value="1"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 1 - CONCESSÃO DE CHA POR CORRESPONDÊNCIA/EQUIVALÊNCIA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="2"
+                        <input type="checkbox" id="Requerimento5h2" name="opcao5h2" value="2"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 2 - EMISSÃO/RENOVAÇÃO</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="3"
+                        <input type="checkbox" id="Requerimento5h3" name="opcao5h3" value="3"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 3 - RENOVAÇÃO DE CHA (ARA, MSA OU CPA)</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="4"
+                        <input type="checkbox" id="Requerimento5h4" name="opcao5h4" value="4"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 4 - EMISSÃO CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="5"
+                        <input type="checkbox" id="Requerimento5h5" name="opcao5h5" value="5"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 5 - RENOVAÇÃO CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="6"
+                        <input type="checkbox" id="Requerimento5h6" name="opcao5h6" value="6"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 6 - CANC. CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="7"
+                        <input type="checkbox" id="Requerimento5h7" name="opcao5h7" value="7"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 7 - CRED. ESTAB. TRINAMENTO NÁUTICO / PESSOA FÍSICA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="8"
+                        <input type="checkbox" id="Requerimento5h8" name="opcao5h8" value="8"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 8 - CRED. DE ÓRGÃO DO ESCOTEIRO DO MAR</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="9"
+                        <input type="checkbox" id="Requerimento5h9" name="opcao5h9" value="9"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 9 - CRED. ESTAB. TRINAMENTO NÁUTICO / VELEIRO</label>
                     </div>
                     <label>10 - RENOVAÇÃO DO CREDENCIAMENTO (Selecione)</label>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10a"
+                        <input type="checkbox" id="Requerimento5h10" name="opcao5h10" value="10a"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> A - ESTAB. TREINAMENTO NÁUTICO / PESSOA FÍSICA </label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10b"
+                        <input type="checkbox" id="Requerimento5h11" name="opcao5h11" value="10b"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> B - ÓRGÃO DO ESCOTEIRO DO MAR</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="10c"
+                        <input type="checkbox" id="Requerimento5h12" name="opcao5h12" value="10c"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2">> C - CRED. ESTAB. TRINAMENTO NÁUTICO / VELEIRO</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="11"
+                        <input type="checkbox" id="Requerimento5h13" name="opcao5h13" value="11"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 11 - DESCREDENCIAMENTO VOLUNTÁRIO</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="12"
+                        <input type="checkbox" id="Requerimento5h14" name="opcao5h14" value="12"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 12 - PEDIDO DE REVISÃO DE PROVAS DE CAPITÃO AMADOR</label>
                     </div>
@@ -509,33 +784,82 @@
     </div>
 </div>
 
-<!-- Modal anexo 2M-->
+
+
+
+<!-- Modal anexo 2Meeeeeeeeeeeeeeeeeeeeeeeeeeeeee-->
 <div class="modal fade" id="modalAnexo2M" tabindex="-1" aria-labelledby="modalAnexo2MLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAnexo2MLabel">Informe o comprador:</h5>
+                <h5 class="modal-title" id="modalAnexo2MLabel">Informe os dados do Vendedor:</h5>
                 <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label>CPF/CPNJ</label>
+                <!-- Opção de seleção -->
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao2M" id="clienteExistente2M"
+                            [(ngModel)]="tipoSelecaoVendedor" value="existente" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteExistente2M">
+                            Selecionar um cliente cadastrado
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao2M" id="clienteManual2M"
+                            [(ngModel)]="tipoSelecaoVendedor" value="manual" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteManual2M">
+                            Inserir os dados manualmente
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Seção para cliente existente -->
+                <div *ngIf="tipoSelecaoVendedor === 'existente'">
                     <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                        <label>CPF/CNPJ do proprietário anterior</label>
+                        <input type="text" id="nomeopcao2M" class="form-control" [(ngModel)]="campotexto1"
                             name="campotexto1" required>
                     </div>
-                </div>
-                <div class="mt-2">
-                    <small style="color: red;">O comprador informado deve estar cadastrado na plataforma.</small>
-                </div>
-                <div class="form-group">
-                    <label>Valor</label>
-                    <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto2"
-                            name="campotexto2" required>
+                    <div class="mt-2">
+                        <small style="color: red;">O Proprietário anterior deve estar cadastrado na plataforma!!</small>
                     </div>
                 </div>
-                
+
+                <!-- Seção para inserção manual -->
+                <div *ngIf="tipoSelecaoVendedor === 'manual'">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group mb-2">
+                                <label>Nome Completo *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.nome"
+                                    name="nomeProprietario" appUppercase required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>CPF/CNPJ *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cpfcnpj"
+                                    name="cpfcnpjProprietario" appUppercase required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.telefone"
+                                    name="telefoneProprietario">
+                            </div>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" [(ngModel)]="proprietarioanterior.email"
+                                name="emailProprietario" appUppercase>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="confirmarAnexo2M()">Confirmar</button>
@@ -547,7 +871,7 @@
 
 <!-- Modal anexo 3D-->
 <div class="modal fade" id="modalAnexo3D" tabindex="-1" aria-labelledby="modalAnexo3DLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo3DLabel">Anexo 3D:</h5>
@@ -555,29 +879,32 @@
             </div>
 
             <div class="modal-body">
-     
+
                 <div class="form-group">
                     <label for="orgMilitarSelect">Organização Militar:</label>
-                    <select id="orgMilitarSelect" class="form-control" [(ngModel)]="campotexto1" name="campotexto1" required>
-                      <option *ngFor="let org of orgMilitares" [value]="org.nome">{{ org.nome }}</option>
+                    <select id="orgMilitarSelect" class="form-control" [(ngModel)]="campotexto1" name="campotexto1"
+                        required>
+                        <option *ngFor="let org of orgMilitares" [value]="org.nome">{{ org.nome }}</option>
                     </select>
-                  </div>
-                
+                </div>
+
                 <div class="form-group">
                     <label>Construtor</label>
                     <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto2"
+                        <input type="text" id="nomeopcao3d" class="form-control" [(ngModel)]="campotexto2"
                             name="campotexto2" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Tipo:</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="radioConstruida" name="tipo" [(ngModel)]="opcao" value="Construida">
+                        <input class="form-check-input" type="radio" id="radioConstruida" name="tipo1"
+                            [(ngModel)]="opcao" value="Construida">
                         <label class="form-check-label" for="radioConstruida">Construida</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="radioAlterada" name="tipo" [(ngModel)]="opcao" value="Alterada">
+                        <input class="form-check-input" type="radio" id="radioAlterada" name="tipo2" [(ngModel)]="opcao"
+                            value="Alterada">
                         <label class="form-check-label" for="radioAlterada">Alterada</label>
                     </div>
                 </div>
@@ -592,7 +919,7 @@
 
 <!-- Modal anexo 3A-->
 <div class="modal fade" id="modalAnexo3A" tabindex="-1" aria-labelledby="modalAnexo3ALabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo3ALabel">Selecionar Requerimento</h5>
@@ -602,72 +929,72 @@
                 <div class="form-group">
                     <label>Requerimento:</label>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="1"
+                        <input type="checkbox" id="Requerimento3A1" name="opcao3A1" value="1"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento1"> 1 - EMISSÃO/RENOVAÇÃO/2a VIA CHA CATEGORIA DE MTA.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="2"
+                        <input type="checkbox" id="Requerimento3A2" name="opcao3A2" value="2"
                             (change)="onCheckboxChange($event)">
-                        <label for="Requerimento2"> 2 -  EMISSÃO DE CHA-MTA-E (HABILITAÇÃO PARA ALUGUEL DE MTA)</label>
+                        <label for="Requerimento2"> 2 - EMISSÃO DE CHA-MTA-E (HABILITAÇÃO PARA ALUGUEL DE MTA)</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="3"
+                        <input type="checkbox" id="Requerimento3A3" name="opcao3A3" value="3"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 3 - RENOVAÇÃO DE CHA (ARA, MSA OU CPA)</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="3a"
+                        <input type="checkbox" id="Requerimento3A4" name="opcao3A4" value="3a"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> >>3 - Declaro que conduzo ou já conduzi Moto Aquática</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="4"
+                        <input type="checkbox" id="Requerimento3A5" name="opcao3A5" value="4"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 4 - CRED. DE ESTAB. DE TREINAMENTO NÁUTICO / PESSOA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="5"
+                        <input type="checkbox" id="Requerimento3A6" name="opcao3A6" value="5"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 5 - CRED. DE ESTAB. DE ALUGUEL DE MOTO AQUÁTICA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="6"
+                        <input type="checkbox" id="Requerimento3A7" name="opcao3A7" value="6"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 6 - CANC. CERT. DE CADASTRO DE MARINAS, CLUBES, ETC.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="6a"
+                        <input type="checkbox" id="Requerimento3A8" name="opcao3A8" value="6a"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> >>6 - NÃO HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="6b"
+                        <input type="checkbox" id="Requerimento3A9" name="opcao3A9" value="6b"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> >>6 - HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="7"
+                        <input type="checkbox" id="Requerimento3A10" name="opcao3A10" value="7"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 7 - CRED. ESTAB. TRINAMENTO NÁUTICO / PESSOA FÍSICA</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="7a"
+                        <input type="checkbox" id="Requerimento3A11" name="opcao3A11" value="7a"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> >>7 - NÃO HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="7b"
+                        <input type="checkbox" id="Requerimento3A12" name="opcao3A12" value="7b"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> >>7 - HOUVE ALTERAÇÃO NOS DADOS DO CRED. ANTERIOR.</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="8"
+                        <input type="checkbox" id="Requerimento3A13" name="opcao3A13" value="8"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 8 - DESCREDENCIAMENTO VOLUNTÁRIO DE ETN-M/PF</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="Requerimento" name="opcao" value="9"
+                        <input type="checkbox" id="Requerimento3A14" name="opcao3A14" value="9"
                             (change)="onCheckboxChange($event)">
                         <label for="Requerimento2"> 9 - DESCREDENCIAMENTO VOLUNTÁRIO DE EAMA</label>
                     </div>
@@ -693,22 +1020,198 @@
 
 <!-- Modal anexo 2F-->
 <div class="modal fade" id="modalAnexo2F" tabindex="-1" aria-labelledby="modalAnexo2FLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAnexo2FLabel">Informe o comprador:</h5>
+                <h5 class="modal-title" id="modalAnexo2FLabel">Informe os dados do Vendedor:</h5>
                 <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label>CPF/CPNJ</label>
-                    <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
-                            name="campotexto1" required>
+                <!-- Opção de seleção -->
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao2F" id="clienteExistente2F"
+                            [(ngModel)]="tipoSelecaoVendedor" value="existente" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteExistente2F">
+                            Selecionar um cliente cadastrado
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao2F" id="clienteManual2F"
+                            [(ngModel)]="tipoSelecaoVendedor" value="manual" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteManual2F">
+                            Inserir os dados manualmente
+                        </label>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <small style="color: red;">O cliente informado deve estar cadastrado na plataforma.</small>
+
+                <!-- Seção para cliente existente -->
+                <div *ngIf="tipoSelecaoVendedor === 'existente'">
+                    <div class="form-group">
+                        <label>CPF/CNPJ do proprietário anterior</label>
+                        <input type="text" id="nomeopcao2F" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                    <div class="mt-2">
+                        <small style="color: red;">O Proprietário anterior deve estar cadastrado na plataforma!!</small>
+                    </div>
+                </div>
+
+                <!-- Seção para inserção manual -->
+                <div *ngIf="tipoSelecaoVendedor === 'manual'">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group mb-2">
+                                <label>Nome Completo *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.nome"
+                                    name="nomeProprietario" appUppercase required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>CPF/CNPJ *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cpfcnpj"
+                                    name="cpfcnpjProprietario" appUppercase required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>RG</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.rg"
+                                    name="rgProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Órgão Emissor</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.orgEmissor"
+                                    name="orgEmissorProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Data Emissão</label>
+                                <input type="date" class="form-control" [(ngModel)]="proprietarioanterior.dtEmissao"
+                                    name="dtEmissaoProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.telefone"
+                                    name="telefoneProprietario">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Celular</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.celular"
+                                    name="celularProprietario">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>E-mail</label>
+                        <input type="email" class="form-control" [(ngModel)]="proprietarioanterior.email"
+                            name="emailProprietario" appUppercase>
+                    </div>
+
+                    <!-- Endereço -->
+                    <hr>
+                    <h6>Endereço</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group mb-2">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cep"
+                                    name="cepProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.logradouro"
+                                    name="logradouroProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-2">
+                                <label>Número</label>
+                                <input type="number" class="form-control" [(ngModel)]="proprietarioanterior.numero"
+                                    name="numeroProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Complemento</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.complemento"
+                                    name="complementoProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.bairro"
+                                    name="bairroProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Cidade</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cidade"
+                                    name="cidadeProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>UF *</label>
+                                <select class="form-control" [(ngModel)]="proprietarioanterior.uf"
+                                    name="ufProprietario">
+                                    <option value="">Selecione...</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -719,9 +1222,9 @@
     </div>
 </div>
 
-<!-- Modal anexo 3D-->
+<!-- Modal anexo 3C-->
 <div class="modal fade" id="modalAnexo3C" tabindex="-1" aria-labelledby="modalAnexo3CLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo3CLabel">Anexo 3C:</h5>
@@ -729,14 +1232,15 @@
             </div>
 
             <div class="modal-body">
-     
+
                 <div class="form-group">
                     <label for="orgMilitarSelect">Organização Militar:</label>
-                    <select id="orgMilitarSelect" class="form-control" [(ngModel)]="campotexto2" name="campotexto2" required>
-                      <option *ngFor="let org of orgMilitares" [value]="org.nome">{{ org.nome }}</option>
+                    <select id="orgMilitarSelect" class="form-control" [(ngModel)]="campotexto2" name="campotexto2"
+                        required>
+                        <option *ngFor="let org of orgMilitares" [value]="org.nome">{{ org.nome }}</option>
                     </select>
-                  </div>
-                
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="confirmarAnexo3C()">Confirmar</button>
@@ -748,7 +1252,7 @@
 
 <!-- Modal anexo 2B-->
 <div class="modal fade" id="modalAnexo2B" tabindex="-1" aria-labelledby="modalAnexo2BLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAnexo2BLabel">Selecionar Natureza</h5>
@@ -758,27 +1262,27 @@
                 <div class="form-group">
                     <label>Natureza</label>
                     <div>
-                        <input type="radio" id="naturezaInscricao" name="natureza2B" value="Inscrição"
+                        <input type="radio" id="naturezaInscricao" name="natureza2B1" value="Inscrição"
                             [(ngModel)]="natureza2B" required>
                         <label for="naturezaInscricao">Inscrição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaCancelamento" name="natureza2B" value="Cancelamento"
+                        <input type="radio" id="naturezaCancelamento" name="natureza2B2" value="Cancelamento"
                             [(ngModel)]="natureza2B">
                         <label for="naturezaCancelamento">Cancelamento</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfProprietario" name="natureza2B" value="Transf. Propriedade"
-                            [(ngModel)]="natureza2B">
+                        <input type="radio" id="naturezaTransfProprietario" name="natureza2B3"
+                            value="Transf. Propriedade" [(ngModel)]="natureza2B">
                         <label for="naturezaTransfProprietario">Transf. Propriedade</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza2B" value="Transf. Jurisdição"
+                        <input type="radio" id="naturezaTransfJurisdicao" name="natureza2B4" value="Transf. Jurisdição"
                             [(ngModel)]="natureza2B">
                         <label for="naturezaTransfJurisdicao">Transf. Jurisdição</label>
                     </div>
                     <div>
-                        <input type="radio" id="naturezaAtualizacao" name="natureza2B" value="Atualização de Dados"
+                        <input type="radio" id="naturezaAtualizacao" name="natureza2B5" value="Atualização de Dados"
                             [(ngModel)]="natureza2B">
                         <label for="naturezaAtualizacao">Atualização de Dados</label>
                     </div>
@@ -792,3 +1296,510 @@
     </div>
 </div>
 
+<!-- Modal anexo 2A-->
+<div class="modal fade" id="modalAnexo2A" tabindex="-1" aria-labelledby="modalAnexo2ALabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2ALabel">Selecionar Requerimento</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tipo Requerimento</label>
+                    <div>
+                        <input type="radio" id="Requerimento2a1" name="opcao2a1" value="inscricao" [(ngModel)]="opcao"
+                            required>
+                        <label for="Requerimento2a1">Inscrição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a2" name="opcao2a2" value="cancelamento"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a2">Canc. de Inscrição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a3" name="opcao2a3" value="transfpropriedade"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a3">Transferência de Propriedade</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a4" name="opcao2a4" value="transfjurisdicao"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a4">Transferência de Jurisdição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a5" name="opcao2a5" value="transfpropjurisdicao"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a5">Transferência de Propriedade e Jurisdição</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a6" name="opcao2a6" value="mudancanome" [(ngModel)]="opcao"
+                            required>
+                        <label for="Requerimento2a6">Mudança de nome da Embarcação</label>
+                    </div>
+                    <div class="form-group" *ngIf="opcao === 'mudancanome'">
+                        <label for="nome">1° Opção:</label>
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                    <div class="form-group" *ngIf="opcao === 'mudancanome'">
+                        <label for="nome">2° Opção:</label>
+                        <input type="text" id="nomeopcao2" class="form-control" [(ngModel)]="campotexto2"
+                            name="campotexto2" required>
+                    </div>
+                    <div class="form-group" *ngIf="opcao === 'mudancanome'">
+                        <label for="nome">3° Opção:</label>
+                        <input type="text" id="nomeopcao3" class="form-control" [(ngModel)]="campotexto3"
+                            name="campotexto3" required>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a7" name="opcao2a7" value="renovacaotie_sim"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a7">Renovação TIE/TIEM COM Alteração</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a8" name="opcao2a8" value="renovacaotie_nao"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a8">Renovação TIE/TIEM SEM Alteração</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a9" name="opcao2a9" value="segviatie_perda"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a9">Segunda Via TIE/TIEM (Perda)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a10" name="opcao2a10" value="segviatie_roubo"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a10">Segunda Via TIE/TIEM (Roubo)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a11" name="opcao2a11" value="segviatie_extravio"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a11">Segunda Via TIE/TIEM (Extravio)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a12" name="opcao2a12" value="segviatie_mauestado"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a12">Segunda Via TIE/TIEM (Mau estado de conservação)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a13" name="opcao2a13" value="alteracaodadosembarcacao"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a13">Alteração de dados cadastrais da embarcação</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a14" name="opcao2a14" value="alteracaodadosproprietario"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a14">Alteração de dados cadastrais do proprietário</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2a15" name="opcao2a15" value="outrosservicos"
+                            [(ngModel)]="opcao" required>
+                        <label for="Requerimento2a15">Outros serviços (Justificar)</label>
+                    </div>
+                    <div class="form-group" *ngIf="opcao === 'outrosservicos'">
+                        <label for="nome">Justificativa:</label>
+                        <input type="text" id="justificativa" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2A()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 2E212-->
+<div class="modal fade" id="modalAnexo2E212" tabindex="-1" aria-labelledby="modalAnexo2E212Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2E212Label">Informe os dados do Vendedor:</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>CPF/CPNJ</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <div class="form-group">
+                        <input type="text" id="nomeopcao2" class="form-control" [(ngModel)]="campotexto2"
+                            name="campotexto1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Valor</label>
+                    <div class="form-group">
+                        <input type="number" id="nomeopcao3" class="form-control" [(ngModel)]="campovalor"
+                            name="campovalor" required>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2E212()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 2J-->
+<div class="modal fade" id="modalAnexo2J" tabindex="-1" aria-labelledby="modalAnexo2JLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2JLabel">Seleção</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Informe o documento perdido/extraviado</label>
+                    <div>
+                        <input type="radio" id="Requerimento2j1" name="opcaotie" value="tie" [(ngModel)]="opcao"
+                            required>
+                        <label for="Requerimento2j1">Titulo de Inscrição de Embarcação (TIE)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento2j2" name="opcaotiem" value="tiem" [(ngModel)]="opcao"
+                            required>
+                        <label for="Requerimento2j2">Titulo de Inscrição de Embarcação Míuda(TIEM)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2J()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 2K-->
+<div class="modal fade" id="modalAnexo2K" tabindex="-1" aria-labelledby="modalAnexo2KLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo2KLabel">Informe os dados do Vendedor:</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Opção de seleção -->
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao" id="clienteExistente"
+                            [(ngModel)]="tipoSelecaoVendedor" value="existente" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteExistente">
+                            Selecionar um cliente cadastrado
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipoSelecao" id="clienteManual"
+                            [(ngModel)]="tipoSelecaoVendedor" value="manual" (change)="limparDados2K2F()">
+                        <label class="form-check-label" for="clienteManual">
+                            Inserir os dados manualmente
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Seção para cliente existente -->
+                <div *ngIf="tipoSelecaoVendedor === 'existente'">
+                    <div class="form-group">
+                        <label>CPF/CNPJ do proprietário anterior</label>
+                        <input type="text" id="nomeopcao2K" class="form-control" [(ngModel)]="campotexto1"
+                            name="campotexto1" required>
+                    </div>
+                    <div class="mt-2">
+                        <small style="color: red;">O Proprietário anterior deve estar cadastrado na plataforma!!</small>
+                    </div>
+                </div>
+
+                <!-- Seção para inserção manual -->
+                <div *ngIf="tipoSelecaoVendedor === 'manual'">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group mb-2">
+                                <label>Nome Completo *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.nome"
+                                    name="nomeProprietario" appUppercase required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>CPF/CNPJ *</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cpfcnpj"
+                                    name="cpfcnpjProprietario" appUppercase required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>RG</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.rg"
+                                    name="rgProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Órgão Emissor</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.orgEmissor"
+                                    name="orgEmissorProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Data Emissão</label>
+                                <input type="date" class="form-control" [(ngModel)]="proprietarioanterior.dtEmissao"
+                                    name="dtEmissaoProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.telefone"
+                                    name="telefoneProprietario">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Celular</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.celular"
+                                    name="celularProprietario">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>E-mail</label>
+                        <input type="email" class="form-control" [(ngModel)]="proprietarioanterior.email"
+                            name="emailProprietario" appUppercase>
+                    </div>
+
+                    <!-- Endereço -->
+                    <hr>
+                    <h6>Endereço</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group mb-2">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cep"
+                                    name="cepProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-2">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.logradouro"
+                                    name="logradouroProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-2">
+                                <label>Número</label>
+                                <input type="number" class="form-control" [(ngModel)]="proprietarioanterior.numero"
+                                    name="numeroProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Complemento</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.complemento"
+                                    name="complementoProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.bairro"
+                                    name="bairroProprietario" appUppercase>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>Cidade</label>
+                                <input type="text" class="form-control" [(ngModel)]="proprietarioanterior.cidade"
+                                    name="cidadeProprietario" appUppercase>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-2">
+                                <label>UF *</label>
+                                <select class="form-control" [(ngModel)]="proprietarioanterior.uf"
+                                    name="ufProprietario">
+                                    <option value="">Selecione...</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2K()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 5D-->
+<div class="modal fade" id="modalAnexo5D" tabindex="-1" aria-labelledby="modalAnexo5DLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo5DLabel">Seleção</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Informe a ocorrência com a carteira</label>
+                    <div>
+                        <input type="radio" id="Requerimento5D1" name="opcao5D1" value="1" [(ngModel)]="opcao" required>
+                        <label for="Requerimento5D1">Extraviada</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento5D2" name="opcao5D2" value="2" [(ngModel)]="opcao" required>
+                        <label for="Requerimento5D2">Roubada</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento5D3" name="opcao5D3" value="3" [(ngModel)]="opcao" required>
+                        <label for="Requerimento5D3">Furtada</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Requerimento5D4" name="opcao5D4" value="4" [(ngModel)]="opcao" required>
+                        <label for="Requerimento5D4">Danificada</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo5D()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal anexo 5E-->
+<div class="modal fade" id="modalAnexo5E" tabindex="-1" aria-labelledby="modalAnexo5ELabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo5ELabel">Seleção</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group mt-3">
+                    <label for="dataSelecionada">Selecione a Escola</label>
+                    <select id="escolaSelect" class="form-control" [(ngModel)]="escolaSelecionada"
+                        name="escolaSelecionada" required>
+                        <option *ngFor="let esc of listaEscolas" [ngValue]="esc">{{ esc.razaoSocial }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="dataSelecionada">Informe a Data da aula</label>
+                    <input type="date" id="dataSelecionada" class="form-control" [(ngModel)]="campotexto1"
+                        name="campotexto1" required>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="horasAula">Quantidade de Horas/Aula</label>
+                    <input type="text" id="horasaula" class="form-control" [(ngModel)]="campotexto2" name="campotexto2"
+                        required>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo5E()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal anexo 3B-->
+<div class="modal fade" id="modalAnexo3B" tabindex="-1" aria-labelledby="modalAnexo3BLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAnexo3BLabel">Seleção</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group mt-3">
+                    <label for="dataSelecionada">Selecione a Escola</label>
+                    <select id="escolaSelect" class="form-control" [(ngModel)]="escolaSelecionada"
+                        name="escolaSelecionada" required>
+                        <option *ngFor="let esc of listaEscolas" [ngValue]="esc">{{ esc.razaoSocial }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="dataSelecionada">Informe a Data da aula</label>
+                    <input type="date" id="dataSelecionada" class="form-control" [(ngModel)]="campotexto1"
+                        name="campotexto1" required>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="confirmarAnexo3B()">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

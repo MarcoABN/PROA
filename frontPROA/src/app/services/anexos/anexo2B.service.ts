@@ -7,6 +7,7 @@ import { Motor } from 'src/app/model/motor';
 import { FrontMotorService } from '../front-motor.service';
 import { Notafiscal } from 'src/app/model/notafiscal';
 import { FrontNotafiscalService } from '../front-notafiscal.service';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class Anexo2BService {
   motores: Motor[] = [];
   notaFiscal!: Notafiscal;
 
-  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) { }
+  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService, private maskcpf: ValidadorcpfcnpjService) { }
 
     //Função para gerar o Anexo 2B. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
   //Se for uma chamada do serviço-anexo é necessário passar algo no último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
@@ -28,6 +29,8 @@ export class Anexo2BService {
     this.notaFiscalService.listarNotaFiscalPorEmbarcacao(embarcacao.id).subscribe(notasFiscais => {
       this.notaFiscal = notasFiscais[0];
     });
+
+    console.log(embarcacao.tipoEmbarcacao);
 
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2B-N212.pdf').then(res => res.arrayBuffer());
@@ -43,9 +46,9 @@ export class Anexo2BService {
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
       form.getTextField('anoconstrucao').setText(formattedDtConstrucao ?? '');
-      form.getTextField('passageiros').setText(embarcacao.lotacao.toString() ?? '');
+      form.getTextField('passageiros').setText(embarcacao.lotacao?.toString() ?? '');
       form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
-      
+      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString()+"m" : '');
       
       if (natureza === 'Inscrição') {
         form.getCheckBox('check_inscricao').check();
@@ -67,7 +70,7 @@ export class Anexo2BService {
       form.getTextField('rg').setText(cliente.rg ?? '');
       form.getTextField('orgemissor').setText(cliente.orgEmissor ?? '');
       form.getTextField('dtemissao').setText(formattedDtEmissao ?? '');
-      form.getTextField('cpfcnpj').setText(cliente.cpfcnpj ?? '');
+      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj) ?? '');
       form.getTextField('telefone').setText(cliente.telefone ?? '');
       form.getTextField('celular').setText(cliente.celular ?? '');
       form.getTextField('email').setText(cliente.email ?? '');
@@ -78,34 +81,13 @@ export class Anexo2BService {
         form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
       }
       
-      if (this.motores.length === 2) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
-      }
-
-      if (this.motores.length === 3) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-        form.getTextField('marcamotor2').setText(this.motores[1].marca.toString() ?? '');
-        form.getTextField('potmotor2').setText(this.motores[1].potencia.toString() ?? '');
-        form.getTextField('numseriemotor2').setText(this.motores[1].numSerie.toString() ?? '');
-        form.getTextField('marcamotor3').setText(this.motores[2].marca.toString() ?? '');
-        form.getTextField('potmotor3').setText(this.motores[2].potencia.toString() ?? '');
-        form.getTextField('numseriemotor3').setText(this.motores[2].numSerie.toString() ?? '');
-      }
-      
       if (this.notaFiscal) {
         const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
         form.getTextField('numnota').setText(this.notaFiscal.numeroNotaFiscal.toString()?? '');
         form.getTextField('dtvenda').setText(formattedDtvenda);
         form.getTextField('local').setText(this.notaFiscal.local.toString()?? '');
         form.getTextField('vendedor').setText(this.notaFiscal.razaoSocial.toString()?? '');
-        form.getTextField('cpfcnpj_vendedor').setText(this.notaFiscal.cnpjvendedor.toString()?? '');
+        form.getTextField('cpfcnpj_vendedor').setText(this.maskcpf.mascararCpfCnpj(this.notaFiscal.cnpjvendedor.toString())?? '');
       }
 
       const hoje = new Date();

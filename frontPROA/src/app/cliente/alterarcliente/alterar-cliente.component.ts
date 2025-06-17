@@ -41,6 +41,7 @@ export class AlterarClienteComponent implements OnInit {
 }
 
   onSubmit() {
+    console.log (this.cliente.dtEmissao);
     this.clienteService.alterarCliente(this.idCliente, this.cliente).subscribe(data => {
       console.log(data);
       this.retornar();

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Anexo3DService } from './anexo3D.service';
+import { Anexo3DService } from './anexo3d.service';
 
 describe('Anexo3DService', () => {
   let service: Anexo3DService;

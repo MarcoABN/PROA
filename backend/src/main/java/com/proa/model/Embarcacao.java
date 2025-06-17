@@ -247,7 +247,7 @@ public class Embarcacao {
 	}
 
 	public void setAreaNavegacao(String areaNavegacao) {
-		this.areaNavegacao = areaNavegacao.toUpperCase();
+		this.areaNavegacao = areaNavegacao;
 	}
 
 	public float getCompPerpendicular() {
@@ -287,7 +287,7 @@ public class Embarcacao {
 	}
 
 	public void setMatCasco(String matCasco) {
-		this.matCasco = matCasco.toUpperCase();
+		this.matCasco = matCasco;
 	}
 
 	public int getQtdTripulantes() {
@@ -324,10 +324,13 @@ public class Embarcacao {
 
 	public String getTipoPropulsao() {
 		return tipoPropulsao;
+		
+		
 	}
 
 	public void setTipoPropulsao(String tipoPropulsao) {
-		this.tipoPropulsao = tipoPropulsao.toUpperCase();
+		
+		this.tipoPropulsao = tipoPropulsao;
 	}
 
 	public String getMatSuperestrutura() {
@@ -335,7 +338,8 @@ public class Embarcacao {
 	}
 
 	public void setMatSuperestrutura(String matSuperestrutura) {
-		this.matSuperestrutura = matSuperestrutura.toUpperCase();
+		
+		this.matSuperestrutura = matSuperestrutura;
 	}
 
 	public float getPontalMoldado() {
@@ -351,7 +355,8 @@ public class Embarcacao {
 	}
 
 	public void setConstrutor(String construtor) {
-		this.construtor = construtor.toUpperCase();
+	
+		this.construtor = construtor;
 	}
 
 	public float getArqueacaoBruta() {
@@ -367,15 +372,16 @@ public class Embarcacao {
 	}
 
 	public void setTipoEmbarcacao(String tipoEmbarcacao) {
-		this.tipoEmbarcacao = tipoEmbarcacao.toUpperCase();
+	
+		this.tipoEmbarcacao = tipoEmbarcacao;
 	}
 
 	public String getNomeEmbarcacao() {
 		return nomeEmbarcacao;
 	}
 
-	public void setNomeEmbarcacao(String nomeEmbarcacao) {
-		this.nomeEmbarcacao = nomeEmbarcacao.toUpperCase();
+	public void setNomeEmbarcacao(String nomeEmbarcacao) {		
+		this.nomeEmbarcacao = nomeEmbarcacao;
 	}
 
 	public String getCorPredominante() {
@@ -383,7 +389,7 @@ public class Embarcacao {
 	}
 
 	public void setCorPredominante(String corPredominante) {
-		this.corPredominante = corPredominante.toUpperCase();
+		this.corPredominante = corPredominante;
 	}
 
 	public float getPorteBruto() {
@@ -423,7 +429,8 @@ public class Embarcacao {
 	}
 
 	public void setNumInscricao(String numInscricao) {
-		this.numInscricao = numInscricao.toUpperCase();
+		
+		this.numInscricao = numInscricao;
 	}
 
 	public String getTipoAtividade() {
@@ -431,7 +438,8 @@ public class Embarcacao {
 	}
 
 	public void setTipoAtividade(String tipoAtividade) {
-		this.tipoAtividade = tipoAtividade.toUpperCase();
+		
+		this.tipoAtividade = tipoAtividade;
 	}
 
 	public String getLogradouro() {
@@ -439,7 +447,8 @@ public class Embarcacao {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro.toUpperCase();
+		
+		this.logradouro = logradouro;
 	}
 
 	public String getBairro() {
@@ -447,7 +456,8 @@ public class Embarcacao {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro.toUpperCase();
+		
+		this.bairro = bairro;
 	}
 
 	public String getNumero() {
@@ -463,7 +473,7 @@ public class Embarcacao {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = complemento.toUpperCase();
+		this.complemento = complemento;
 	}
 
 	public String getUF() {
@@ -471,7 +481,7 @@ public class Embarcacao {
 	}
 
 	public void setUF(String uF) {
-		UF = uF.toUpperCase();
+		UF = uF;
 	}
 
 	public String getCidade() {
@@ -479,7 +489,7 @@ public class Embarcacao {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade.toUpperCase();
+		this.cidade = cidade;
 	}
 
 	public String getCEP() {

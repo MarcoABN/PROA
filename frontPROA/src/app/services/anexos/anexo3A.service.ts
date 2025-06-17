@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { PDFDocument } from 'pdf-lib';
 import { Cliente } from 'src/app/model/cliente';
 import { Embarcacao } from 'src/app/model/embarcacao';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo3AService {
   texto: string[] = [];
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private maskcpf: ValidadorcpfcnpjService) { }
 
-  async anexo3A(solicitacao: string, campotexto1: string, embarcacao?: Embarcacao, cliente?: Cliente, servico?: string): Promise<void | Uint8Array> {
+  async anexo3A(solicitacao: string, campotexto1: string, cliente: Cliente, servico?: string): Promise<void | Uint8Array> {
 
     try {
 
@@ -76,33 +77,14 @@ export class Anexo3AService {
         }
       });
 
-      if (embarcacao) {
-        form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
-        form.getTextField('cpf1').setText(embarcacao.cliente?.cpfcnpj ?? '');
-        form.getTextField('cpf2').setText(embarcacao.cliente?.cpfcnpj ?? '');
-        form.getTextField('rg').setText(embarcacao.cliente?.rg ?? '');
-        form.getTextField('orgexpedidor').setText(embarcacao.cliente?.orgEmissor ?? '');
-        form.getTextField('logradouro').setText(embarcacao.cliente?.logradouro ?? '');
-        form.getTextField('numero').setText(embarcacao.cliente?.numero ?? '');
-        form.getTextField('complemento').setText(embarcacao.cliente?.complemento ?? '');
-        form.getTextField('bairro').setText(embarcacao.cliente?.bairro ?? '');
-        form.getTextField('cidade').setText(embarcacao.cliente?.cidade ?? '');
-        form.getTextField('uf').setText(embarcacao.cliente?.uf ?? '');
-        form.getTextField('cep').setText(embarcacao.cliente?.cep ?? '');
-        form.getTextField('dddtelefone').setText(embarcacao.cliente?.telefone ? embarcacao.cliente.telefone.substring(0, 2) : '');
-        form.getTextField('telefone').setText(embarcacao.cliente?.telefone ? embarcacao.cliente.telefone.substring(2) : '');
-        form.getTextField('dddcelular').setText(embarcacao.cliente?.celular ? embarcacao.cliente.celular.substring(0, 2) : '');
-        form.getTextField('celular').setText(embarcacao.cliente?.celular ? embarcacao.cliente.celular.substring(2) : '');
-        form.getTextField('email').setText(embarcacao.cliente?.email ?? '');
-        form.getTextField('local').setText(embarcacao.cliente?.cidade ?? '');
-      } else if (cliente) {
+      if (cliente) {
         form.getTextField('nome').setText(cliente.nome ?? '');
-        form.getTextField('cpf1').setText(cliente.cpfcnpj ?? '');
-        form.getTextField('cpf2').setText(cliente.cpfcnpj ?? '');
+        form.getTextField('cpf1').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj) ?? '');
+        form.getTextField('cpf2').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj)?? '');
         form.getTextField('rg').setText(cliente.rg ?? '');
         form.getTextField('orgexpedidor').setText(cliente.orgEmissor ?? '');
         form.getTextField('logradouro').setText(cliente.logradouro ?? '');
-        form.getTextField('numero').setText(cliente.numero ?? '');
+        form.getTextField('numero').setText(cliente.numero.toString() ?? '');
         form.getTextField('complemento').setText(cliente.complemento ?? '');
         form.getTextField('bairro').setText(cliente.bairro ?? '');
         form.getTextField('cidade').setText(cliente.cidade ?? '');

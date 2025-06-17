@@ -2,13 +2,14 @@ import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { PDFDocument } from 'pdf-lib';
 import { Embarcacao } from 'src/app/model/embarcacao';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo2EService {
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private maskcpf: ValidadorcpfcnpjService) { }
 
   async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array>{
 
@@ -110,14 +111,14 @@ export class Anexo2EService {
 
       form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
       form.getTextField('logradouro').setText((embarcacao.cliente?.logradouro ?? '') + ', ' + (embarcacao.cliente?.complemento ?? ''));
-      form.getTextField('numero').setText(embarcacao.cliente?.numero ?? '');
+      form.getTextField('numero').setText(embarcacao.cliente?.numero.toString() ?? '');
       form.getTextField('cidade').setText(embarcacao.cliente?.cidade ?? '');
       form.getTextField('uf').setText(embarcacao.cliente?.uf ?? '');
       form.getTextField('rg').setText(embarcacao.cliente?.rg ?? '');
       form.getTextField('orgexpedidor').setText(embarcacao.cliente?.orgEmissor ?? '');
       form.getTextField('cep').setText(embarcacao.cliente?.cep ?? '');
       form.getTextField('telefone').setText(embarcacao.cliente?.telefone ?? '');
-      form.getTextField('cpfcnpj').setText(embarcacao.cliente?.cpfcnpj ?? '');
+      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente?.cpfcnpj) ?? '');
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('numinscricao').setText(embarcacao.numInscricao ?? '');

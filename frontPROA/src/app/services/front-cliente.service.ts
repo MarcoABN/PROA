@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { Cliente } from '../model/cliente';
 import { AppConfig } from '../config/app-config';
@@ -40,7 +40,7 @@ export class FrontClienteService {
 
   //Servico para Alterar uma Cliente
   alterarCliente(IDCliente: number, cliente: Cliente): Observable<Object>{
-    console.log("Teste: ", cliente.dataNasc);
+    console.log("Teste: ", cliente.dtEmissao);
     return this.httpClient.put(`${this.url}/${IDCliente}`, cliente);
   }
 
@@ -53,6 +53,12 @@ export class FrontClienteService {
   //Consultar por CPFCNPJ
   consultarRepresentantes(idEmpresa: number): Observable<Cliente[]> {
     return this.httpClient.get<Cliente[]>(`${this.url3}/${idEmpresa}`);
+  }
+
+   // Novo método para consultar por nome (busca parcial)
+  consultarClientesPorNome(nome: string): Observable<Cliente[]> {
+    const params = new HttpParams().set('nome', nome);
+    return this.httpClient.get<Cliente[]>(`${this.url}/buscar-por-nome`, { params });
   }
   
 

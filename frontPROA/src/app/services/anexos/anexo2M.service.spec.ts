@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Anexo2MService } from './anexo2M.service';
+import { Anexo2MService } from './anexo2m.service';
 
 describe('Anexo2MService', () => {
   let service: Anexo2MService;

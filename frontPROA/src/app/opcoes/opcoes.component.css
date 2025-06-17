@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    justify-content: center; /* centralização horizontal */
+    align-items: flex-start; /* alinha no topo */
+    padding: 1rem 2rem 2rem 2rem; /* reduz padding superior */
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh; /* garante altura mínima da viewport */
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 900px;
+}

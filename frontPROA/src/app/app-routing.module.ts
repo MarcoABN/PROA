@@ -15,7 +15,7 @@ import { AuthGuard } from './services/autenticacao/auth.guard'; // Importe o Aut
 import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
-import { EmpresaComponent } from './empresa/empresa.component';
+import { OpcoesComponent } from './opcoes/opcoes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login/login', pathMatch: 'full' },
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'motor/manter-motor/:id', component: ManterMotorComponent, canActivate: [AuthGuard] },
   { path: 'notafiscal/notafiscal/:id', component: NotafiscalComponent, canActivate: [AuthGuard] },
   { path: 'servico-anexo/servico-anexo', component: ServicoAnexoComponent, canActivate: [AuthGuard] },
-  { path: 'empresa/empresa', component: EmpresaComponent, canActivate: [AuthGuard]},
+  { path: 'empresa/empresa', component: OpcoesComponent, canActivate: [AuthGuard]},
   
 ];
 

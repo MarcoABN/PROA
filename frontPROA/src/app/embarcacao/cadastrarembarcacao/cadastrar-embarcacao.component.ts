@@ -36,6 +36,14 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
       (data: Cliente) => {
         this.cliente = data;
         console.log('Cliente recebido: ', this.cliente);
+        this.embarcacao.cep = this.cliente.cep;
+        this.embarcacao.logradouro = this.cliente.logradouro;
+        this.embarcacao.numero = this.cliente.numero;
+        this.embarcacao.bairro = this.cliente.bairro;
+        this.embarcacao.complemento = this.cliente.complemento;
+        this.embarcacao.cidade = this.cliente.cidade;
+        this.embarcacao.uf = this.cliente.uf;
+        
       },
       (error) => {
         console.error('Erro ao consultar cliente: ', error);
@@ -43,11 +51,11 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
     );
     this.embarcacao.tipoEmbarcacao = 'LANCHA';
     this.embarcacao.areaNavegacao = 'INTERIOR';
-    this.embarcacao.tipoAtividade = 'ESPORTE E LAZER';
+    this.embarcacao.tipoAtividade = 'ESPORTE LAZER';
     this.embarcacao.tipoPropulsao = 'MOTOR';
     this.embarcacao.qtdTripulantes = 1;
     this.embarcacao.qtdMotores = 1;
-    this.embarcacao.numInscricao = '';    
+    this.embarcacao.numInscricao = '';
   }
 
   retornar(){
@@ -63,12 +71,11 @@ export class CadastrarEmbarcacaoComponent implements OnInit {
 
   onSubmit(){
     //AQUI FOI A CORRECAO DA CARALHA QUE NAO FUNCIONA!!!!!!!!!!
-    if (1 == 1) {0
-      console.log("teste pra testar o teste");
-    }
-    //TOMA NO CUUUUUUUUUUUUUUUUUUUUUUUUUUU
+    
     this.embarcacao.id = 0;
     this.embarcacao.cliente = this.cliente;
+
+    console.log('Enviando para backend:', this.embarcacao);
     this.embarcacaoService.cadastrarEmbarcacao(this.embarcacao).subscribe(data => {
       console.log(data);
       alert('Cadastro realizado com sucesso!');

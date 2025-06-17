@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.proa.backendteste.BackendApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.954 s - in com.proa.backendteste.BackendApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.951 s - in com.proa.backendteste.BackendApplicationTests

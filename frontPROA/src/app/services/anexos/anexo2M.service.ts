@@ -6,49 +6,57 @@ import { FrontMotorService } from '../front-motor.service';
 import { Cliente } from 'src/app/model/cliente';
 import { FrontClienteService } from '../front-cliente.service';
 import { firstValueFrom } from 'rxjs';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo2MService {
 
-  constructor(private motorService: FrontMotorService, private clienteService: FrontClienteService ) { }
+  constructor(private motorService: FrontMotorService, private maskcpf: ValidadorcpfcnpjService ) { }
 
-  cliente!: Cliente;
   motores: Motor[] = [];
   qtdmotores!: number;
   
   
-  async anexo2M (embarcacao: Embarcacao, campotexto1: string, campotexto2: string, servico?: string): Promise<void | Uint8Array>{
+  async anexo2M ( embarcacao: Embarcacao, 
+                  campotexto1: string, 
+                  campotexto2: string, 
+                  campotexto3: string, 
+                  opcao: string,
+                  valor:number,
+                  servico?: string): Promise<void | Uint8Array>{
 
 
     try {
 
-      await this.carregarDados(embarcacao, campotexto1);
+      await this.carregarDados(embarcacao);
 
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2M-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
       const form = pdfDoc.getForm();
 
+      
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
-      form.getTextField('nomeproprietario').setText(embarcacao.cliente?.nome ?? '');
-      form.getTextField('cpfcnpjproprietario').setText(embarcacao.cliente?.cpfcnpj ?? '');
-      form.getTextField('telefoneproprietario').setText(embarcacao.cliente?.telefone ?? '');
-      form.getTextField('emailproprietario').setText(embarcacao.cliente?.email ?? '');
 
-      form.getTextField('nomecomprador').setText(this.cliente?.nome ?? '');
-      form.getTextField('cpfcnpjcomprador').setText(this.cliente?.cpfcnpj ?? '');
-      form.getTextField('telefone').setText(this.cliente?.celular ?? '');
-      form.getTextField('logradourocomprador').setText(this.cliente?.logradouro ?? '');
-      form.getTextField('bairrocomprador').setText(this.cliente?.bairro ?? '');
-      form.getTextField('cidadecomprador').setText(this.cliente?.cidade ?? '');
-      form.getTextField('numerocomprador').setText(this.cliente?.numero ?? '');
-      form.getTextField('complementocomprador').setText(this.cliente?.complemento ?? '');
-      form.getTextField('cepcomprador').setText(this.cliente?.cep ?? '');
-      form.getTextField('emailcomprador').setText(this.cliente?.email ?? '');
-      form.getTextField('valorcomprador').setText("R$ " + (campotexto2 ?? ''));
+      form.getTextField('cpfcnpjproprietario').setText(this.maskcpf.mascararCpfCnpj(campotexto1) ?? '');
+      form.getTextField('nomeproprietario').setText(campotexto2?? '');
+      form.getTextField('telefoneproprietario').setText(campotexto3 ?? '');
+      form.getTextField('emailproprietario').setText(opcao ?? '');
+
+      form.getTextField('nomecomprador').setText(embarcacao.cliente.nome ?? '');
+      form.getTextField('cpfcnpjcomprador').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
+      form.getTextField('telefone').setText(embarcacao.cliente.celular ?? '');
+      form.getTextField('logradourocomprador').setText(embarcacao.cliente.logradouro ?? '');
+      form.getTextField('bairrocomprador').setText(embarcacao.cliente.bairro ?? '');
+      form.getTextField('cidadecomprador').setText(embarcacao.cliente.cidade ?? '');
+      form.getTextField('numerocomprador').setText(embarcacao.cliente.numero.toString() ?? '');
+      form.getTextField('complementocomprador').setText(embarcacao.cliente.complemento ?? '');
+      form.getTextField('cepcomprador').setText(embarcacao.cliente.cep ?? '');
+      form.getTextField('emailcomprador').setText(embarcacao.cliente.email ?? '');
+      form.getTextField('valorcomprador').setText("R$ " + (valor ?? ''));
 
 
 
@@ -131,7 +139,7 @@ export class Anexo2MService {
     window.open(url, '_blank');
   }
 
-  async carregarDados(embarcacao: Embarcacao, campotexto1: string) {
+  async carregarDados(embarcacao: Embarcacao) {
     try {
       this.motores = await firstValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao?.id ?? ''));
       this.qtdmotores = this.motores?.length ?? 0;
@@ -146,12 +154,6 @@ export class Anexo2MService {
         throw error;
       }
     }
-  
-    try {
-      this.cliente = await firstValueFrom(this.clienteService.consultarClienteCPFCNPJ(campotexto1 ?? ''));
-    } catch (error) {
-      console.error("Erro ao buscar cliente comprador:", error);
-      throw error;
-    }
   }
+
 }

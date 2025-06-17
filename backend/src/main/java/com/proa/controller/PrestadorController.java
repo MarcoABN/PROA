@@ -35,6 +35,19 @@ public class PrestadorController {
 		return this.prestRep.findAll();
 
 	}
+	
+
+    //Buscar só instrutores
+    @GetMapping("/instrutores")
+    public List<Prestador> listarInstrutores() {
+        return prestRep.findByInstrutorTrue();
+    }
+
+    //Buscar só procuradores
+    @GetMapping("/procuradores")
+    public List<Prestador> listarProcuradores() {
+        return prestRep.findByProcuradorTrue();
+    }
 
 	//Metodo para consultar Prestador
 	@GetMapping("/prestador/{idPrestador}")
@@ -80,6 +93,17 @@ public class PrestadorController {
 		prestLocalizado.setProfissao(prest.getProfissao());
 		prestLocalizado.setNacionalidade(prest.getNacionalidade());
 		
+		prestLocalizado.setCha_dtemissao(prest.getCha_dtemissao());
+		prestLocalizado.setCha_categoria(prest.getCha_categoria());
+		prestLocalizado.setCha_numero(prest.getCha_numero());
+		
+		prestLocalizado.setProcurador(prest.getProcurador());
+		prestLocalizado.setInstrutor(prest.getInstrutor());
+		prestLocalizado.setTipoProcuracao(prest.getTipoProcuracao());
+		prestLocalizado.setEstabelecimento(prest.getEstabelecimento());
+		
+		
+		
 		/*AVALIAR COMO DEVE SER TRATADO A QUESTÃO DO RELACIONAMENTO:
 		 * AO CRIAR GET/POST PARA OS RELACIONAMENTOS, TEMOS LOOP NAS VALIDAÇÕES
 		 * LOGO, DEVE-SE:
@@ -113,4 +137,6 @@ public class PrestadorController {
 		return ResponseEntity.ok(resposta);
 
 	}
+	
+	
 }

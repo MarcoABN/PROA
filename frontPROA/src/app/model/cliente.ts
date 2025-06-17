@@ -9,26 +9,25 @@ export class Cliente {
     dtEmissao!: Date;
     cpfcnpj!: string;
     nacionalidade!: string;
-    naturalidade!: string;
+    naturalidade?: string;
     dataNasc!: Date;
-    telefone!: string;
-    celular!: string;
-    email!: string;
+    telefone?: string;
+    celular?: string;
+    email?: string;
     //tratar senha posteriormente
     senha!: string;
 
     //Dados de endereço
     cep!: string;
     logradouro!: string;
-    numero!: string;
-    complemento!: string;
+    numero!: number;
+    complemento?: string;
     bairro!: string;
     cidade!: string;
     uf!: string;
-    representaEmpresa!: string;
     
-    //Adicionar posterior: relação de classes
-
-    idEmpresa!: number;
+    cha_numero?: string;
+    cha_categoria?: string;
+    cha_dtemissao?: Date;
     
 }

@@ -1,61 +1,104 @@
-<div class="form-wrapper">
-  <h2 class="text-center">Motores vinculados a Embarcação</h2>
-  
-  <div class="form-group">
-      <label for="cliente">Nome do Cliente:</label>
-      <input type="text" id="cliente" class="form-control" [(ngModel)]="cliente.nome" readonly>
-  </div>
-  
-  <div class="form-group">
-      <label for="embarcacao">Nome da Embarcação:</label>
-      <input type="text" id="embarcacao" class="form-control" [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
-  </div>
-  
-  <br>
-  <h3>Motores</h3>
-<table class="table table-striped" *ngIf="motores.length > 0; else noMotores">
-  <thead>
-    <tr>
-      <th>Marca</th>
-      <th>Número de Série</th>
-      <th>Potência</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let motor of motores">
-      <td>{{ motor.marca }}</td>
-      <td>{{ motor.numSerie }}</td>
-      <td>{{ motor.potencia }}</td>
-      <td>
-        <button type="button" class="btn btn-danger" (click)="excluirMotor(motor.id)">Excluir</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto">
+    <h2 class="text-center mb-3 mb-md-4">
+      <i class="fas fa-engine me-2"></i>Motores vinculados à Embarcação
+    </h2>
 
-<ng-template #noMotores>
-  <p class="text-center text-muted">Nenhum motor cadastrado para esta embarcação.</p>
-</ng-template>
+    <!-- Informações do Cliente e Embarcação -->
+    <div class="card mb-3">
+      <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informações</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-2 g-md-3">
+          <div class="col-md-6">
+            <label for="cliente" class="form-label small">Nome do Cliente</label>
+            <input type="text" id="cliente" class="form-control form-control-plaintext form-control-sm" 
+                   [(ngModel)]="cliente.nome" readonly>
+          </div>
+          <div class="col-md-6">
+            <label for="embarcacao" class="form-label small">Nome da Embarcação</label>
+            <input type="text" id="embarcacao" class="form-control form-control-plaintext form-control-sm" 
+                   [(ngModel)]="embarcacao.nomeEmbarcacao" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  
-  <br>
-  <h3>Adicionar Motor</h3>
-  
-  <div class="form-group">
-      <label for="marca">Marca:</label>
-      <input type="text" id="marca" class="form-control" [(ngModel)]="novoMotor.marca">
+    <!-- Lista de Motores -->
+    <div class="card mb-3">
+      <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Motores Cadastrados</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped" *ngIf="motores.length > 0; else noMotores">
+            <thead>
+              <tr>
+                <th class="small">Marca</th>
+                <th class="small">Número de Série</th>
+                <th class="small">Potência</th>
+                <th class="small text-end">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let motor of motores">
+                <td>{{ motor.marca }}</td>
+                <td>{{ motor.numSerie }}</td>
+                <td>{{ motor.potencia }}</td>
+                <td class="text-end">
+                  <button type="button" class="btn btn-danger btn-sm" 
+                          (click)="excluirMotor(motor.id)">
+                    <i class="fas fa-trash-alt me-1"></i>Excluir
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ng-template #noMotores>
+            <p class="text-center text-muted small">Nenhum motor cadastrado para esta embarcação.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário para Adicionar Motor -->
+    <div class="card mb-3">
+      <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Adicionar Novo Motor</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="adicionarMotor()" #motorForm="ngForm">
+          <div class="row g-2 g-md-3">
+            <div class="col-md-4">
+              <label for="marca" class="form-label small">Marca*</label>
+              <input type="text" id="marca" class="form-control form-control-sm" 
+                     [(ngModel)]="novoMotor.marca" name="marca" required>
+            </div>
+            
+            <div class="col-md-4">
+              <label for="numSerie" class="form-label small">Número de Série*</label>
+              <input type="text" id="numSerie" class="form-control form-control-sm" 
+                     [(ngModel)]="novoMotor.numSerie" name="numSerie" required>
+            </div>
+            
+            <div class="col-md-4">
+              <label for="potencia" class="form-label small">Potência*</label>
+              <input type="number" id="potencia" class="form-control form-control-sm" 
+                     [(ngModel)]="novoMotor.potencia" name="potencia" required>
+            </div>
+          </div>
+          
+          <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" class="btn btn-success btn-sm" [disabled]="!motorForm.form.valid">
+                <i class="fas fa-plus me-1"></i>Adicionar Motor
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  
-  <div class="form-group">
-      <label for="numSerie">Número de Série:</label>
-      <input type="text" id="numSerie" class="form-control" [(ngModel)]="novoMotor.numSerie">
-  </div>
-  
-  <div class="form-group">
-      <label for="potencia">Potência:</label>
-      <input type="number" id="potencia" class="form-control" [(ngModel)]="novoMotor.potencia">
-  </div>
-  
-  <button type="button" class="btn btn-success" (click)="adicionarMotor()">Adicionar Motor</button>
 </div>

@@ -89,17 +89,21 @@ public class Cliente {
 	@Column (name="uf")
 	private String UF;
 	
+	@Column (name="cha_numero")
+	private String cha_numero;
 	
+	@Column (name="cha_categoria")
+	private String cha_categoria;
 	
-
-	
-
+	@Column (name="cha_dtemissao")
+	private Date cha_dtemissao;
 	
 
 	public Cliente(List<Embarcacao> embarcacoes, OrgMilitar orgmilitar, Long id, String nome, String rG,
 			String orgEmissor, Date dtEmissao, String cPFCNPJ, String nacionalidade, String naturalidade, Date dataNasc,
 			String telefone, String celular, String email, String senha, String cep, String logradouro, String numero,
-			String complemento, String bairro, String cidade, String uF) {
+			String complemento, String bairro, String cidade, String uF, String cha_numero, String cha_categoria,
+			Date cha_dtemissao) {
 		super();
 		this.embarcacoes = embarcacoes;
 		this.orgmilitar = orgmilitar;
@@ -123,9 +127,10 @@ public class Cliente {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		UF = uF;
-
+		this.cha_numero = cha_numero;
+		this.cha_categoria = cha_categoria;
+		this.cha_dtemissao = cha_dtemissao;
 	}
- 
 
 	public Cliente() {
 		super();
@@ -146,7 +151,7 @@ public class Cliente {
 
 	public void setNome(String nome) {
 		
-		this.nome = nome.toUpperCase();
+		this.nome = nome;
 	}
 
 	public String getRG() {
@@ -162,7 +167,8 @@ public class Cliente {
 	}
 
 	public void setOrgEmissor(String orgEmissor) {
-		this.orgEmissor = orgEmissor.toUpperCase();
+	
+		this.orgEmissor = orgEmissor;
 	}
 
 	public String getCPFCNPJ() {
@@ -210,7 +216,7 @@ public class Cliente {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.toUpperCase();
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -234,7 +240,7 @@ public class Cliente {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro.toUpperCase();
+		this.logradouro = logradouro;
 	}
 
 	public String getNumero() {
@@ -250,7 +256,7 @@ public class Cliente {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = complemento.toUpperCase();
+		this.complemento = complemento;
 	}
 
 	public String getBairro() {
@@ -258,7 +264,7 @@ public class Cliente {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro.toUpperCase();
+		this.bairro = bairro;
 	}
 
 	public String getCidade() {
@@ -266,7 +272,7 @@ public class Cliente {
 	}
 
 	public void setCidade(String cidade) {
-		this.cidade = cidade.toUpperCase();
+		this.cidade = cidade;
 	}
 
 	public String getUF() {
@@ -274,7 +280,7 @@ public class Cliente {
 	}
 
 	public void setUF(String uF) {
-		UF = uF.toUpperCase();
+		UF = uF;
 	}
 
 	public OrgMilitar getOrgmilitar() {
@@ -301,6 +307,37 @@ public class Cliente {
 		this.nacionalidade = nacionalidade;
 	}
 
+
+	public String getCha_numero() {
+		return cha_numero;
+	}
+
+
+	public void setCha_numero(String cha_numero) {
+		this.cha_numero = cha_numero;
+	}
+
+
+	public String getCha_categoria() {
+		return cha_categoria;
+	}
+
+
+	public void setCha_categoria(String cha_categoria) {
+		this.cha_categoria = cha_categoria;
+	}
+
+
+	public Date getCha_dtemissao() {
+		return cha_dtemissao;
+	}
+
+
+	public void setCha_dtemissao(Date cha_dtemissao) {
+		this.cha_dtemissao = cha_dtemissao;
+	}
+
+	
 	
 	
 

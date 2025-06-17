@@ -1,174 +1,203 @@
-<div class="form-wrapper">
-    <h2>Alterar Cliente</h2>
-    <br>
-    <h4>Detalhes do Cliente</h4>
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto">
+    <h2 class="text-center mb-3 mb-md-4">
+      <i class="fas fa-user-edit me-2"></i>Alterar Cliente
+    </h2>
+
     <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
-    <div class="card mb-4">
+      <!-- Dados Pessoais -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-id-card me-2"></i>Dados Pessoais</h5>
+        </div>
         <div class="card-body">
-            <div class="row">
-                <!-- Nome -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nome"><span class="text-danger">*</span>Nome:</label>
-                        <input type="text" id="nome" class="form-control" [(ngModel)]="cliente.nome" name="nome" required>
-                    </div>
-                </div>
-
-                <!-- CPF/CNPJ -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="cpfcnpj"><span class="text-danger">*</span>CPF/CNPJ:</label>
-                        <input type="text" id="cpfcnpj" class="form-control" [(ngModel)]="cliente.cpfcnpj" name="cpfcnpj" required>
-                    </div>
-                </div>
-
-                <!-- RG -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="rg"><span class="text-danger">*</span>RG:</label>
-                        <input type="text" id="rg" class="form-control" [(ngModel)]="cliente.rg" name="rg" required>
-                    </div>
-                </div>
-
-                <!-- Órgão Emissor e Data de Emissão -->
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="orgEmissor"><span class="text-danger">*</span>Órgão Emissor:</label>
-                        <input type="text" id="orgEmissor" class="form-control" [(ngModel)]="cliente.orgEmissor" name="orgEmissor" required>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="dtEmissao"><span class="text-danger">*</span>Data de Emissão:</label>
-                        <input type="date" id="dtEmissao" class="form-control" [(ngModel)]="cliente.dtEmissao" name="dtEmissao" required>
-                    </div>
-                </div>
-
-                <!-- Data de Nascimento -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="dtNasc"><span class="text-danger">*</span>Data de Nascimento:</label>
-                        <input type="date" id="dtNasc" class="form-control" [(ngModel)]="cliente.dataNasc" name="dtNasc" required>
-                    </div>
-                </div>
-
-                <!-- Nacionalidade -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nacionalidade"><span class="text-danger">*</span>Nacionalidade:</label>
-                        <input type="text" id="nacionalidade" class="form-control" [(ngModel)]="cliente.nacionalidade" name="nacionalidade" required>
-                    </div>
-                </div>
-
-                <!-- Naturalidade -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="naturalidade"><span class="text-danger">*</span>Naturalidade:</label>
-                        <input type="text" id="naturalidade" class="form-control" [(ngModel)]="cliente.naturalidade" name="naturalidade" required>
-                    </div>
-                </div>
-
-                <!-- Telefone -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="telefone">Telefone:</label>
-                        <input type="text" id="telefone" class="form-control" [(ngModel)]="cliente.telefone" name="telefone" required>
-                    </div>
-                </div>
-
-                <!-- Celular -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="celular">Celular:</label>
-                        <input type="text" id="celular" class="form-control" [(ngModel)]="cliente.celular" name="celular" required>
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" class="form-control" [(ngModel)]="cliente.email" name="email" required>
-                    </div>
-                </div>
+          <div class="row g-2 g-md-3">
+            <!-- Nome -->
+            <div class="col-md-6">
+              <label for="nome" class="form-label small">Nome*</label>
+              <input type="text" id="nome" class="form-control form-control-sm" [(ngModel)]="cliente.nome" name="nome"
+                appUppercase required>
             </div>
-        </div>
-    </div>
- 
-        <div class="card mb-4">
-            <div class="card-header bg-light">
-                <h4 class="mb-0">Endereço</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="CEP"><span class="text-danger">*</span>CEP</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="CEP" [(ngModel)]="cliente.cep" name="CEP"
-                                    required>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary"
-                                        (click)="buscarEndereco()">Buscar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="logradouro"><span class="text-danger">*</span>Logradouro</label>
-                            <input type="text" class="form-control" id="logradouro" [(ngModel)]="cliente.logradouro"
-                                name="logradouro" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="numero"><span class="text-danger">*</span>Número</label>
-                            <input type="number" class="form-control" id="numero" [(ngModel)]="cliente.numero"
-                                name="numero" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="bairro"><span class="text-danger">*</span>Bairro</label>
-                            <input type="text" class="form-control" id="bairro" [(ngModel)]="cliente.bairro"
-                                name="bairro" required>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="complemento"><span class="text-danger">*</span>Complemento</label>
-                            <input type="text" class="form-control" id="complemento"
-                                [(ngModel)]="cliente.complemento" name="complemento">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="cidade"><span class="text-danger">*</span>Cidade</label>
-                            <input type="text" class="form-control" id="cidade" [(ngModel)]="cliente.cidade"
-                                name="cidade" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="UF"><span class="text-danger">*</span>UF</label>
-                            <input type="text" class="form-control" id="UF" [(ngModel)]="cliente.uf" name="UF"
-                                required>
-                        </div>
-                    </div>
-                </div>
+            <!-- CPF/CNPJ -->
+            <div class="col-md-6">
+              <label for="cpfcnpj" class="form-label small">CPF/CNPJ*</label>
+              <input type="text" id="cpfcnpj" class="form-control form-control-sm" [(ngModel)]="cliente.cpfcnpj"
+                name="cpfcnpj" appUppercase required>
             </div>
-        </div>
 
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="button" class="btn btn-secondary" (click)="confirmCancel()" style="margin-left: 10px;">Cancelar</button>
+            <!-- RG -->
+            <div class="col-md-6">
+              <label for="rg" class="form-label small">RG*</label>
+              <input type="text" id="rg" class="form-control form-control-sm" [(ngModel)]="cliente.rg" name="rg"
+                appUppercase required>
+            </div>
+
+            <!-- Órgão Emissor -->
+            <div class="col-md-3">
+              <label for="orgEmissor" class="form-label small">Órgão Emissor*</label>
+              <input type="text" id="orgEmissor" class="form-control form-control-sm" [(ngModel)]="cliente.orgEmissor"
+                name="orgEmissor" appUppercase required>
+            </div>
+
+            <!-- Data de Emissão -->
+            <div class="col-md-3">
+              <label for="dtEmissao" class="form-label small">Data de Emissão*</label>
+              <input type="date" id="dtEmissao" class="form-control form-control-sm" [(ngModel)]="cliente.dtEmissao"
+                name="dtEmissao" required>
+            </div>
+
+            <!-- Data de Nascimento -->
+            <div class="col-md-6">
+              <label for="dtNasc" class="form-label small">Data de Nascimento*</label>
+              <input type="date" id="dtNasc" class="form-control form-control-sm" [(ngModel)]="cliente.dataNasc"
+                name="dtNasc" required>
+            </div>
+
+            <!-- Nacionalidade -->
+            <div class="col-md-6">
+              <label for="nacionalidade" class="form-label small">Nacionalidade*</label>
+              <input type="text" id="nacionalidade" class="form-control form-control-sm"
+                [(ngModel)]="cliente.nacionalidade" name="nacionalidade" appUppercase required>
+            </div>
+
+            <!-- Naturalidade -->
+            <div class="col-md-6">
+              <label for="naturalidade" class="form-label small">Naturalidade</label>
+              <input type="text" id="naturalidade" class="form-control form-control-sm"
+                [(ngModel)]="cliente.naturalidade" name="naturalidade" appUppercase>
+            </div>
+
+            <!-- Telefone -->
+            <div class="col-md-6">
+              <label for="telefone" class="form-label small">Telefone</label>
+              <input type="number" id="telefone" class="form-control form-control-sm" [(ngModel)]="cliente.telefone"
+                name="telefone">
+            </div>
+
+            <!-- Celular -->
+            <div class="col-md-6">
+              <label for="celular" class="form-label small">Celular</label>
+              <input type="number" id="celular" class="form-control form-control-sm" [(ngModel)]="cliente.celular"
+                name="celular">
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6">
+              <label for="email" class="form-label small">Email</label>
+              <input type="email" id="email" class="form-control form-control-sm" [(ngModel)]="cliente.email"
+                name="email" appUppercase>
+            </div>
+          </div>
         </div>
-        
+      </div>
+
+      <!-- Carteira de Habilitação Amador (CHA) -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            <i class="fas fa-id-badge me-2"></i>Carteira de Habilitação Amador (CHA)
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <!-- Número da CHA -->
+            <div class="col-md-4">
+              <label for="chaNumero" class="form-label small">Número da CHA</label>
+              <input type="text" id="chaNumero" class="form-control form-control-sm" [(ngModel)]="cliente.cha_numero"
+                name="cha_numero" appUppercase>
+            </div>
+            <!-- Categoria da CHA -->
+            <div class="col-md-4">
+              <label for="chaCategoria" class="form-label small">Categoria</label>
+              <input type="text" id="chaCategoria" class="form-control form-control-sm"
+                [(ngModel)]="cliente.cha_categoria" name="cha_categoria" appUppercase>
+            </div>
+            <!-- Data de Emissão da CHA -->
+            <div class="col-md-4">
+              <label for="chaDtEmissao" class="form-label small">Data de Emissão</label>
+              <input type="date" id="chaDtEmissao" class="form-control form-control-sm"
+                [(ngModel)]="cliente.cha_dtemissao" name="cha_dtemissao">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Endereço -->
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Endereço</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-2 g-md-3">
+            <!-- CEP + Buscar -->
+            <div class="col-md-6">
+              <label for="CEP" class="form-label small">CEP*</label>
+              <div class="input-group input-group-sm">
+                <input type="number" class="form-control" id="CEP" [(ngModel)]="cliente.cep" name="CEP" required>
+                <button type="button" class="btn btn-primary btn-sm" (click)="buscarEndereco()">Buscar</button>
+              </div>
+            </div>
+
+            <!-- Logradouro -->
+            <div class="col-md-6">
+              <label for="logradouro" class="form-label small">Logradouro*</label>
+              <input type="text" class="form-control form-control-sm" id="logradouro" [(ngModel)]="cliente.logradouro"
+                name="logradouro" appUppercase required>
+            </div>
+
+            <!-- Número -->
+            <div class="col-md-6">
+              <label for="numero" class="form-label small">Número*</label>
+              <input type="number" class="form-control form-control-sm" id="numero" [(ngModel)]="cliente.numero"
+                name="numero" required>
+            </div>
+
+            <!-- Bairro -->
+            <div class="col-md-6">
+              <label for="bairro" class="form-label small">Bairro*</label>
+              <input type="text" class="form-control form-control-sm" id="bairro" [(ngModel)]="cliente.bairro"
+                name="bairro" appUppercase required>
+            </div>
+
+            <!-- Complemento -->
+            <div class="col-md-6">
+              <label for="complemento" class="form-label small">Complemento</label>
+              <input type="text" class="form-control form-control-sm" id="complemento" [(ngModel)]="cliente.complemento"
+                name="complemento" appUppercase>
+            </div>
+
+            <!-- Cidade -->
+            <div class="col-md-3">
+              <label for="cidade" class="form-label small">Cidade*</label>
+              <input type="text" class="form-control form-control-sm" id="cidade" [(ngModel)]="cliente.cidade"
+                name="cidade" appUppercase required>
+            </div>
+
+            <!-- UF -->
+            <div class="col-md-3">
+              <label for="UF" class="form-label small">UF*</label>
+              <input type="text" class="form-control form-control-sm" id="UF" [(ngModel)]="cliente.uf" name="UF"
+                appUppercase required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-end">
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!clienteForm.form.valid">
+              <i class="fas fa-save me-1"></i>Salvar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="confirmCancel()">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
+  </div>
 </div>

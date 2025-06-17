@@ -1,26 +1,52 @@
-<div class="container mt-4 scrollable-content">
-    <h1>Bem-vindo a PROA</h1>
-    <p>Escolha uma das opções abaixo:</p>
+<div class="container scrollable-content">
+    <header class="page-header">
+        <h1>Bem-vindo ao PROA</h1>
+        <p>Selecione uma das opções para começar</p>
+    </header>
 
-<div class="option-container">
-    <div class="option" (click)="listarCliente()">
-        <img src="../../assets/iconuser.png" alt="Clientes">
-        <p>Clientes</p>
-    </div>
+    <nav class="option-container" role="navigation" aria-label="Menu principal">
+        <button class="option" 
+                (click)="listarCliente()" 
+                type="button"
+                aria-label="Acessar seção de Clientes">
+            <img src="../../assets/iconuser.png" 
+                 alt="" 
+                 role="presentation"
+                 loading="lazy">
+            <p>Clientes</p>
+        </button>
 
-    <div class="option" (click)="listarembarcacao()">
-        <img src="../../assets/iconboat.png" alt="Embarcações">
-        <p>Embarcações</p>
-    </div>
-    
-    <div class="option" (click)="emitirAnexos()">
-        <img src="../../assets/iconanexo.png" alt="Anexos">
-        <p>Anexos</p>
-    </div>
+        <button class="option" 
+                (click)="listarembarcacao()" 
+                type="button"
+                aria-label="Acessar seção de Embarcações">
+            <img src="../../assets/iconboat.png" 
+                 alt="" 
+                 role="presentation"
+                 loading="lazy">
+            <p>Embarcações</p>
+        </button>
+        
+        <button class="option" 
+                (click)="emitirAnexos()" 
+                type="button"
+                aria-label="Acessar seção de Anexos">
+            <img src="../../assets/iconanexo.png" 
+                 alt="" 
+                 role="presentation"
+                 loading="lazy">
+            <p>Anexos</p>
+        </button>
 
-    <div hidden class="option" (click)="emitirServicos()">
-        <img src="../../assets/iconservice.png" alt="Serviços">
-        <p>Serviços</p>
-    </div>
-</div>
+        <button hidden class="option" 
+                (click)="emitirServicos()" 
+                type="button"
+                aria-label="Acessar seção de Serviços">
+            <img src="../../assets/iconservice.png" 
+                 alt="" 
+                 role="presentation"
+                 loading="lazy">
+            <p>Serviços</p>
+        </button>
+    </nav>
 </div>

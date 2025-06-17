@@ -8,6 +8,7 @@ import { FrontMotorService } from '../front-motor.service';
 import { Notafiscal } from 'src/app/model/notafiscal';
 import { FrontNotafiscalService } from '../front-notafiscal.service';
 import { lastValueFrom } from 'rxjs';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AnexosService {
   motores: Motor[] = [];
   notaFiscal!: Notafiscal;
 
-  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService) { }
+  constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService, private maskcpf: ValidadorcpfcnpjService) { }
 
     //Função para gerar o Anexo 2D. Se for uma solicitação única não é necessário o último parâmtro na chamada da função e o PDF será exibido diretamente.
   //Se for uma chamada do serviço-anexo é necessário passar algo no último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
@@ -42,39 +43,39 @@ export class AnexosService {
       form.getTextField('tipo').setText(embarcacao.tipoEmbarcacao ?? '');
       form.getTextField('atividade').setText(embarcacao.tipoAtividade ?? '');
       
-      form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes.toString() ?? '');
+      form.getTextField('tripulantes').setText(embarcacao.qtdTripulantes?.toString() ?? '');
       form.getTextField('anoconstrucao').setText(formattedDtConstrucao ?? '');
       
-      form.getTextField('passageiros').setText(embarcacao.lotacao.toString() ?? '');
+      form.getTextField('passageiros').setText(embarcacao.lotacao?.toString() ?? '');
       form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
       
       form.getTextField('matcasco').setText(embarcacao.matCasco ?? '');
 
       //Medidas
-      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() : '');
+      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString()+"m" : '');
 
-      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta ? embarcacao.arqueacaoBruta.toString() : '');
-      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida ? embarcacao.arqueacaoLiquida.toString() : '');
-      form.getTextField('boca').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString() : '');
-      form.getTextField('contorno').setText(embarcacao.contorno ? embarcacao.contorno.toString() : '');
-      form.getTextField('pontal').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString() : '');
+      form.getTextField('arqbruta').setText(embarcacao.arqueacaoBruta ? embarcacao.arqueacaoBruta.toString()+"m" : '');
+      form.getTextField('arqliquida').setText(embarcacao.arqueacaoLiquida ? embarcacao.arqueacaoLiquida.toString()+"m" : '');
+      form.getTextField('boca').setText(embarcacao.bocaMoldada ? embarcacao.bocaMoldada.toString()+"m" : '');
+      form.getTextField('contorno').setText(embarcacao.contorno ? embarcacao.contorno.toString()+"m" : '');
+      form.getTextField('pontal').setText(embarcacao.pontalMoldado ? embarcacao.pontalMoldado.toString()+"m" : '');
 
 
 
       //Medidas
 
-      
-      if (natureza === 'Inscrição') {
+      //
+      if (natureza === 'inscricao') {
         form.getCheckBox('check_inscricao').check();
-      } else if (natureza === 'Cancelamento') {
+      } else if (natureza === 'cancelamento') {
         form.getCheckBox('check_cancelamento').check();
-      } else if (natureza === 'Transf. Propriedade') {
+      } else if (natureza === 'transfpropriedade') {
         form.getCheckBox('check_transfproprietario').check();
-      } else if (natureza === 'Transf. Jurisdição') {
+      } else if (natureza === 'transfjurisdicao') {
         form.getCheckBox('check_transfjurisdicao').check();
-      } else if (natureza === 'Atualização de Dados') {
+      } else if (natureza === 'atualizacaodados') {
         form.getCheckBox('check_atualizacaodados').check();
-      } else if (natureza === 'Emissão de Certidão') {
+      } else if (natureza === 'emissaocertidao') {
         form.getCheckBox('check_emissaocertidao').check();
       };
 
@@ -86,7 +87,7 @@ export class AnexosService {
       form.getTextField('rg').setText(cliente.rg ?? '');
       form.getTextField('orgemissor').setText(cliente.orgEmissor ?? '');
       form.getTextField('dtemissao').setText(formattedDtEmissao ?? '');
-      form.getTextField('cpfcnpj').setText(cliente.cpfcnpj ?? '');
+      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj) ?? '');
       form.getTextField('telefone').setText(cliente.telefone ?? '');
       form.getTextField('celular').setText(cliente.celular ?? '');
       form.getTextField('email').setText(cliente.email ?? '');
@@ -104,7 +105,7 @@ export class AnexosService {
         form.getTextField('dtvenda').setText(formattedDtvenda?? '');
         form.getTextField('local').setText(notaFiscal.local?.toString() ?? '');
         form.getTextField('vendedor').setText(notaFiscal.razaoSocial?.toString() ?? '');
-        form.getTextField('cpfcnpj_vendedor').setText(notaFiscal.cnpjvendedor?.toString() ?? '');
+        form.getTextField('cpfcnpj_vendedor').setText(this.maskcpf.mascararCpfCnpj(notaFiscal.cnpjvendedor?.toString()) ?? '');
       }
 
       const hoje = new Date();

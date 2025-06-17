@@ -3,18 +3,18 @@ import { FrontClienteService } from '../front-cliente.service';
 import { Cliente } from 'src/app/model/cliente';
 import { Embarcacao } from 'src/app/model/embarcacao';
 import { PDFDocument } from 'pdf-lib';
+import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo2FService {
 
-  constructor(private clienteService: FrontClienteService) { }
-  clienteNovo!: Cliente;
-  
-  async anexo2F(embarcacao: Embarcacao, campotexto1: string, campotexto2: string, servico?: string): Promise<void | Uint8Array> {
+  constructor(private clienteService: FrontClienteService, private maskcpf: ValidadorcpfcnpjService) { }
 
-    await this.carregarDados(campotexto1);
+  
+  async anexo2F(embarcacao: Embarcacao, clienteNovo: Cliente, campotexto2: string, servico?: string): Promise<void | Uint8Array> {
+
 
     try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2F-N212.pdf').then(res => res.arrayBuffer());
@@ -30,29 +30,29 @@ export class Anexo2FService {
       form.getTextField('rg').setText(embarcacao.cliente.rg ?? '');
       form.getTextField('orgaoexpedidor').setText(embarcacao.cliente.orgEmissor ?? '');
       form.getTextField('dtexpedicao').setText(embarcacao.cliente.dtEmissao?.toString() ?? '');
-      form.getTextField('cpfcnpj').setText(embarcacao.cliente.cpfcnpj ?? '');
+      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
       form.getTextField('endereco').setText(embarcacao.cliente.logradouro ?? '');
       form.getTextField('complemento').setText(embarcacao.cliente.complemento ?? '');
-      form.getTextField('numero').setText(embarcacao.cliente.numero ?? '');
+      form.getTextField('numero').setText(embarcacao.cliente.numero?.toString() ?? '');
       form.getTextField('bairro').setText(embarcacao.cliente.bairro ?? '');
       form.getTextField('cidade').setText(embarcacao.cliente.cidade ?? '');
       form.getTextField('uf').setText(embarcacao.cliente.uf ?? '');
       form.getTextField('cep').setText(embarcacao.cliente.cep ?? '');
 
-      form.getTextField('nomenovoproprietario').setText(this.clienteNovo.nome ?? '');
-      form.getTextField('rgnovoproprietario').setText(this.clienteNovo.rg ?? '');
-      form.getTextField('orgaoexpedidornovoproprietario').setText(this.clienteNovo.orgEmissor ?? '');
-      form.getTextField('dtexpedicaonovoproprietario').setText(this.clienteNovo.dtEmissao?.toString() ?? '');
-      form.getTextField('cpfcnpjnovoproprietario').setText(this.clienteNovo.cpfcnpj ?? '');
-      form.getTextField('endereconovoproprietario').setText(this.clienteNovo.logradouro ?? '');
-      form.getTextField('numeronovoproprietario').setText(this.clienteNovo.numero ?? '');
-      form.getTextField('complementonovoproprietario').setText(this.clienteNovo.complemento ?? '');
-      form.getTextField('bairronovoproprietario').setText(this.clienteNovo.bairro ?? '');
-      form.getTextField('cidadenovoproprietario').setText(this.clienteNovo.cidade ?? '');
-      form.getTextField('ufnovoproprietario').setText(this.clienteNovo.uf ?? '');
-      form.getTextField('cepnovoproprietario').setText(this.clienteNovo.cep ?? '');
+      form.getTextField('nomenovoproprietario').setText(clienteNovo.nome ?? '');
+      form.getTextField('rgnovoproprietario').setText(clienteNovo.rg ?? '');
+      form.getTextField('orgaoexpedidornovoproprietario').setText(clienteNovo.orgEmissor ?? '');
+      form.getTextField('dtexpedicaonovoproprietario').setText(clienteNovo.dtEmissao?.toString() ?? '');
+      form.getTextField('cpfcnpjnovoproprietario').setText(this.maskcpf.mascararCpfCnpj(clienteNovo.cpfcnpj) ?? '');
+      form.getTextField('endereconovoproprietario').setText(clienteNovo.logradouro ?? '');
+      form.getTextField('numeronovoproprietario').setText(clienteNovo.numero?.toString() ?? '');
+      form.getTextField('complementonovoproprietario').setText(clienteNovo.complemento ?? '');
+      form.getTextField('bairronovoproprietario').setText(clienteNovo.bairro ?? '');
+      form.getTextField('cidadenovoproprietario').setText(clienteNovo.cidade ?? '');
+      form.getTextField('ufnovoproprietario').setText(clienteNovo.uf ?? '');
+      form.getTextField('cepnovoproprietario').setText(clienteNovo.cep ?? '');
 
-      form.getTextField('local').setText(this.clienteNovo.cidade ?? '');
+      form.getTextField('local').setText(clienteNovo.cidade ?? '');
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
@@ -97,9 +97,4 @@ export class Anexo2FService {
     window.open(url, '_blank');
   }
 
-  async carregarDados(campotexto1: string) {
-    this.clienteService.consultarClienteCPFCNPJ(campotexto1).subscribe(cliente => {
-      this.clienteNovo = cliente;
-    });
-  }
 }

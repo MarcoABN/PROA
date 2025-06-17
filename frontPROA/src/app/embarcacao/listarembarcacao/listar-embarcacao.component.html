@@ -1,56 +1,91 @@
-<div class="form-wrapper">
-<h2 class="text-center">Embarcações Cadastradas</h2>
-    <form #clienteForm="ngForm" (ngSubmit)="pesquisarPorCPF()">
-        <div class="form-group">
-            <label for="cliente">Cliente (CPF ou CNPJ)</label>
-            <br>
-            <input type="text" 
-                   class="form-control" 
-                   id="cliente" 
-                   [(ngModel)]="cpf" 
-                   name="cliente" 
-                   mask="000.000.000-00 || 00.000.000/0000-00"
-                   [dropSpecialCharacters]="false"
-                   required
-                   style="width: 200px; display: inline-block; margin-right: 10px;">
-            <input type="text" 
-                   class="form-control" 
-                   [(ngModel)]="nomeCliente" 
-                   name="nomeCliente" 
-                   readonly
-                   style="width: 400px; display: inline-block;">
-        </div>
-        <br>
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
-            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
-        </div>
-        <br><br>
-    </form>
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto" style="max-width: 900px;">
+    <h2 class="text-center mb-3 mb-md-4">
+      <i class="fas fa-ship me-2"></i>Embarcações Cadastradas
+    </h2>
 
-    <table class="table table-striped" *ngIf="embarcacoes.length > 0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-            </tr>
+    <div class="search-form">
+      <form #clienteForm="ngForm" (ngSubmit)="pesquisarPorCPF()">
+        <div class="row g-2 g-md-3 align-items-end">
+          <div class="col-12 col-md-4">
+            <label for="cliente" class="form-label small">Cliente (CPF ou CNPJ)</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="cliente"
+              [(ngModel)]="cpf"
+              name="cliente"
+              mask="000.000.000-00 || 00.000.000/0000-00"
+              [dropSpecialCharacters]="false"
+              required
+            />
+          </div>
+
+          <div class="col-12 col-md-5">
+            <label for="nomeCliente" class="form-label small">Nome</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="nomeCliente"
+              [(ngModel)]="nomeCliente"
+              name="nomeCliente"
+              readonly
+            />
+          </div>
+
+          <div class="col-12 col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">
+              <i class="fas fa-search me-1"></i>Pesquisar
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="limparDados(clienteForm)">
+              <i class="fas fa-eraser me-1"></i>Limpar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-responsive mt-4" *ngIf="embarcacoes.length > 0">
+      <table class="table table-sm table-striped table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th class="text-center">Ações</th>
+          </tr>
         </thead>
-
         <tbody>
-            <tr *ngFor="let emb of embarcacoes">
-                <td>{{emb.id}}</td>
-                <td>{{emb.nomeEmbarcacao}}</td>
-                <td>
-                    <button (click)="consultarEmbarcacao(emb.id)" class="btn btn-primary" style="margin: 10px;">Consultar</button>
-                    <button (click)="alterarEmbarcacao(emb.id)" class="btn btn-secondary" style="margin: 10px;">Alterar</button>
-                    <button (click)="manterMotor(emb.id)" class="btn btn-info" style="margin: 10px;">Motores</button>
-                    <button (click)="notafiscal(emb.id)" class="btn btn-info" style="margin: 10px;">Nota Fiscal</button>
-                    <button (click)="excluirEmbarcacao(emb.id)" class="btn btn-danger" style="margin: 10px;">Excluir</button>
-                </td>
-            </tr>
+          <tr *ngFor="let emb of embarcacoes">
+            <td>{{ emb.id }}</td>
+            <td>{{ emb.nomeEmbarcacao }}</td>
+            <td class="text-center">
+              <div class="d-flex flex-wrap gap-2 justify-content-center">
+                <button (click)="consultarEmbarcacao(emb.id)" class="btn btn-primary btn-sm">
+                  <i class="fas fa-eye me-1"></i>Consultar
+                </button>
+                <button (click)="alterarEmbarcacao(emb.id)" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-edit me-1"></i>Alterar
+                </button>
+                <button (click)="manterMotor(emb.id)" class="btn btn-info btn-sm">
+                  <i class="fas fa-cogs me-1"></i>Motores
+                </button>
+                <button (click)="notafiscal(emb.id)" class="btn btn-info btn-sm">
+                  <i class="fas fa-file-invoice me-1"></i>Nota Fiscal
+                </button>
+                <button (click)="excluirEmbarcacao(emb.id)" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash me-1"></i>Excluir
+                </button>
+              </div>
+            </td>
+          </tr>
         </tbody>
-    </table>
+      </table>
+    </div>
 
-    <br>
-    <button (click)="cadastrarEmbarcacao()" *ngIf="nomeCliente" class="btn btn-info">Cadastrar Nova Embarcacao</button>
+    <div class="mt-3">
+      <button (click)="cadastrarEmbarcacao()" *ngIf="nomeCliente" class="btn btn-info btn-sm">
+        <i class="fas fa-plus me-1"></i>Cadastrar Nova Embarcação
+      </button>
+    </div>
+  </div>
 </div>

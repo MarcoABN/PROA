@@ -77,13 +77,39 @@ public class Prestador {
 	
 	@Column (name = "CEP")
 	private String CEP;
+	
+	@Column (name = "estabelecimento")
+	private String estabelecimento;
+	
+	@Column (name = "cha_numero")
+    private String cha_numero;
+	
+	@Column (name = "cha_categoria")
+    private String cha_categoria;
+	
+	@Column (name = "cha_dtemissao")
+	private Date cha_dtemissao;
+	
+	@Column (name = "instrutor")
+	private Boolean instrutor = false;
+	
+	@Column (name = "procurador")
+    private Boolean procurador = false;
+	
+	@Column (name = "tipoProcuracao")
+    private String tipoProcuracao; // "COMPLETO" ou "REDUZIDO"
 
 	
 
-	public Prestador(Long iD, String nome, String rG, String orgEmissor, Date dtEmissao,
-			String nacionalidade, String estadoCivil, String profissao, String cPFCNPJ, String telefone, String celular,
-			String email, String senha, String logradouro, String bairro, String numero, String complemento, String uF,
-			String cidade, String cEP) {
+	
+
+	
+
+	public Prestador(Long iD, String nome, String rG, String orgEmissor, Date dtEmissao, String nacionalidade,
+			String estadoCivil, String profissao, String cPFCNPJ, String telefone, String celular, String email,
+			String senha, String logradouro, String bairro, String numero, String complemento, String uF, String cidade,
+			String cEP, String cha_numero, String cha_categoria, Date cha_dtemissao, Boolean instrutor,
+			Boolean procurador, String tipoProcuracao, String estabelecimento) {
 		super();
 		ID = iD;
 		this.nome = nome;
@@ -105,6 +131,13 @@ public class Prestador {
 		UF = uF;
 		this.cidade = cidade;
 		CEP = cEP;
+		this.cha_numero = cha_numero;
+		this.cha_categoria = cha_categoria;
+		this.cha_dtemissao = cha_dtemissao;
+		this.instrutor = instrutor;
+		this.procurador = procurador;
+		this.tipoProcuracao = tipoProcuracao;
+		this.estabelecimento = estabelecimento;
 	}
 
 	public Prestador() {
@@ -271,6 +304,65 @@ public class Prestador {
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
 	}
+
+	public Boolean getInstrutor() {
+		return instrutor;
+	}
+
+	public void setInstrutor(Boolean instrutor) {
+		this.instrutor = instrutor;
+	}
+
+	public Boolean getProcurador() {
+		return procurador;
+	}
+	
+
+	public String getCha_numero() {
+		return cha_numero;
+	}
+
+	public void setCha_numero(String cha_numero) {
+		this.cha_numero = cha_numero;
+	}
+
+	public String getCha_categoria() {
+		return cha_categoria;
+	}
+
+	public void setCha_categoria(String cha_categoria) {
+		this.cha_categoria = cha_categoria;
+	}
+
+	public Date getCha_dtemissao() {
+		return cha_dtemissao;
+	}
+
+	public void setCha_dtemissao(Date cha_dtemissao) {
+		this.cha_dtemissao = cha_dtemissao;
+	}
+
+	public void setProcurador(Boolean procurador) {
+		this.procurador = procurador;
+	}
+
+	public String getTipoProcuracao() {
+		return tipoProcuracao;
+	}
+
+	public void setTipoProcuracao(String tipoProcuracao) {
+		this.tipoProcuracao = tipoProcuracao;
+	}
+
+	public String getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(String estabelecimento) {
+		this.estabelecimento = estabelecimento;
+	}
+	
+	
 	
 	
 }

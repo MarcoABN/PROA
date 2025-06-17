@@ -2,21 +2,23 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Embarcacao } from '../model/embarcacao';
 import { Cliente } from '../model/cliente';
-import { AnexosService } from '../services/anexos/anexo2D.service';
+import { AnexosService } from '../services/anexos/anexo2d.service';
 import { Anexo2EService } from '../services/anexos/anexo2e.service';
 import { Anexo5HService } from '../services/anexos/anexo5h.service';
 import { Anexo3CService } from '../services/anexos/anexo3c.service';
-import { Anexo2LService } from '../services/anexos/anexo2L.service';
-import { Anexo2MService } from '../services/anexos/anexo2M.service';
-import { Anexo3DService } from '../services/anexos/anexo3D.service';
-import { Anexo3AService } from '../services/anexos/anexo3A.service';
-import { Anexo2FService } from '../services/anexos/anexo2F.service';
+import { Anexo2LService } from '../services/anexos/anexo2l.service';
+import { Anexo2MService } from '../services/anexos/anexo2m.service';
+import { Anexo3DService } from '../services/anexos/anexo3d.service';
+import { Anexo3AService } from '../services/anexos/anexo3a.service';
+import { Anexo2FService } from '../services/anexos/anexo2f.service';
 import { FrontClienteService } from '../services/front-cliente.service';
 import { FrontEmbarcacaoService } from '../services/front-embarcacao.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FrontEmailService } from '../services/front-email.service';
 import { PDFDocument } from 'pdf-lib';
 import { Modal } from 'bootstrap';
+
+import {FrontProcuracaoService} from '../services/front-procuracao.service'
 
 @Component({
   selector: 'app-servico-anexo',
@@ -36,6 +38,7 @@ export class ServicoAnexoComponent {
   campotexto1: string = '';
   campotexto2: string = '';
   campotexto3: string = '';
+  campovalor: number = 0;
   charCount: number = 0;
   modalAnexo2M: any;
   selecao!: number;
@@ -55,6 +58,8 @@ export class ServicoAnexoComponent {
     private embarcacaoService: FrontEmbarcacaoService,
     private router: Router,
     private emailService: FrontEmailService,
+
+    private procuracaoService: FrontProcuracaoService,
 
   ) { }
 
@@ -132,13 +137,10 @@ export class ServicoAnexoComponent {
   }
 
   gerarAnexo5H() {
-    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-    if (selectedEmbarcacao) {
-      this.anexo5Hservice.anexo5H(this.opcao, this.campotexto1, selectedEmbarcacao);
-    } else if (this.cliente) {
-      this.anexo5Hservice.anexo5H(this.opcao, this.campotexto1, undefined, this.cliente);
+    if (this.cliente) {
+      this.anexo5Hservice.anexo5H(this.opcao, this.campotexto1, this.cliente);
     } else {
-      console.error('Embarcação selecionada não encontrada.');
+      console.error('Cliente não informado!');
     }
   }
 
@@ -154,9 +156,9 @@ export class ServicoAnexoComponent {
   gerarAnexo2L() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
     if (selectedEmbarcacao) {
-      this.anexo2Lservice.anexo2L(selectedEmbarcacao);
+      this.anexo2Lservice.anexo2L(this.cliente);
     } else if (this.cliente) {
-      this.anexo2Lservice.anexo2L(undefined, this.cliente);
+      this.anexo2Lservice.anexo2L(this.cliente);
     } else {
       console.error('Embarcação selecionada não encontrada.');
     }
@@ -165,7 +167,9 @@ export class ServicoAnexoComponent {
   gerarAnexo2M() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
     if (selectedEmbarcacao) {
-      this.anexo2Mservice.anexo2M(selectedEmbarcacao, this.campotexto1, this.campotexto2);
+
+      //Arrumar depois
+      //this.anexo2Mservice.anexo2M(selectedEmbarcacao, this.campotexto1, this.campotexto2, this.campotexto3, this.opcao, this.campovalor);
     } else {
       console.error('Embarcação selecionada não encontrada.');
     }
@@ -181,18 +185,17 @@ export class ServicoAnexoComponent {
   }
 
   gerarAnexo3A() {
-    const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-    if (selectedEmbarcacao) {
-      this.anexo3Aservice.anexo3A(this.opcao, this.campotexto1, undefined, this.cliente);
+    if (this.cliente) {
+      this.anexo3Aservice.anexo3A(this.opcao, this.campotexto1, this.cliente);
     } else {
-      console.error('Embarcação selecionada não encontrada.');
+      console.error('Cliente não informado.');
     }
   }
 
-  gerarAnexo2F() {
+  gerarAnexo2F(propanterior: Cliente) {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
     if (selectedEmbarcacao) {
-      this.anexo2Fservice.anexo2F(selectedEmbarcacao, this.campotexto1, this.campotexto2);
+      this.anexo2Fservice.anexo2F(selectedEmbarcacao, propanterior, this.campotexto2);
     } else {
       console.error('Embarcação selecionada não encontrada.');
     }
@@ -227,27 +230,42 @@ export class ServicoAnexoComponent {
   async ServicoInscEmbTela() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
+
     if (selectedEmbarcacao) {
+
+      //Gerar a procuração
+      const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
+        selectedEmbarcacao.cliente.id
+      );
+
       // Gerar PDF do Anexo 2E
       const anexo2EPdf = await this.anexo2EService.anexo2E(
         selectedEmbarcacao,
         'inscricao',
-        this.campotexto1,
-        this.campotexto2,
-        this.campotexto3,
-        'OK'
+        '',
+        '',
+        '',
+        'ok'
       );
 
       // Gerar PDF do Anexo 2D
       const anexo2DPdf = await this.anexosService.anexo2D(
         selectedEmbarcacao,
         this.cliente,
-        'Inscrição',
+        'inscricao',
         'OK'
       );
 
       // Verificar se os PDFs foram gerados corretamente
       const pdfs: Uint8Array[] = [];
+
+      if (procuracaoPdf){
+        const buffer = await procuracaoPdf.arrayBuffer();
+        pdfs.push(new Uint8Array(buffer));
+      } else {
+        console.error('Falha ao gerar a Procuração');
+      }
+
       if (anexo2EPdf) {
         pdfs.push(anexo2EPdf);
       } else {
@@ -271,40 +289,80 @@ export class ServicoAnexoComponent {
   // Função para enviar anexos por e-mail
   async ServicoInscEmbEmail() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+    
     if (selectedEmbarcacao) {
-      const anexo2e = await this.anexo2EService.anexo2E(
+      //Gerar a procuração
+      const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
+        selectedEmbarcacao.cliente.id
+      );
+
+      // Gerar PDF do Anexo 2E
+      const anexo2EPdf = await this.anexo2EService.anexo2E(
         selectedEmbarcacao,
         'inscricao',
-        this.campotexto1,
-        this.campotexto2,
-        this.campotexto3,
-        'OK');
+        '',
+        '',
+        '',
+        'ok'
+      );
 
-      const anexo2d = await this.anexosService.anexo2D(
+      // Gerar PDF do Anexo 2D
+      const anexo2DPdf = await this.anexosService.anexo2D(
         selectedEmbarcacao,
         this.cliente,
-        'Inscrição',
-        'OK');
+        'inscricao',
+        'OK'
+      );
 
-      if (anexo2e && anexo2d) {
+      // Verificar se os PDFs foram gerados corretamente
+      const pdfs: Uint8Array[] = [];
 
-        const pdfs: Uint8Array[] = [anexo2e, anexo2d];
+      if (procuracaoPdf){
+        const buffer = await procuracaoPdf.arrayBuffer();
+        pdfs.push(new Uint8Array(buffer));
+      } else {
+        console.error('Falha ao gerar a Procuração');
+      }
 
+      if (anexo2EPdf) {
+        pdfs.push(anexo2EPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2E');
+      }
+
+      if (anexo2DPdf) {
+        pdfs.push(anexo2DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2D');
+      }
+
+      
+
+        
+        /*
+        
         this.emailService.enviarPDFsPorEmail(
           selectedEmbarcacao.cliente.email, // Destinatário
           'Projeto de apoio a Regularização de Operações Aquaviárias - PROA', // Assunto
           'Seguem os anexos para o serviço de Inscrição de Embarcação. Dúvidas consulte sua escola Naval.', //Conteudo do email
           ...pdfs
-        )
-      }
+        )*/
+      
     }
   }
 
+  
   //Alteração de Embarcação: Anexos 3D e 2D
   async ServicoAltcEmbTela() {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
     if (selectedEmbarcacao) {
+      
+      //Gerar a procuração
+      const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
+        selectedEmbarcacao.cliente.id,
+      );
+
       const anexo3DPdf = await this.anexo3Dservice.anexo3D(
         this.campotexto1,
         this.campotexto2,
@@ -322,6 +380,14 @@ export class ServicoAnexoComponent {
       );
       // Verificar se os PDFs foram gerados corretamente
       const pdfs: Uint8Array[] = [];
+
+      if (procuracaoPdf){
+        const buffer = await procuracaoPdf.arrayBuffer();
+        pdfs.push(new Uint8Array(buffer));
+      } else {
+        console.error('Falha ao gerar a Procuração');
+      }
+
       if (anexo3DPdf) {
         pdfs.push(anexo3DPdf);
       } else {
@@ -342,35 +408,65 @@ export class ServicoAnexoComponent {
     }
   }
 
+  //Comentando dutante mudança pra python. Posteriormente avaliar como fica
   //Alteração de Embarcação: Anexos 3D e 2D
   async ServicoAltEmbEmail() {
 
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
+    
     if (selectedEmbarcacao) {
-      this.opcao = "Atualização de Dados"
-      const anexo3D = await this.anexo3Dservice.anexo3D(
+
+      //Gerar a procuração
+      const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
+        selectedEmbarcacao.cliente.id,
+      );
+
+      const anexo3DPdf = await this.anexo3Dservice.anexo3D(
         this.campotexto1,
         this.campotexto2,
         this.opcao,
         selectedEmbarcacao,
         "OK"
       );
-      const anexo2d = await this.anexosService.anexo2D(
+
+      // Gerar PDF do Anexo 2D
+      const anexo2DPdf = await this.anexosService.anexo2D(
         selectedEmbarcacao,
         this.cliente,
-        'Inscrição',
+        this.natureza,
         'OK'
       );
-      if (anexo3D && anexo2d) {
-        const pdfs: Uint8Array[] = [anexo3D, anexo2d];
+      // Verificar se os PDFs foram gerados corretamente
+      const pdfs: Uint8Array[] = [];
 
-        this.emailService.enviarPDFsPorEmail(
+      if (procuracaoPdf){
+        const buffer = await procuracaoPdf.arrayBuffer();
+        pdfs.push(new Uint8Array(buffer));
+      } else {
+        console.error('Falha ao gerar a Procuração');
+      }
+
+      if (anexo3DPdf) {
+        pdfs.push(anexo3DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2E');
+      }
+
+      if (anexo2DPdf) {
+        pdfs.push(anexo2DPdf);
+      } else {
+        console.error('Falha ao gerar Anexo 2D');
+      }
+
+        //COMENTADO PARA CORRIGIR DEPOIS
+
+        /*this.emailService.enviarPDFsPorEmail(
           selectedEmbarcacao.cliente.email, // Destinatário
           'Projeto de apoio a Regularização de Operações Aquaviárias - PROA', // Assunto
           'Seguem os anexos para o serviço de Alteração de Embarcação. Dúvidas consulte sua escola Naval.', //Conteudo do email
           ...pdfs
-        )
-      }
+        )*/
+      
     }
   }
 
@@ -379,15 +475,34 @@ export class ServicoAnexoComponent {
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
     if (selectedEmbarcacao) {
-      const anexoPdf = await this.anexo3Cservice.anexo3C(selectedEmbarcacao, 'OK');
 
+      //Gerar a procuração
+      const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
+        selectedEmbarcacao.cliente.id,
+      );
 
-      const anexo2Pdf = await this.anexo2Mservice.anexo2M(selectedEmbarcacao, this.campotexto1, this.campotexto2, 'OK');
+      const anexo3cPdf = await this.anexo3Cservice.anexo3C(
+        selectedEmbarcacao,
+        this.campotexto2,
+        'ok',
+      );
+
+      const anexo2Pdf = await this.anexo2Mservice.anexo2M(
+        selectedEmbarcacao, this.campotexto1, this.campotexto2, this.campotexto3, this.opcao, this.campovalor, 'OK'
+      );
 
       // Verificar se os PDFs foram gerados corretamente
       const pdfs: Uint8Array[] = [];
-      if (anexoPdf) {
-        pdfs.push(anexoPdf);
+
+      if (procuracaoPdf){
+        const buffer = await procuracaoPdf.arrayBuffer();
+        pdfs.push(new Uint8Array(buffer));
+      } else {
+        console.error('Falha ao gerar a Procuração');
+      }
+
+      if (anexo3cPdf) {
+        pdfs.push(anexo3cPdf);
       } else {
         console.error('Falha ao gerar Anexo 2E');
       }
@@ -414,16 +529,24 @@ export class ServicoAnexoComponent {
       const anexoPdf = await this.anexo3Cservice.anexo3C(selectedEmbarcacao, 'OK');
 
 
-      const anexo2Pdf = await this.anexo2Mservice.anexo2M(selectedEmbarcacao, this.campotexto1, this.campotexto2, 'OK');
+      const anexo2Pdf = await this.anexo2Mservice.anexo2M(selectedEmbarcacao, 
+                                                          this.campotexto1, 
+                                                          this.campotexto2, 
+                                                          this.campotexto3, 
+                                                          this.opcao, 
+                                                          this.campovalor, 
+                                                          'OK');
       if (anexoPdf && anexo2Pdf) {
         const pdfs: Uint8Array[] = [anexoPdf, anexo2Pdf];
 
-        this.emailService.enviarPDFsPorEmail(
+        //COMENTADO PARA CORRIGIR DEPOIS -- ERRO NO CADASTRO DE CLIENTE
+
+        /*this.emailService.enviarPDFsPorEmail(
           selectedEmbarcacao.cliente.email, // Destinatário
           'Projeto de apoio a Regularização de Operações Aquaviárias - PROA', // Assunto
           'Seguem os anexos para o serviço de Transferência de Titularidade de Embarcação. Dúvidas consulte sua escola Naval.', //Conteudo do email
           ...pdfs
-        )
+        )*/
       }
     }
   }

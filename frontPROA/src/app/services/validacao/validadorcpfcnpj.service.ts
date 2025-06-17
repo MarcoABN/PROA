@@ -96,4 +96,20 @@ export class ValidadorcpfcnpjService {
 
     return resultado === parseInt(digitos.charAt(1));
   }
+
+  mascararCpfCnpj(valor: string): string {
+    if (!valor) return '';
+    const apenasNumeros = valor.replace(/\D/g, '');
+
+    if (apenasNumeros.length === 11) {
+      // Máscara CPF: xxx.xxx.xxx-xx
+      return apenasNumeros.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+    if (apenasNumeros.length === 14) {
+      // Máscara CNPJ: xx.xxx.xxx/xxxx-xx
+      return apenasNumeros.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+    // Retorna original se não bater nenhum caso
+    return valor;
+  }
 }

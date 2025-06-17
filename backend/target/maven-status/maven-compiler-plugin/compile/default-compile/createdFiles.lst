@@ -2,7 +2,6 @@ com\proa\BackendApplication.class
 com\proa\model\Cliente.class
 com\proa\repository\OrgMilitarRepository.class
 com\proa\model\Embarcacao.class
-com\proa\model\Procuracao.class
 com\proa\model\Motor.class
 com\proa\repository\ClienteRepository.class
 com\proa\model\Prestador.class
@@ -14,14 +13,14 @@ com\proa\controller\MotorController.class
 com\proa\controller\NotaFiscalController.class
 com\proa\repository\EmbarcacaoRepository.class
 com\proa\repository\NotaFiscalRepository.class
-com\proa\service\ProcuracaoService.class
+com\proa\repository\EscolaNauticaRepository.class
 com\proa\controller\ClienteController.class
 com\proa\model\NotaFiscal.class
+com\proa\model\EscolaNautica.class
 com\proa\model\OrgMilitar.class
 com\proa\controller\PrestadorController.class
+com\proa\controller\EscolaNauticaController.class
 com\proa\exception\ResourceNotFoundException.class
-com\proa\repository\ProcuracaoRepository.class
 com\proa\service\EmailService.class
 com\proa\repository\MotorRepository.class
 com\proa\controller\OrgMilitarController.class
-com\proa\controller\ProcuracaoController.class

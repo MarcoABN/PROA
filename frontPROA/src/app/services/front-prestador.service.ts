@@ -8,12 +8,24 @@ import { AppConfig } from '../config/app-config';
   providedIn: 'root'
 })
 export class FrontPrestadorService {
-  private url = `${AppConfig.API_BASE_URL}/cprestador/prestador`; //'http://3.214.105.13:8080/cprestador/prestador'; 
+  private url = `${AppConfig.API_BASE_URL}/cprestador/prestador`;
+  private url2 = `${AppConfig.API_BASE_URL}/cprestador/instrutores`;
+  private url3 = `${AppConfig.API_BASE_URL}/cprestador/procuradores`;
+  
+  //'http://3.214.105.13:8080/cprestador/prestador'; 
 
   constructor(private httpClient: HttpClient) { }
 
   listarPrestador(): Observable<Prestador[]>{
     return this.httpClient.get<Prestador[]>(`${this.url}`)
+  }
+
+  listarInstrutores(): Observable<Prestador[]>{
+    return this.httpClient.get<Prestador[]>(`${this.url2}`)
+  }
+
+  listarProcuradores(): Observable<Prestador[]>{
+    return this.httpClient.get<Prestador[]>(`${this.url3}`)
   }
 
   //Serviço para consulta da prestador

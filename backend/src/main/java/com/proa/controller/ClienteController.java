@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proa.exception.ResourceNotFoundException;
@@ -101,22 +102,12 @@ public class ClienteController {
 		clientetLocalizado.setUF(cliente.getUF());
 		clientetLocalizado.setCidade(cliente.getCidade());
 		clientetLocalizado.setCep(cliente.getCep());
+		clientetLocalizado.setCha_categoria(cliente.getCha_categoria());
+		clientetLocalizado.setCha_numero(cliente.getCha_numero());
+		clientetLocalizado.setCha_dtemissao(cliente.getCha_dtemissao());
+		
 		//Relacionamento
 		clientetLocalizado.setOrgmilitar(cliente.getOrgmilitar());
-		
-		System.out.println(cliente.getDataNasc());
-		System.out.println(clientetLocalizado.getDataNasc());
-		
-		/*AVALIAR COMO DEVE SER TRATADO A QUESTÃO DO RELACIONAMENTO:
-		 * AO CRIAR GET/POST PARA OS RELACIONAMENTOS, TEMOS LOOP NAS VALIDAÇÕES
-		 * LOGO, DEVE-SE:
-		 * 1- CRIAR UMA NOVA INSTÂNCIA MANTENDO OS DADOS E SINALIZANDO A NOVA "TITUALIDADE"
-		 * 2- CRIAR UMA NOVA INSTÂNCIA EXCLUINDO OS DADOS E SINALIZANDO A NOVA "TITUALIDADE"
-		 * 3- AVALIAR FORMAS DE ALTERAÇÃO DO PRÓPRIO DADO CADASTRADO (CHAVE EXTRANGEIRA)
-		 * 
-		 * 
-		 * */
-		
 
 		Cliente atualizado = this.clientRep.save(clientetLocalizado);
 
@@ -141,6 +132,21 @@ public class ClienteController {
 
 	}
 	
+	//Novo método para consultar Cliente por nome (busca parcial)
+    @GetMapping("/cliente/buscar-por-nome")
+    public ResponseEntity<List<Cliente>> consultarPorNome(@RequestParam String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new ResourceNotFoundException("Nome não pode ser vazio");
+        }
+        
+        List<Cliente> clientes = this.clientRep.findByNomeContainingIgnoreCase(nome.trim());
+        
+        if (clientes.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum cliente encontrado com o nome: " + nome);
+        }
+        
+        return ResponseEntity.ok(clientes);
+    }
 	
 	//
 }

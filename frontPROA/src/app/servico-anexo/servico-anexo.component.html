@@ -1,161 +1,211 @@
-<div class="container mt-4 scrollable-content" style="height: 80vh; overflow-y: auto;">
-    <h2 class="text-center">Serviços</h2>
-    <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
-        <div class="form-group">
-            <label for="cliente">Cliente (CPF ou CNPJ)</label>
-            <br>
-            <input type="text" class="form-control" id="cliente" #clienteInput [(ngModel)]="cpfcnpjCliente"
-                name="cliente" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="false" required
-                style="width: 200px; display: inline-block; margin-right: 10px;">
-            <input type="text" class="form-control" [(ngModel)]="nomeCliente" name="nomeCliente" readonly
-                style="width: 400px; display: inline-block;">
+<div class="container-fluid p-2 p-md-3">
+  <div class="form-wrapper mx-auto">
+    <h2 class="text-center mb-3 mb-md-4">
+      <i class="fas fa-file-alt me-2"></i>Serviços de Documentação
+    </h2>
+
+    <!-- Formulário de Pesquisa Compacto -->
+    <div class="search-form">
+      <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
+        <div class="row g-2 g-md-3">
+          <div class="col-12 col-md-4">
+            <label for="cliente" class="form-label small">Cliente (CPF ou CNPJ)</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="cliente"
+              #clienteInput
+              [(ngModel)]="cpfcnpjCliente"
+              name="cliente"
+              mask="000.000.000-00 || 00.000.000/0000-00"
+              [dropSpecialCharacters]="false"
+              required
+            />
+          </div>
+
+          <div class="col-12 col-md-5">
+            <label for="nomeCliente" class="form-label small">Nome</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="nomeCliente"
+              [(ngModel)]="nomeCliente"
+              name="nomeCliente"
+              readonly
+            />
+          </div>
+
+          <div class="col-12 col-md-3 d-flex align-items-end">
+            <div class="col-12 col-md-3 d-flex gap-2">
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-search me-1"></i>Pesquisar
+              </button>
+              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="limparDados(clienteForm)">
+                <i class="fas fa-eraser me-1"></i>Limpar
+              </button>
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Pesquisar</button>
-            <button type="button" class="btn btn-secondary" (click)="limparDados(clienteForm)">Limpar</button>
-        </div>
-        <br><br>
-        <div class="form-group">
-            <label for="embarcacao">Embarcação</label>
-            <select class="form-control" id="embarcacao" [(ngModel)]="idEmbarcacao" name="embarcacao"
-                (change)="onEmbarcacaoChange($event)" required>
-                <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">{{embarcacao.nomeEmbarcacao}}
-                </option>
+
+        <div class="row mt-2 mt-md-3">
+          <div class="col-12">
+            <label for="embarcacao" class="form-label small">Embarcação</label>
+            <select
+              class="form-select form-select-sm"
+              id="embarcacao"
+              [(ngModel)]="idEmbarcacao"
+              name="embarcacao"
+              (change)="onEmbarcacaoChange($event)"
+              required
+            >
+              <option value="">Selecione uma embarcação</option>
+              <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">
+                {{ embarcacao.nomeEmbarcacao }}
+              </option>
             </select>
+          </div>
         </div>
-    </form>
-    <br>
-    
-    <div class="servicos-disponiveis">
-        <!-- Seção CHA -->
-        <div hidden class="servico-categoria mb-5">
-            <h2 class="mb-3">Serviços CHA - Carteira de Habilitação para Amador:</h2>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                    
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Emissão CHA - Arrais</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="null"
-                                    [disabled]="!cliente">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="null"
-                                    [disabled]="!cliente">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Renovação CHA - Arrais</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="null"
-                                    [disabled]="!cliente">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="null"
-                                    [disabled]="!cliente">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Emissão CHA - Moto Aquática</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="null"
-                                    [disabled]="!cliente">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="null"
-                                    [disabled]="!cliente">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Seção Embarcação -->
-        <div class="servico-categoria">
-            <h2 class="mb-3">Serviços Embarcação</h2>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Inscrição de Embarcação Esporte Recreio</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="ServicoInscEmbTela()"
-                                    [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="ServicoInscEmbEmail()"
-                                    [disabled]="!cliente || !embarcacoes.length">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Alteração de Embarcação Esporte Recreio</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="ServicoAltcEmbTela()"
-                                    [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="ServicoAltEmbEmail()"
-                                    [disabled]="!cliente || !embarcacoes.length">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Transferência de Embarcação Esporte Recreio</h5>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-outline-primary me-2" (click)="openModal2M(1)"
-                                    [disabled]="!cliente || !embarcacoes.length">Visualizar</button>
-                                <button type="button" class="btn btn-primary" (click)="openModal2M(2)"
-                                    [disabled]="!cliente || !embarcacoes.length">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </form>
     </div>
-    
+
+    <br>
+    <!-- Seções de Serviços -->
+    <div class="row">
+      <!-- Serviços de Embarcação -->
+      <div class="col-12 mb-4">
+        <div class="section-header">
+          <i class="fas fa-ship"></i>
+          <h4 class="mb-0">Serviços para Embarcações</h4>
+        </div>
+
+        <div class="row g-2 g-md-3">
+          <!-- Inscrição -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-file-signature text-primary me-1"></i>
+                  Inscrição de Embarcação
+                </h5>
+                <p class="card-subtitle small text-muted mb-2">(Esporte/Recreio)</p>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-outline-primary btn-sm" 
+                    (click)="ServicoInscEmbTela()">
+                    <i class="fas fa-eye me-1"></i>Visualizar
+                  </button>
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-primary btn-sm" 
+                    (click)="ServicoInscEmbEmail()">
+                    <i class="fas fa-paper-plane me-1"></i>Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alteração -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-edit text-success me-1"></i>
+                  Alteração de Embarcação
+                </h5>
+                <p class="card-subtitle small text-muted mb-2">(Esporte/Recreio)</p>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-outline-primary btn-sm" 
+                    (click)="ServicoAltcEmbTela()">
+                    <i class="fas fa-eye me-1"></i>Visualizar
+                  </button>
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-primary btn-sm" 
+                    (click)="ServicoAltEmbEmail()">
+                    <i class="fas fa-paper-plane me-1"></i>Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transferência -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-exchange-alt text-info me-1"></i>
+                  Transferência de Embarcação
+                </h5>
+                <p class="card-subtitle small text-muted mb-2">(Esporte/Recreio)</p>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-outline-primary btn-sm" 
+                    (click)="openModal2M(1)">
+                    <i class="fas fa-eye me-1"></i>Visualizar
+                  </button>
+                  <button 
+                    [disabled]="!cliente || !embarcacoes.length" 
+                    type="button" 
+                    class="btn btn-primary btn-sm" 
+                    (click)="openModal2M(2)">
+                    <i class="fas fa-paper-plane me-1"></i>Enviar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Modal anexo 2M-->
+<!-- Modal para Transferência -->
 <div class="modal fade" id="modalAnexo2M" tabindex="-1" aria-labelledby="modalAnexo2MLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAnexo2MLabel">Informe o comprador:</h5>
-                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>CPF/CPNJ</label>
-                    <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto1"
-                            name="campotexto1" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Valor</label>
-                    <div class="form-group">
-                        <input type="text" id="nomeopcao1" class="form-control" [(ngModel)]="campotexto2"
-                            name="campotexto2" required>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="confirmarAnexo2M()">Confirmar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAnexo2MLabel">
+          <i class="fas fa-exchange-alt me-2"></i>Informações para Transferência
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #transferenciaForm="ngForm">
+          <div class="mb-3">
+            <label for="campotexto1" class="form-label small">CPF/CNPJ do Comprador*</label>
+            <input type="text" id="campotexto1" class="form-control form-control-sm" 
+                   [(ngModel)]="campotexto1" name="campotexto1" required>
+            <small class="text-muted">O comprador informado deve estar cadastrado na plataforma.</small>
+          </div>
+          <div class="mb-3">
+            <label for="campotexto2" class="form-label small">Valor da Transferência*</label>
+            <input type="text" id="campotexto2" class="form-control form-control-sm" 
+                   [(ngModel)]="campotexto2" name="campotexto2" required>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" (click)="confirmarAnexo2M()" 
+                [disabled]="!transferenciaForm.form.valid">
+          <i class="fas fa-check me-1"></i>Confirmar
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+          <i class="fas fa-times me-1"></i>Cancelar
+        </button>
+      </div>
     </div>
+  </div>
 </div>
