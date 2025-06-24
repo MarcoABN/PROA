@@ -1,72 +1,52 @@
 <div class="container-fluid p-2 p-md-3">
   <div class="form-wrapper mx-auto">
     <h2 class="text-center mb-3 mb-md-4">
-      <i class="fas fa-file-alt me-2"></i>Serviços de Documentação
+      <i class="fas fa-file-alt me-2"></i>Serviços
     </h2>
 
     <!-- Formulário de Pesquisa Compacto -->
-    <div class="search-form">
-      <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
-        <div class="row g-2 g-md-3">
-          <div class="col-12 col-md-4">
-            <label for="cliente" class="form-label small">Cliente (CPF ou CNPJ)</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="cliente"
-              #clienteInput
-              [(ngModel)]="cpfcnpjCliente"
-              name="cliente"
-              mask="000.000.000-00 || 00.000.000/0000-00"
-              [dropSpecialCharacters]="false"
-              required
-            />
-          </div>
+        <div class="search-form">
+            <form #clienteForm="ngForm" (ngSubmit)="consultarAnexo()">
+                <div class="row g-2 g-md-3">
+                    <div class="col-12 col-md-4">
+                        <label for="cliente" class="form-label small">Cliente (CPF ou CNPJ)</label>
+                        <input type="text" class="form-control form-control-sm" id="cliente" #clienteInput
+                            [(ngModel)]="cpfcnpjCliente" name="cliente" mask="000.000.000-00 || 00.000.000/0000-00"
+                            [dropSpecialCharacters]="false" required />
+                    </div>
 
-          <div class="col-12 col-md-5">
-            <label for="nomeCliente" class="form-label small">Nome</label>
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              id="nomeCliente"
-              [(ngModel)]="nomeCliente"
-              name="nomeCliente"
-              readonly
-            />
-          </div>
+                    <div class="col-12 col-md-5">
+                        <label for="nomeCliente" class="form-label small">Nome</label>
+                        <input type="text" class="form-control form-control-sm" id="nomeCliente"
+                            [(ngModel)]="nomeCliente" name="nomeCliente" readonly />
+                    </div>
 
-          <div class="col-12 col-md-3 d-flex align-items-end">
-            <div class="col-12 col-md-3 d-flex gap-2">
-              <button type="submit" class="btn btn-primary btn-sm">
-                <i class="fas fa-search me-1"></i>Pesquisar
-              </button>
-              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="limparDados(clienteForm)">
-                <i class="fas fa-eraser me-1"></i>Limpar
-              </button>
-            </div>
-          </div>
+                    <div class="col-12 col-md-3 d-flex align-items-end">
+                        <div class="col-12 col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-search me-1"></i>Pesquisar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="limparDados(clienteForm)">
+                                <i class="fas fa-eraser me-1"></i>Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mt-md-3">
+                    <div class="col-12">
+                        <label for="embarcacao" class="form-label small">Embarcação</label>
+                        <select class="form-select form-select-sm" id="embarcacao" [(ngModel)]="idEmbarcacao"
+                            name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
+                            <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">
+                                {{ embarcacao.nomeEmbarcacao }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <div class="row mt-2 mt-md-3">
-          <div class="col-12">
-            <label for="embarcacao" class="form-label small">Embarcação</label>
-            <select
-              class="form-select form-select-sm"
-              id="embarcacao"
-              [(ngModel)]="idEmbarcacao"
-              name="embarcacao"
-              (change)="onEmbarcacaoChange($event)"
-              required
-            >
-              <option value="">Selecione uma embarcação</option>
-              <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">
-                {{ embarcacao.nomeEmbarcacao }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </form>
-    </div>
 
     <br>
     <!-- Seções de Serviços -->
@@ -96,7 +76,7 @@
                     (click)="ServicoInscEmbTela()">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
-                  <button 
+                  <button hidden
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
                     class="btn btn-primary btn-sm" 
@@ -125,7 +105,7 @@
                     (click)="ServicoAltcEmbTela()">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
-                  <button 
+                  <button hidden
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
                     class="btn btn-primary btn-sm" 
@@ -137,6 +117,7 @@
             </div>
           </div>
 
+          
           <!-- Transferência -->
           <div class="col-12 col-sm-6 col-md-4">
             <div class="card h-100">
@@ -154,7 +135,7 @@
                     (click)="openModal2M(1)">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
-                  <button 
+                  <button hidden
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
                     class="btn btn-primary btn-sm" 

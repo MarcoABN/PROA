@@ -275,4 +275,6 @@ export class ListarClienteComponent implements OnInit {
     this.clientes = [];
     this.mensagemErro = '';
   }
+
+  
 }

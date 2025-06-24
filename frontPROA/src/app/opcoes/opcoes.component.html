@@ -67,7 +67,7 @@
             <tbody>
               <tr *ngFor="let prestador of prestadores">
                 <td>{{ prestador.nome }}</td>
-                <td>{{ prestador.cpfcnpj }}</td>
+                <td>{{ prestador.cpfcnpj | cpfCnpj }}</td>
                 <td>
                   <input type="checkbox" [checked]="prestador.instrutor" disabled>
                 </td>
@@ -95,51 +95,51 @@
 
 
 <div class="form-wrapper mx-auto">
-    <div class="card mb-4">
-      <div class="card-header bg-light d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="fas fa-ship me-2"></i>Escolas Náuticas</h5>
-        <!-- CORRIGIDO: Chamada do método correto -->
-        <button class="btn btn-success btn-sm" (click)="abrirModalCadastrarEscola()">
-          <i class="fas fa-plus me-1"></i>Cadastrar
-        </button>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-sm table-striped table-hover">
-            <thead class="small">
-              <tr>
-                <th>Razão Social</th>
-                <th>CNPJ</th>
-                <th>Instrutor</th>
-                <th>Responsável</th>
-                <th class="text-end">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let escolanautica of escolas">
-                <td>{{ escolanautica.razaoSocial }}</td>
-                <td>{{ escolanautica.cnpj }}</td>
-                <!-- CORRIGIDO: Exibindo o nome do instrutor -->
-                <td>{{ escolanautica.instrutor?.nome || 'Não definido' }}</td>
-                <!-- CORRIGIDO: Exibindo o nome do responsável -->
-                <td>{{ escolanautica.responsavel?.nome || 'Não definido' }}</td>
-                <td class="text-end">
-                  <button class="btn btn-primary btn-sm me-1" (click)="abrirModalAlterarEscola(escolanautica)">
+  <div class="card mb-4">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h5 class="mb-0"><i class="fas fa-ship me-2"></i>Escolas Náuticas</h5>
+      <button class="btn btn-success btn-sm" (click)="abrirModalCadastrarEscola()">
+        <i class="fas fa-plus me-1"></i>Cadastrar
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+          <thead class="small">
+            <tr>
+              <th style="width: 25%; min-width: 200px;">Razão Social</th>
+              <th style="width: 15%; min-width: 120px;">CNPJ</th>
+              <th style="width: 20%; min-width: 150px;">Instrutor</th>
+              <th style="width: 20%; min-width: 150px;">Responsável</th>
+              <th style="width: 20%; min-width: 140px;" class="text-end">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let escolanautica of escolas">
+              <td class="text-break">{{ escolanautica.razaoSocial }}</td>
+              <td class="text-nowrap">{{ escolanautica.cnpj | cpfCnpj }}</td>
+              <td class="text-break">{{ escolanautica.instrutor?.nome || 'Não definido' }}</td>
+              <td class="text-break">{{ escolanautica.responsavel?.nome || 'Não definido' }}</td>
+              <td class="text-end">
+                <button class="btn btn-primary btn-sm me-1" (click)="abrirModalAlterarEscola(escolanautica)">
                     <i class="fas fa-edit me-1"></i>Alterar
                   </button>
                   <button class="btn btn-danger btn-sm" (click)="excluirEscolaNautica(escolanautica.id)">
                     <i class="fas fa-trash-alt me-1"></i>Excluir
                   </button>
-                </td>
-              </tr>
-              <tr *ngIf="escolas.length === 0">
-                <td colspan="5" class="text-center text-muted small">Nenhuma Escola Náutica cadastrada</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              </td>
+            </tr>
+            <tr *ngIf="escolas.length === 0">
+              <td colspan="5" class="text-center text-muted small py-4">
+                <i class="fas fa-info-circle me-1"></i>
+                Nenhuma Escola Náutica cadastrada
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal para Organizações Militares -->
@@ -202,7 +202,7 @@
             <div class="col-md-6">
               <label for="cpf" class="form-label small">CPF/CNPJ*</label>
               <input type="text" class="form-control form-control-sm" id="cpf" [(ngModel)]="prestador.cpfcnpj"
-                name="cpf" (blur)="validarCpfCnpj(prestador.cpfcnpj)" required>
+                name="cpf" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="true"  (blur)="validarCpfCnpj(prestador.cpfcnpj)" required>
               <small class="text-danger small" *ngIf="cpfCnpjInvalido">CPF/CNPJ inválido!</small>
             </div>
             <div class="col-md-6">
@@ -232,12 +232,12 @@
             <div class="col-md-6">
               <label for="telefone" class="form-label small">Telefone</label>
               <input type="text" class="form-control form-control-sm" id="telefone" [(ngModel)]="prestador.telefone"
-                name="telefone">
+                name="telefone" mask="(00) 0000-0000" [dropSpecialCharacters]="true">
             </div>
             <div class="col-md-6">
               <label for="celular" class="form-label small">Celular</label>
               <input type="text" class="form-control form-control-sm" id="celular" [(ngModel)]="prestador.celular"
-                name="celular">
+                name="celular" mask="(00) 0 0000-0000" [dropSpecialCharacters]="true">
             </div>
 
 
@@ -395,7 +395,7 @@
             <div class="col-md-4">
               <label for="cnpjEscola" class="form-label small">CNPJ*</label>
               <input type="text" class="form-control form-control-sm" id="cnpjEscola" 
-                     [(ngModel)]="escolanautica.cnpj" name="cnpjEscola" required>
+                     [(ngModel)]="escolanautica.cnpj" name="cnpjEscola" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="true"  required>
             </div>
 
             <!-- Seleção do Instrutor -->

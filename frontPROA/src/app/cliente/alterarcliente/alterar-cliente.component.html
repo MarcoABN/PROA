@@ -23,7 +23,7 @@
             <div class="col-md-6">
               <label for="cpfcnpj" class="form-label small">CPF/CNPJ*</label>
               <input type="text" id="cpfcnpj" class="form-control form-control-sm" [(ngModel)]="cliente.cpfcnpj"
-                name="cpfcnpj" appUppercase required>
+                name="cpfcnpj" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="true" required>
             </div>
 
             <!-- RG -->
@@ -42,23 +42,23 @@
 
             <!-- Data de Emissão -->
             <div class="col-md-3">
-              <label for="dtEmissao" class="form-label small">Data de Emissão*</label>
+              <label for="dtEmissao" class="form-label small">Data de Emissão</label>
               <input type="date" id="dtEmissao" class="form-control form-control-sm" [(ngModel)]="cliente.dtEmissao"
-                name="dtEmissao" required>
+                name="dtEmissao">
             </div>
 
             <!-- Data de Nascimento -->
             <div class="col-md-6">
-              <label for="dtNasc" class="form-label small">Data de Nascimento*</label>
+              <label for="dtNasc" class="form-label small">Data de Nascimento</label>
               <input type="date" id="dtNasc" class="form-control form-control-sm" [(ngModel)]="cliente.dataNasc"
-                name="dtNasc" required>
+                name="dtNasc">
             </div>
 
             <!-- Nacionalidade -->
             <div class="col-md-6">
-              <label for="nacionalidade" class="form-label small">Nacionalidade*</label>
+              <label for="nacionalidade" class="form-label small">Nacionalidade</label>
               <input type="text" id="nacionalidade" class="form-control form-control-sm"
-                [(ngModel)]="cliente.nacionalidade" name="nacionalidade" appUppercase required>
+                [(ngModel)]="cliente.nacionalidade" name="nacionalidade" appUppercase>
             </div>
 
             <!-- Naturalidade -->
@@ -71,15 +71,15 @@
             <!-- Telefone -->
             <div class="col-md-6">
               <label for="telefone" class="form-label small">Telefone</label>
-              <input type="number" id="telefone" class="form-control form-control-sm" [(ngModel)]="cliente.telefone"
-                name="telefone">
+              <input type="text" id="telefone" class="form-control form-control-sm" [(ngModel)]="cliente.telefone"
+                name="telefone" mask="(00) 0000-0000" [dropSpecialCharacters]="true">
             </div>
 
             <!-- Celular -->
             <div class="col-md-6">
               <label for="celular" class="form-label small">Celular</label>
-              <input type="number" id="celular" class="form-control form-control-sm" [(ngModel)]="cliente.celular"
-                name="celular">
+              <input type="text" id="celular" class="form-control form-control-sm" [(ngModel)]="cliente.celular"
+                name="celular" mask="(00) 0 0000-0000" [dropSpecialCharacters]="true" />
             </div>
 
             <!-- Email -->

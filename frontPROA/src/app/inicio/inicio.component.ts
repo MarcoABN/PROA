@@ -35,4 +35,8 @@ export class InicioComponent {
     this.router.navigate(['/servico-anexo/servico-anexo']);
   }
 
+  acessarVencimentos(){
+    this.router.navigate(['/vencimento/vencimento'])
+  }
+
 }

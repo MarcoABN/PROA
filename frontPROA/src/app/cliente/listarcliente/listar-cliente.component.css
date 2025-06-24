@@ -25,18 +25,283 @@
     padding: 2rem;
     min-height: 100%;
     box-sizing: border-box;
-  }
-  
-  .form-wrapper {
-    max-width: 900px;
+}
+
+.form-wrapper {
+    max-width: 1200px;
     width: 100%;
     margin-top: 0 !important;
     padding-top: 0 !important;
-  }
-  
-  @media (min-height: 768px) {
+}
+
+@media (min-height: 768px) {
     :host {
-      align-items: center; /* centraliza verticalmente só se houver espaço */
-      padding: 2rem;
+        align-items: center; /* centraliza verticalmente só se houver espaço */
+        padding: 2rem;
     }
-  }
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-gif {
+    width: 80px;
+    height: auto;
+}
+
+/* Melhorias no formulário de pesquisa */
+.search-form {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos específicos para os cards de cliente */
+.cliente-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.cliente-card:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.15);
+    transform: translateY(-2px);
+}
+
+.cliente-card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.cliente-card .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #495057;
+}
+
+.cliente-card .card-body {
+    padding: 1rem;
+}
+
+/* Estilo especial para resultado único */
+.scrollable-content .card:has(.cliente-card) .card-header h5 .text-primary,
+.cliente-card .text-primary {
+    color: #007bff !important;
+}
+
+/* Estilo especial para múltiplos resultados */
+.scrollable-content .card:has(.row .cliente-card) .card-header h5 .text-success,
+.cliente-card .text-success {
+    color: #28a745 !important;
+}
+
+/* Botões das ações */
+.cliente-card .btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cliente-card .btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Cores específicas para cada tipo de ação */
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+    color: #007bff;
+}
+
+.empty-state p {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.empty-state small {
+    font-size: 0.9rem;
+}
+
+/* Badge personalizada */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.6em;
+}
+
+/* Melhorias nos cards principais */
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Melhorias no alert de erro */
+.alert-danger {
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .form-wrapper {
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .scrollable-content {
+        max-height: 70vh;
+        padding-right: 10px;
+    }
+    
+    .cliente-card .card-body {
+        padding: 0.75rem;
+    }
+    
+    .cliente-card .btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .empty-state {
+        padding: 2rem 0.5rem;
+    }
+    
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+    
+    .search-form {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .cliente-card .row.g-2 {
+        gap: 0.5rem !important;
+    }
+    
+    .cliente-card .btn {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.5rem;
+    }
+    
+    .cliente-card .card-header {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .cliente-card .card-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* Cores dos ícones */
+.text-primary {
+    color: #007bff !important;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+/* Ajustes para badges */
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+/* Animações suaves */
+.cliente-card,
+.btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Melhorias de acessibilidade */
+.btn:focus {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.cliente-card:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Estilo específico para campo de pesquisa */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Melhorias no placeholder */
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 0.7;
+}
+
+/* Hover effect no formulário */
+.search-form:hover {
+    border-color: #adb5bd;
+    transition: border-color 0.2s ease;
+}

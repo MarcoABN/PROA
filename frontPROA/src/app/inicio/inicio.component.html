@@ -38,7 +38,7 @@
             <p>Anexos</p>
         </button>
 
-        <button hidden class="option" 
+        <button  class="option" 
                 (click)="emitirServicos()" 
                 type="button"
                 aria-label="Acessar seção de Serviços">
@@ -47,6 +47,17 @@
                  role="presentation"
                  loading="lazy">
             <p>Serviços</p>
+        </button>
+
+        <button  class="option" 
+                (click)="acessarVencimentos()" 
+                type="button"
+                aria-label="Acessar seção de Vencimentos">
+            <img src="../../assets/calendario.png" 
+                 alt="" 
+                 role="presentation"
+                 loading="lazy">
+            <p>Vencimentos</p>
         </button>
     </nav>
 </div>

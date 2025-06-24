@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from './material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
@@ -29,6 +29,7 @@ import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
 import { OpcoesComponent } from './opcoes/opcoes.component';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { UppercaseDirective } from './config/uppercase.directive';
+import { CpfCnpjPipe } from './config/cpf-cnpj.pipe';
 
 
 
@@ -51,12 +52,14 @@ import { UppercaseDirective } from './config/uppercase.directive';
     LoginComponent,
 
     ManterMotorComponent,
-     NotafiscalComponent,
-     ServicoAnexoComponent,
-     OpcoesComponent,
-     SafeUrlPipe,
-     UppercaseDirective
+    NotafiscalComponent,
+    ServicoAnexoComponent,
+    OpcoesComponent,
+    SafeUrlPipe,
+    UppercaseDirective,
+    CpfCnpjPipe,
     
+
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { UppercaseDirective } from './config/uppercase.directive';
 
     NgxMaskDirective, 
     NgxMaskPipe,
+    CommonModule,
 
     AngularFireModule.initializeApp(
       {

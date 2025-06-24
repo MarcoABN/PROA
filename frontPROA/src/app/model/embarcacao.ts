@@ -42,6 +42,9 @@ export class Embarcacao {
     cep!: string;
 
     cliente!: Cliente;
+
+    valor?: number; 
+    dtSeguro?: Date;
     
     //falta incluir demais relações
 

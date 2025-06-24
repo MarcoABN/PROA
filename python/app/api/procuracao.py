@@ -6,6 +6,6 @@ router = APIRouter(prefix="/procuracao", tags=["Procuracao"])
 
 @router.post("/gerar")
 def gerar(request: ProcuracaoRequest):
-    print ('Iniciou a entrada no python')
+
     pdf = gerar_procuracao(request)
     return Response(content=pdf, media_type="application/pdf")

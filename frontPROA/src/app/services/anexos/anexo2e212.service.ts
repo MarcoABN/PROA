@@ -11,14 +11,14 @@ export class Anexo2E212Service {
   mesextenso?: String;
   constructor(private datePipe: DatePipe, private maskcpf: ValidadorcpfcnpjService) { }
 
-  async anexo2E212(embarcacao: Embarcacao, cpfVendedor: string, nomeVendedor: string, valor: number, servico?: string): Promise<void | Uint8Array> {
+  async anexo2E212(embarcacao: Embarcacao, cpfVendedor: string, nomeVendedor: string, servico?: string): Promise<void | Uint8Array> {
 
     try {
 
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2E-N212.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
-      const formattedDtEmissao = this.datePipe.transform((embarcacao.cliente.dtEmissao?? ''), 'dd/MM/yyyy') || '';
+      const formattedDtEmissao = this.datePipe.transform((embarcacao.cliente.dtEmissao ?? ''), 'dd/MM/yyyy') || '';
 
       const form = pdfDoc.getForm();
 
@@ -27,22 +27,26 @@ export class Anexo2E212Service {
 
       form.getTextField('nomevendedor').setText(nomeVendedor ?? '');
       form.getTextField('cpfcnpjvendedor').setText(this.maskcpf.mascararCpfCnpj(cpfVendedor) ?? '');
-      form.getTextField('valor').setText(valor.toString() ?? '');
+      const valorFormatado = embarcacao.valor != null
+        ? `R$ ${Number(embarcacao.valor).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
+        : 'R$ 0,00';
+
+      form.getTextField('valor').setText(valorFormatado);
 
       form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
       form.getTextField('rg').setText(embarcacao.cliente?.rg ?? '');
       form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente?.cpfcnpj) ?? '');
-      
+
       const endereco =
-          (embarcacao.cliente.logradouro ?? '') +
-          ', ' + (embarcacao.cliente.numero ?? '') +
-          ', ' + (embarcacao.cliente.complemento ?? '') +
-          ', ' + (embarcacao.cliente.bairro ?? '') +
-          ', ' + (embarcacao.cliente.cidade ?? '') +
-          ', CEP: ' + (embarcacao.cliente.cep ?? '');
-        const [part1, part2] = this.divideString(endereco, 75);
-        form.getTextField('endereco1').setText(part1.toUpperCase());
-        form.getTextField('endereco2').setText(part2.toUpperCase());
+        (embarcacao.cliente.logradouro ?? '') +
+        ', ' + (embarcacao.cliente.numero ?? '') +
+        ', ' + (embarcacao.cliente.complemento ?? '') +
+        ', ' + (embarcacao.cliente.bairro ?? '') +
+        ', ' + (embarcacao.cliente.cidade ?? '') +
+        ', CEP: ' + (embarcacao.cliente.cep ?? '');
+      const [part1, part2] = this.divideString(endereco, 75);
+      form.getTextField('endereco1').setText(part1.toUpperCase());
+      form.getTextField('endereco2').setText(part2.toUpperCase());
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
@@ -129,5 +133,7 @@ export class Anexo2E212Service {
 
     return [part1, part2];
   }
+
+
 
 }

@@ -427,7 +427,7 @@
                                             <i class="fas fa-stamp text-primary me-1"></i>
                                             Procuração 01
                                         </h5>
-                                        <button [disabled]="!cliente || !embarcacoes.length" type="button"
+                                        <button [disabled]="!cliente" type="button"
                                             class="btn btn-primary btn-sm w-100" (click)="gerarProcuracao01()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
                                         </button>
@@ -1442,14 +1442,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Valor</label>
-                    <div class="form-group">
-                        <input type="number" id="nomeopcao3" class="form-control" [(ngModel)]="campovalor"
-                            name="campovalor" required>
-                    </div>
-                </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="confirmarAnexo2E212()">Confirmar</button>
@@ -1649,7 +1641,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group mb-2">
-                                <label>UF *</label>
+                                <label>UF</label>
                                 <select class="form-control" [(ngModel)]="proprietarioanterior.uf"
                                     name="ufProprietario">
                                     <option value="">Selecione...</option>
@@ -1802,4 +1794,12 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal de Carregamento -->
+<div *ngIf="carregando" class="loading-overlay">
+  <div class="loading-content">
+    <img src="assets/gifbarco.gif" alt="Carregando..." class="loading-gif">
+    <p class="text-muted mt-2">Gerando documento, aguarde...</p>
+  </div>
 </div>

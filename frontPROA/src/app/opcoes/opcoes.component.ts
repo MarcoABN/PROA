@@ -29,18 +29,7 @@ export class OpcoesComponent implements OnInit {
   modalTituloOrgMilitar: string = '';
 
 
-  /*
-  ALTERAR LÓGICA
-  Criar estrutura para cadastro de escola náutica
-  cada escola náutica terá:
-
-  1 instrutor
-  1 responsável
-
-  a partir disso preencher os dados dos anexos 3b e 5e
-
-  */
-  // Organizações Militares
+  
   
 
   constructor(
@@ -212,4 +201,6 @@ export class OpcoesComponent implements OnInit {
       }
     );
   }
+
+  
 }

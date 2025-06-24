@@ -107,6 +107,8 @@ public class EmbarcacaoController {
 		embLocalizado.setCidade(emb.getCidade());
 		embLocalizado.setCEP(emb.getCEP());
 		embLocalizado.setBordaLivre(emb.getBordaLivre());
+		embLocalizado.setValor(emb.getValor());
+		embLocalizado.setDtSeguro(emb.getDtSeguro());
 
 
 

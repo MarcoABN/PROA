@@ -26,33 +26,33 @@ export class Anexo2FService {
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
       form.getTextField('cp-dl-ag').setText(campotexto2 ?? '');
 
-      form.getTextField('nomeproprietarioanterior').setText(embarcacao.cliente.nome ?? '');
-      form.getTextField('rg').setText(embarcacao.cliente.rg ?? '');
-      form.getTextField('orgaoexpedidor').setText(embarcacao.cliente.orgEmissor ?? '');
-      form.getTextField('dtexpedicao').setText(embarcacao.cliente.dtEmissao?.toString() ?? '');
-      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
-      form.getTextField('endereco').setText(embarcacao.cliente.logradouro ?? '');
-      form.getTextField('complemento').setText(embarcacao.cliente.complemento ?? '');
-      form.getTextField('numero').setText(embarcacao.cliente.numero?.toString() ?? '');
-      form.getTextField('bairro').setText(embarcacao.cliente.bairro ?? '');
-      form.getTextField('cidade').setText(embarcacao.cliente.cidade ?? '');
-      form.getTextField('uf').setText(embarcacao.cliente.uf ?? '');
-      form.getTextField('cep').setText(embarcacao.cliente.cep ?? '');
+      form.getTextField('nomeproprietarioanterior').setText(clienteNovo.nome ?? '');
+      form.getTextField('rg').setText(clienteNovo.rg ?? '');
+      form.getTextField('orgaoexpedidor').setText(clienteNovo.orgEmissor ?? '');
+      form.getTextField('dtexpedicao').setText(clienteNovo.dtEmissao?.toString() ?? '');
+      form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(clienteNovo.cpfcnpj) ?? '');
+      form.getTextField('endereco').setText(clienteNovo.logradouro ?? '');
+      form.getTextField('complemento').setText(clienteNovo.complemento ?? '');
+      form.getTextField('numero').setText(clienteNovo.numero?.toString() ?? '');
+      form.getTextField('bairro').setText(clienteNovo.bairro ?? '');
+      form.getTextField('cidade').setText(clienteNovo.cidade ?? '');
+      form.getTextField('uf').setText(clienteNovo.uf ?? '');
+      form.getTextField('cep').setText(clienteNovo.cep ?? '');
 
-      form.getTextField('nomenovoproprietario').setText(clienteNovo.nome ?? '');
-      form.getTextField('rgnovoproprietario').setText(clienteNovo.rg ?? '');
-      form.getTextField('orgaoexpedidornovoproprietario').setText(clienteNovo.orgEmissor ?? '');
-      form.getTextField('dtexpedicaonovoproprietario').setText(clienteNovo.dtEmissao?.toString() ?? '');
-      form.getTextField('cpfcnpjnovoproprietario').setText(this.maskcpf.mascararCpfCnpj(clienteNovo.cpfcnpj) ?? '');
-      form.getTextField('endereconovoproprietario').setText(clienteNovo.logradouro ?? '');
-      form.getTextField('numeronovoproprietario').setText(clienteNovo.numero?.toString() ?? '');
-      form.getTextField('complementonovoproprietario').setText(clienteNovo.complemento ?? '');
-      form.getTextField('bairronovoproprietario').setText(clienteNovo.bairro ?? '');
-      form.getTextField('cidadenovoproprietario').setText(clienteNovo.cidade ?? '');
-      form.getTextField('ufnovoproprietario').setText(clienteNovo.uf ?? '');
-      form.getTextField('cepnovoproprietario').setText(clienteNovo.cep ?? '');
+      form.getTextField('nomenovoproprietario').setText(embarcacao.cliente.nome ?? '');
+      form.getTextField('rgnovoproprietario').setText(embarcacao.cliente.rg ?? '');
+      form.getTextField('orgaoexpedidornovoproprietario').setText(embarcacao.cliente.orgEmissor ?? '');
+      form.getTextField('dtexpedicaonovoproprietario').setText(embarcacao.cliente.dtEmissao?.toString() ?? '');
+      form.getTextField('cpfcnpjnovoproprietario').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
+      form.getTextField('endereconovoproprietario').setText(embarcacao.cliente.logradouro ?? '');
+      form.getTextField('complementonovoproprietario').setText(embarcacao.cliente.complemento ?? '');
+      form.getTextField('numeronovoproprietario').setText(embarcacao.cliente.numero?.toString() ?? '');
+      form.getTextField('bairronovoproprietario').setText(embarcacao.cliente.bairro ?? '');
+      form.getTextField('cidadenovoproprietario').setText(embarcacao.cliente.cidade ?? '');
+      form.getTextField('ufnovoproprietario').setText(embarcacao.cliente.uf ?? '');
+      form.getTextField('cepnovoproprietario').setText(embarcacao.cliente.cep ?? '');
 
-      form.getTextField('local').setText(clienteNovo.cidade ?? '');
+      form.getTextField('local').setText(embarcacao.cliente.cidade ?? '');
 
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');

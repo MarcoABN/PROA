@@ -1,0 +1,232 @@
+<div class="container-fluid p-2 p-md-3">
+    <div class="form-wrapper mx-auto">
+        <h2 class="text-center mb-3 mb-md-4">
+            <i class="fas fa-calendar-alt me-2"></i>Consulta de Vencimentos
+        </h2>
+
+        <!-- Formulário de Pesquisa Compacto -->
+        <div class="search-form">
+            <form [formGroup]="vencimentoForm" (ngSubmit)="buscarVencimentos()">
+                <div class="row g-2 g-md-3">
+                    <div class="col-12 col-md-4">
+                        <label for="dataInicio" class="form-label small">Data Início</label>
+                        <input type="date" class="form-control form-control-sm" id="dataInicio" 
+                            formControlName="dataInicio" 
+                            [class.is-invalid]="vencimentoForm.get('dataInicio')?.invalid && vencimentoForm.get('dataInicio')?.touched" />
+                        <div class="invalid-feedback" *ngIf="vencimentoForm.get('dataInicio')?.invalid && vencimentoForm.get('dataInicio')?.touched">
+                            Data inicial é obrigatória
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="dataFim" class="form-label small">Data Fim</label>
+                        <input type="date" class="form-control form-control-sm" id="dataFim" 
+                            formControlName="dataFim"
+                            [class.is-invalid]="vencimentoForm.get('dataFim')?.invalid && vencimentoForm.get('dataFim')?.touched" />
+                        <div class="invalid-feedback" *ngIf="vencimentoForm.get('dataFim')?.invalid && vencimentoForm.get('dataFim')?.touched">
+                            Data final é obrigatória
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 d-flex align-items-end">
+                        <div class="d-flex gap-2 w-100">
+                            <button type="submit" class="btn btn-primary btn-sm" 
+                                [disabled]="vencimentoForm.invalid">
+                                <i class="fas fa-search me-1"></i>Buscar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="limparResultados()">
+                                <i class="fas fa-eraser me-1"></i>Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <!-- Seções de Resultados Organizadas -->
+        <div class="scrollable-content">
+            <div class="row">
+                <!-- COLUNA 1: CHA -->
+                <div class="col-12 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-id-card me-2 text-success"></i>Vencimentos CHA</h5>
+                            <span class="badge bg-success" *ngIf="!loadingCha">{{ clientesCha.length }}</span>
+                            <div class="spinner-border spinner-border-sm text-success" *ngIf="loadingCha" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <!-- Estado Vazio -->
+                            <div class="empty-state" *ngIf="clientesCha.length === 0 && !loadingCha">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>Nenhum vencimento de CHA encontrado no período</p>
+                            </div>
+
+                            <!-- Lista de CHAs -->
+                            <div *ngIf="clientesCha.length > 0">
+                                <div class="card result-card" *ngFor="let cliente of clientesCha">
+                                    <div class="card-body p-3">
+                                        <h6 class="card-title mb-2">
+                                            <i class="fas fa-user text-success me-1"></i>
+                                            {{ cliente.nome }}
+                                        </h6>
+                                        <div class="row g-1">
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>CPF/CNPJ:</strong> {{ cliente.cpfcnpj }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>CHA:</strong> {{ cliente.cha_numero || 'Não informado' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Categoria:</strong> {{ cliente.cha_categoria || 'Não informado' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Emissão:</strong> {{ formatarData(cliente.cha_dtemissao) }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Telefone:</strong> {{ cliente.telefone || cliente.celular || 'Não informado' }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUNA 2: TIE -->
+                <div class="col-12 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-ship me-2 text-primary"></i>Vencimentos TIE</h5>
+                            <span class="badge bg-primary" *ngIf="!loadingTie">{{ embarcacoesTie.length }}</span>
+                            <div class="spinner-border spinner-border-sm text-primary" *ngIf="loadingTie" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <!-- Estado Vazio -->
+                            <div class="empty-state" *ngIf="embarcacoesTie.length === 0 && !loadingTie">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>Nenhum vencimento de TIE encontrado no período</p>
+                            </div>
+
+                            <!-- Lista de TIEs -->
+                            <div *ngIf="embarcacoesTie.length > 0">
+                                <div class="card result-card" *ngFor="let embarcacao of embarcacoesTie">
+                                    <div class="card-body p-3">
+                                        <h6 class="card-title mb-2">
+                                            <i class="fas fa-anchor text-primary me-1"></i>
+                                            {{ embarcacao.nomeEmbarcacao }}
+                                        </h6>
+                                        <div class="row g-1">
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Inscrição:</strong> {{ embarcacao.numInscricao || 'Sem inscrição' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Proprietário:</strong> {{ embarcacao.cliente.nome || 'Não informado' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Tipo:</strong> {{ embarcacao.tipoEmbarcacao }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Atividade:</strong> {{ embarcacao.tipoAtividade }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Área Navegação:</strong> {{ embarcacao.areaNavegacao }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUNA 3: SEGURO -->
+                <div class="col-12 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="fas fa-shield-alt me-2 text-warning"></i>Vencimentos Seguro</h5>
+                            <span class="badge bg-warning" *ngIf="!loadingSeguro">{{ embarcacoesSeguro.length }}</span>
+                            <div class="spinner-border spinner-border-sm text-warning" *ngIf="loadingSeguro" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <!-- Estado Vazio -->
+                            <div class="empty-state" *ngIf="embarcacoesSeguro.length === 0 && !loadingSeguro">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>Nenhum vencimento de Seguro encontrado no período</p>
+                            </div>
+
+                            <!-- Lista de Seguros -->
+                            <div *ngIf="embarcacoesSeguro.length > 0">
+                                <div class="card result-card" *ngFor="let embarcacao of embarcacoesSeguro">
+                                    <div class="card-body p-3">
+                                        <h6 class="card-title mb-2">
+                                            <i class="fas fa-file-contract text-warning me-1"></i>
+                                            {{ embarcacao.nomeEmbarcacao }}
+                                        </h6>
+                                        <div class="row g-1">
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Inscrição:</strong> {{ embarcacao.numInscricao || 'Sem inscrição' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Proprietário:</strong> {{ embarcacao.cliente.nome || 'Não informado' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Data Seguro:</strong> {{ formatarData(embarcacao.dtSeguro) }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Valor:</strong> {{ embarcacao.valor ? embarcacao.valor : 'Não informado' }}
+                                                </small>
+                                            </div>
+                                            <div class="col-12">
+                                                <small class="text-muted d-block">
+                                                    <strong>Tipo:</strong> {{ embarcacao.tipoEmbarcacao }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -59,7 +59,7 @@ export class Anexo3bService {
 
 
 
-      const hoje = new Date();
+      const hoje = new Date(dataAula + 'T00:00:00');
       const dia = hoje.getDate().toString().padStart(2, '0');
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();

@@ -144,26 +144,34 @@ public class Embarcacao {
 	
 	@Column (name = "bordalivre")
 	private float bordaLivre;
+	
+	@Column (name = "valor")
+	private Double valor;
+
+	@Column (name = "dtseguro")
+	private Date dtSeguro;
+
+
+
+	
+
 
 	
 
 
 
-	
-
-
-	public Embarcacao(OrgMilitar orgmilitar, Cliente cliente, long iD, int qtdMotores,
-			float arqueacaoLiquida, float bocaMoldada, String areaNavegacao, float compPerpendicular, String numCasco,
-			Date dtConstrucao, float capArmazenamento, String matCasco, int qtdTripulantes, float contorno,
-			float compTotal, int lotacao, String tipoPropulsao, String matSuperestrutura, float pontalMoldado,
-			String construtor, float arqueacaoBruta, String tipoEmbarcacao, String nomeEmbarcacao,
-			String corPredominante, float porteBruto, Date dtInscricao, float potenciaMotor, float calado,
-			String numInscricao, String tipoAtividade, String logradouro, String bairro, String numero,
-			String complemento, String uF, String cidade, String cEP, float bordaLivre) {
+	public Embarcacao(OrgMilitar orgmilitar, Cliente cliente, long id, int qtdMotores, float arqueacaoLiquida,
+			float bocaMoldada, String areaNavegacao, float compPerpendicular, String numCasco, Date dtConstrucao,
+			float capArmazenamento, String matCasco, int qtdTripulantes, float contorno, float compTotal, int lotacao,
+			String tipoPropulsao, String matSuperestrutura, float pontalMoldado, String construtor,
+			float arqueacaoBruta, String tipoEmbarcacao, String nomeEmbarcacao, String corPredominante,
+			float porteBruto, Date dtInscricao, float potenciaMotor, float calado, String numInscricao,
+			String tipoAtividade, String logradouro, String bairro, String numero, String complemento, String uF,
+			String cidade, String cEP, float bordaLivre, Double valor, Date dtSeguro) {
 		super();
 		this.orgmilitar = orgmilitar;
 		this.cliente = cliente;
-		id = iD;
+		this.id = id;
 		this.qtdMotores = qtdMotores;
 		this.arqueacaoLiquida = arqueacaoLiquida;
 		this.bocaMoldada = bocaMoldada;
@@ -199,6 +207,8 @@ public class Embarcacao {
 		this.cidade = cidade;
 		CEP = cEP;
 		this.bordaLivre = bordaLivre;
+		this.valor = valor;
+		this.dtSeguro = dtSeguro;
 	}
 
 
@@ -533,6 +543,30 @@ public class Embarcacao {
 
 	public void setBordaLivre(float bordaLivre) {
 		this.bordaLivre = bordaLivre;
+	}
+
+
+
+	public Double getValor() {
+		return valor;
+	}
+
+
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+
+
+	public Date getDtSeguro() {
+		return dtSeguro;
+	}
+
+
+
+	public void setDtSeguro(Date dtSeguro) {
+		this.dtSeguro = dtSeguro;
 	}
 	
 	

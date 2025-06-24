@@ -25,18 +25,174 @@
     padding: 2rem;
     min-height: 100%;
     box-sizing: border-box;
-  }
-  
-  .form-wrapper {
-    max-width: 900px;
+}
+
+.form-wrapper {
+    max-width: 1200px;
     width: 100%;
     margin-top: 0 !important;
     padding-top: 0 !important;
-  }
-  
-  @media (min-height: 768px) {
+}
+
+@media (min-height: 768px) {
     :host {
-      align-items: center; /* centraliza verticalmente só se houver espaço */
-      padding: 2rem;
+        align-items: center; /* centraliza verticalmente só se houver espaço */
+        padding: 2rem;
     }
-  }
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-gif {
+    width: 80px;
+    height: auto;
+}
+
+/* Estilos específicos para os resultados */
+.result-card {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+}
+
+.result-card:hover {
+    border-color: #adb5bd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-card .card-body {
+    padding: 0.75rem;
+}
+
+.result-card .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Melhorias no formulário de pesquisa */
+.search-form {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .form-wrapper {
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .scrollable-content {
+        max-height: 70vh;
+        padding-right: 10px;
+    }
+    
+    .result-card .card-body {
+        padding: 0.5rem;
+    }
+    
+    .empty-state {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .empty-state i {
+        font-size: 2rem;
+    }
+}
+
+/* Badge personalizada */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.6em;
+}
+
+/* Spinner personalizado */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Melhorias nos cards principais */
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Cores dos ícones por categoria */
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-primary {
+    color: #007bff !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+/* Ajustes para badges por categoria */
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}

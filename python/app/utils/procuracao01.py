@@ -14,7 +14,6 @@ def safe_get(d, key):
 def gerar_pdf_procuracao(cliente):
     doc = Document("docs/procuracao01OR.docx")
 
-    print ('Entrou no utils', cliente)
 
     placeholders = {
         "${nomecliente1}": safe_get(cliente, "nome"),

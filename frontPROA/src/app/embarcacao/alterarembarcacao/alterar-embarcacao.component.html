@@ -72,6 +72,20 @@
               </div>
             </div>
 
+            <div class="col-md-6">
+              <label for="tipoAtividade" class="form-label small">Tipo de Atividade*</label>
+              <select id="tipoAtividade" class="form-control form-control-sm" [(ngModel)]="embarcacao.tipoAtividade"
+                name="tipoAtividade" #tipoAtividade="ngModel" required>
+                <option value="">Selecione um tipo</option>
+                <option value="ESPORTE LAZER">ESPORTE LAZER</option>
+                <option value="COMERCIAL">COMERCIAL</option>
+              </select>
+              <div class="invalid-feedback small"
+                *ngIf="tipoAtividade.invalid && (tipoAtividade.dirty || tipoAtividade.touched)">
+                <div *ngIf="tipoAtividade.errors?.['required']">Tipo de atividade é obrigatório</div>
+              </div>
+            </div>
+
 
             <!-- 3ª Linha -->
             <div class="col-md-6">
@@ -103,8 +117,16 @@
 
             <div class="col-md-6">
               <label for="matCasco" class="form-label small">Material do Casco</label>
-              <input type="text" id="matCasco" class="form-control form-control-sm" [(ngModel)]="embarcacao.matCasco"
-                name="matCasco" appUppercase>
+              <input list="matCasco" id=list class="form-control form-control-sm" [(ngModel)]="embarcacao.matCasco"
+                name="matCasco" placeholder="Selecione ou digite um tipo" autocomplete="off" appUppercase>
+
+              <datalist id="matCasco">
+                <option value="ALUMÍNIO">
+                <option value="DURALUMINIO">
+                <option value="FIBRA DE VIDRO">
+                <option value="AÇO INOXIDÁVEL">
+                <option value="MADEIRA">
+              </datalist>
             </div>
 
             <!-- 5ª Linha -->
@@ -151,10 +173,10 @@
             <div class="col-md-6">
               <label for="matSuperestrutura" class="form-label small">Material da Superestrutura</label>
               <input list="matSuperestrutura" id=list class="form-control form-control-sm"
-                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura" placeholder="Selecione ou digite um tipo"
-                autocomplete="off" appUppercase>
+                [(ngModel)]="embarcacao.matSuperestrutura" name="matSuperestrutura"
+                placeholder="Selecione ou digite um tipo" autocomplete="off" appUppercase>
 
-                <datalist id="matSuperestrutura">
+              <datalist id="matSuperestrutura">
                 <option value="ALUMÍNIO">
                 <option value="DURALUMINIO">
                 <option value="FIBRA DE VIDRO">
@@ -187,6 +209,19 @@
               <label for="dtInscricao" class="form-label small">Data de Inscrição</label>
               <input type="date" id="dtInscricao" class="form-control form-control-sm"
                 [(ngModel)]="embarcacao.dtInscricao" name="dtInscricao">
+            </div>
+
+            <!--10 linha-->
+            <div class="col-md-6">
+              <label for="Valor" class="form-label small">Valor (Desconsiderar centavos)</label>
+              <input type="text" id="Valor" class="form-control form-control-sm" [(ngModel)]="embarcacao.valor"
+                name="Valor" mask="separator.2" prefix="R$ " thousandSeparator="." decimalMarker="," />
+            </div>
+
+            <div class="col-md-6">
+              <label for="dtSeguro" class="form-label small">Data de Emissão do Seguro Obrigatório</label>
+              <input type="date" id="dtSeguro" class="form-control form-control-sm" [(ngModel)]="embarcacao.dtSeguro"
+                name="dtSeguro">
             </div>
           </div>
         </div>

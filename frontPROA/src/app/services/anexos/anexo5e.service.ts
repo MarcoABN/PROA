@@ -19,6 +19,8 @@ export class Anexo5eService {
     horasaula: string,
     servico?: string): Promise<void | Uint8Array> {
     // qtd horas, estabelecimento, dataaula
+
+    console.log(dataAula);
     try {
 
       const pdfBytes = await fetch('assets/pdfanexos/Anexo5E-N211.pdf').then(res => res.arrayBuffer());
@@ -62,7 +64,7 @@ export class Anexo5eService {
 
 
 
-      const hoje = new Date();
+      const hoje = new Date(dataAula + 'T00:00:00');
       const dia = hoje.getDate().toString().padStart(2, '0');
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();

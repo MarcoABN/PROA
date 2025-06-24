@@ -15,78 +15,78 @@
             <!-- Nome -->
             <div class="col-md-6">
               <label for="nome" class="form-label small">Nome*</label>
-              <input type="text" id="nome" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.nome" name="nome" appUppercase required>
+              <input type="text" id="nome" class="form-control form-control-sm" [(ngModel)]="cliente.nome" name="nome"
+                appUppercase required>
             </div>
 
             <!-- CPF/CNPJ -->
             <div class="col-md-6">
               <label for="cpfcnpj" class="form-label small">CPF/CNPJ*</label>
-              <input type="text" id="cpfcnpj" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.cpfcnpj" name="cpfcnpj" appUppercase required>
+              <input type="text" id="cpfcnpj" class="form-control form-control-sm" [(ngModel)]="cliente.cpfcnpj"
+                name="cpfcnpj" mask="000.000.000-00 || 00.000.000/0000-00" [dropSpecialCharacters]="true" required />
             </div>
 
             <!-- RG -->
             <div class="col-md-6">
               <label for="rg" class="form-label small">RG*</label>
-              <input type="text" id="rg" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.rg" name="rg" appUppercase required>
+              <input type="text" id="rg" class="form-control form-control-sm" [(ngModel)]="cliente.rg" name="rg"
+                appUppercase required>
             </div>
 
             <!-- Órgão Emissor -->
             <div class="col-md-3">
               <label for="orgEmissor" class="form-label small">Órgão Emissor*</label>
-              <input type="text" id="orgEmissor" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.orgEmissor" name="orgEmissor" appUppercase required>
+              <input type="text" id="orgEmissor" class="form-control form-control-sm" [(ngModel)]="cliente.orgEmissor"
+                name="orgEmissor" appUppercase required>
             </div>
 
             <!-- Data de Emissão -->
             <div class="col-md-3">
-              <label for="dtEmissao" class="form-label small">Data de Emissão*</label>
-              <input type="date" id="dtEmissao" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.dtEmissao" name="dtEmissao" required>
+              <label for="dtEmissao" class="form-label small">Data de Emissão</label>
+              <input type="date" id="dtEmissao" class="form-control form-control-sm" [(ngModel)]="cliente.dtEmissao"
+                name="dtEmissao">
             </div>
 
             <!-- Data de Nascimento -->
             <div class="col-md-6">
-              <label for="dtNasc" class="form-label small">Data de Nascimento*</label>
-              <input type="date" id="dtNasc" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.dataNasc" name="dtNasc" required>
+              <label for="dtNasc" class="form-label small">Data de Nascimento</label>
+              <input type="date" id="dtNasc" class="form-control form-control-sm" [(ngModel)]="cliente.dataNasc"
+                name="dtNasc">
             </div>
 
             <!-- Nacionalidade -->
             <div class="col-md-6">
-              <label for="nacionalidade" class="form-label small">Nacionalidade*</label>
-              <input type="text" id="nacionalidade" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.nacionalidade" name="nacionalidade" appUppercase required>
+              <label for="nacionalidade" class="form-label small">Nacionalidade</label>
+              <input type="text" id="nacionalidade" class="form-control form-control-sm"
+                [(ngModel)]="cliente.nacionalidade" name="nacionalidade" appUppercase>
             </div>
 
             <!-- Naturalidade -->
             <div class="col-md-6">
               <label for="naturalidade" class="form-label small">Naturalidade</label>
-              <input type="text" id="naturalidade" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.naturalidade" name="naturalidade" appUppercase>
+              <input type="text" id="naturalidade" class="form-control form-control-sm"
+                [(ngModel)]="cliente.naturalidade" name="naturalidade" appUppercase>
             </div>
 
             <!-- Telefone -->
             <div class="col-md-6">
               <label for="telefone" class="form-label small">Telefone</label>
-              <input type="number" id="telefone" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.telefone" name="telefone">
+              <input type="text" id="telefone" class="form-control form-control-sm" [(ngModel)]="cliente.telefone"
+                name="telefone" mask="(00) 0000-0000" [dropSpecialCharacters]="true">
             </div>
 
             <!-- Celular -->
             <div class="col-md-6">
               <label for="celular" class="form-label small">Celular</label>
-              <input type="number" id="celular" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.celular" name="celular">
+              <input type="text" id="celular" class="form-control form-control-sm" [(ngModel)]="cliente.celular"
+                name="celular" mask="(00) 0 0000-0000" [dropSpecialCharacters]="true" />
             </div>
 
             <!-- Email -->
             <div class="col-md-6">
               <label for="email" class="form-label small">Email</label>
-              <input type="email" id="email" class="form-control form-control-sm" 
-                     [(ngModel)]="cliente.email" name="email" appUppercase>
+              <input type="email" id="email" class="form-control form-control-sm" [(ngModel)]="cliente.email"
+                name="email" appUppercase>
             </div>
           </div>
         </div>
@@ -134,53 +134,51 @@
             <div class="col-md-6">
               <label for="CEP" class="form-label small">CEP*</label>
               <div class="input-group input-group-sm">
-                <input type="number" class="form-control" id="CEP" 
-                       [(ngModel)]="cliente.cep" name="CEP" required>
-                <button type="button" class="btn btn-primary btn-sm" 
-                        (click)="buscarEndereco()">Buscar</button>
+                <input type="number" class="form-control" id="CEP" [(ngModel)]="cliente.cep" name="CEP" required>
+                <button type="button" class="btn btn-primary btn-sm" (click)="buscarEndereco()">Buscar</button>
               </div>
             </div>
 
             <!-- Logradouro -->
             <div class="col-md-6">
               <label for="logradouro" class="form-label small">Logradouro*</label>
-              <input type="text" class="form-control form-control-sm" id="logradouro" 
-                     [(ngModel)]="cliente.logradouro" name="logradouro" appUppercase required>
+              <input type="text" class="form-control form-control-sm" id="logradouro" [(ngModel)]="cliente.logradouro"
+                name="logradouro" appUppercase required>
             </div>
 
             <!-- Número -->
             <div class="col-md-6">
               <label for="numero" class="form-label small">Número*</label>
-              <input type="number" class="form-control form-control-sm" id="numero" 
-                     [(ngModel)]="cliente.numero" name="numero" required>
+              <input type="number" class="form-control form-control-sm" id="numero" [(ngModel)]="cliente.numero"
+                name="numero" required>
             </div>
 
             <!-- Bairro -->
             <div class="col-md-6">
               <label for="bairro" class="form-label small">Bairro*</label>
-              <input type="text" class="form-control form-control-sm" id="bairro" 
-                     [(ngModel)]="cliente.bairro" name="bairro" appUppercase required>
+              <input type="text" class="form-control form-control-sm" id="bairro" [(ngModel)]="cliente.bairro"
+                name="bairro" appUppercase required>
             </div>
 
             <!-- Complemento -->
             <div class="col-md-6">
               <label for="complemento" class="form-label small">Complemento</label>
-              <input type="text" class="form-control form-control-sm" id="complemento" 
-                     [(ngModel)]="cliente.complemento" name="complemento" appUppercase>
+              <input type="text" class="form-control form-control-sm" id="complemento" [(ngModel)]="cliente.complemento"
+                name="complemento" appUppercase>
             </div>
 
             <!-- Cidade -->
             <div class="col-md-3">
               <label for="cidade" class="form-label small">Cidade*</label>
-              <input type="text" class="form-control form-control-sm" id="cidade" 
-                     [(ngModel)]="cliente.cidade" name="cidade" appUppercase required>
+              <input type="text" class="form-control form-control-sm" id="cidade" [(ngModel)]="cliente.cidade"
+                name="cidade" appUppercase required>
             </div>
 
             <!-- UF -->
             <div class="col-md-3">
               <label for="UF" class="form-label small">UF*</label>
-              <input type="text" class="form-control form-control-sm" id="UF" 
-                     [(ngModel)]="cliente.uf" name="UF" appUppercase required>
+              <input type="text" class="form-control form-control-sm" id="UF" [(ngModel)]="cliente.uf" name="UF"
+                appUppercase required>
             </div>
           </div>
         </div>
@@ -193,8 +191,7 @@
             <button type="submit" class="btn btn-primary btn-sm">
               <i class="fas fa-save me-1"></i>Salvar
             </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" 
-                    (click)="confirmCancel()">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="confirmCancel()">
               <i class="fas fa-times me-1"></i>Cancelar
             </button>
           </div>

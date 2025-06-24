@@ -80,6 +80,9 @@ export class AnexosComponent implements AfterViewInit {
     listaEscolas: Escolanautica[] = [];
     escolaSelecionada: Escolanautica | null = null;
 
+    carregando: boolean = false;
+
+
 
     requerimentosLista = [
         { value: 1, label: '1 - CONCESSÃO DE CHA POR CORRESPONDÊNCIA/EQUIVALÊNCIA', checked: false },
@@ -698,12 +701,17 @@ export class AnexosComponent implements AfterViewInit {
 
     //aqui
 
-    gerarProcuracao01() {
-        const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-        if (selectedEmbarcacao) {
-            this.procuracao01Service.gerarProcuracao(this.cliente.id);
-        } else {
-            console.error('Embarcação selecionada não encontrada.');
+    async gerarProcuracao01() {
+        this.carregando = true;
+
+        try {
+            const pdf = await this.procuracao01Service.gerarProcuracao(this.cliente.id); // seu método
+            // lógica para download ou exibição
+        } catch (erro) {
+            console.error("Erro ao gerar procuração", erro);
+            // exibir mensagem de erro, se desejar
+        } finally {
+            this.carregando = false;
         }
     }
 
@@ -826,7 +834,7 @@ export class AnexosComponent implements AfterViewInit {
     gerarAnexo2E212() {
         const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
         if (selectedEmbarcacao) {
-            this.anexo2E212service.anexo2E212(selectedEmbarcacao, this.campotexto1, this.campotexto2, this.campovalor);
+            this.anexo2E212service.anexo2E212(selectedEmbarcacao, this.campotexto1, this.campotexto2);
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
@@ -894,7 +902,7 @@ export class AnexosComponent implements AfterViewInit {
         this.embarcacoes = [];
         this.cliente = undefined!;
         this.idEmbarcacao = undefined!;
-        
+
 
         setTimeout(() => {
             this.clienteInput.nativeElement.focus();//Coloca o foco no campo de texto "Cliente (CPF ou CNPJ)"
@@ -939,9 +947,9 @@ export class AnexosComponent implements AfterViewInit {
     }
 
     limparDados2K2F(): void {
-            this.proprietarioanterior = new Cliente();
-            this.campotexto1 = '';
-            
+        this.proprietarioanterior = new Cliente();
+        this.campotexto1 = '';
+
     }
 
 }

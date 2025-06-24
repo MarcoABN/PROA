@@ -16,6 +16,7 @@ import { ManterMotorComponent } from './motor/manter-motor.component';
 import { NotafiscalComponent } from './notafiscal/notafiscal.component';
 import { ServicoAnexoComponent } from './servico-anexo/servico-anexo.component';
 import { OpcoesComponent } from './opcoes/opcoes.component';
+import { VencimentosComponent } from './vencimento/vencimento.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login/login', pathMatch: 'full' },
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'notafiscal/notafiscal/:id', component: NotafiscalComponent, canActivate: [AuthGuard] },
   { path: 'servico-anexo/servico-anexo', component: ServicoAnexoComponent, canActivate: [AuthGuard] },
   { path: 'empresa/empresa', component: OpcoesComponent, canActivate: [AuthGuard]},
+  { path: 'vencimento/vencimento', component: VencimentosComponent, canActivate: [AuthGuard]},
   
 ];
 

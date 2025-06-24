@@ -235,7 +235,8 @@ export class ServicoAnexoComponent {
 
       //Gerar a procuração
       const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
-        selectedEmbarcacao.cliente.id
+        selectedEmbarcacao.cliente.id,
+        'ok'
       );
 
       // Gerar PDF do Anexo 2E
@@ -361,6 +362,7 @@ export class ServicoAnexoComponent {
       //Gerar a procuração
       const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
         selectedEmbarcacao.cliente.id,
+        'ok'
       );
 
       const anexo3DPdf = await this.anexo3Dservice.anexo3D(
@@ -479,6 +481,7 @@ export class ServicoAnexoComponent {
       //Gerar a procuração
       const procuracaoPdf = await this.procuracaoService.gerarProcuracao(
         selectedEmbarcacao.cliente.id,
+        'ok'
       );
 
       const anexo3cPdf = await this.anexo3Cservice.anexo3C(
@@ -500,6 +503,7 @@ export class ServicoAnexoComponent {
       } else {
         console.error('Falha ao gerar a Procuração');
       }
+
 
       if (anexo3cPdf) {
         pdfs.push(anexo3cPdf);
