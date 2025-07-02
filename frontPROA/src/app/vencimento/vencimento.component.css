@@ -1,27 +1,13 @@
+/* Layout principal - sem scroll interno */
 .scrollable-content {
-    max-height: 80vh; /* Define a altura máxima como 80% da altura da viewport */
-    overflow-y: auto; /* Permite rolagem vertical quando necessário */
-    padding-right: 15px; /* Ajuste para evitar que o conteúdo fique encostado na borda direita */
-    margin-bottom: 20px; /* Adiciona um espaço na parte inferior */
-}
-
-/* Opcional: Adiciona um estilo para a barra de rolagem (pode variar de acordo com o navegador) */
-.scrollable-content::-webkit-scrollbar {
-    width: 8px; /* Largura da barra de rolagem */
-}
-
-.scrollable-content::-webkit-scrollbar-thumb {
-    background-color: darkgray; /* Cor da barra de rolagem */
-    border-radius: 10px; /* Bordas arredondadas */
-}
-
-.scrollable-content::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Cor do fundo da barra de rolagem */
+    width: 100%;
+    margin-bottom: 20px;
+    /* Removido: max-height, overflow-y, padding-right */
 }
 
 :host {
     justify-content: center;
-    align-items: flex-start; /* para não colar no topo */
+    align-items: flex-start;
     padding: 2rem;
     min-height: 100%;
     box-sizing: border-box;
@@ -36,11 +22,12 @@
 
 @media (min-height: 768px) {
     :host {
-        align-items: center; /* centraliza verticalmente só se houver espaço */
+        align-items: center;
         padding: 2rem;
     }
 }
 
+/* Loading overlay */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -63,58 +50,191 @@
     height: auto;
 }
 
-/* Estilos específicos para os resultados */
-.result-card {
-    border: 1px solid #dee2e6;
+/* Seções de serviços - Layout minimalista */
+.service-section {
+    margin-bottom: 2.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
     border-radius: 6px;
-    margin-bottom: 0.75rem;
-    transition: all 0.2s ease;
+}
+
+.service-header {
     background-color: #fafafa;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.service-content {
+    padding: 1.25rem;
+    background-color: #ffffff;
+}
+
+/* Grid horizontal limpo */
+.horizontal-grid .row {
+    margin: 0;
+    gap: 1rem;
+}
+
+.horizontal-grid .col-12,
+.horizontal-grid .col-md-6,
+.horizontal-grid .col-lg-4,
+.horizontal-grid .col-xl-3 {
+    padding: 0;
+}
+
+/* Cards dos resultados - Design limpo */
+.result-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background-color: #ffffff;
+    height: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .result-card:hover {
-    border-color: #adb5bd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: #c5c5c5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .result-card .card-body {
-    padding: 0.75rem;
+    padding: 1rem;
+    height: 100%;
 }
 
 .result-card .card-title {
     font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #495057;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: #333;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
 }
 
+/* Detalhes dos resultados */
+.result-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detail-item {
+    line-height: 1.4;
+}
+
+.detail-item small {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.detail-item small strong {
+    color: #333;
+    font-weight: 500;
+}
+
+.detail-item .text-danger {
+    color: #d63384 !important;
+}
+
+.detail-item .text-danger strong {
+    color: #d63384 !important;
+}
+
+/* Estados vazios */
 .empty-state {
     text-align: center;
-    padding: 2rem 1rem;
-    color: #6c757d;
+    padding: 2.5rem 1rem;
+    color: #999;
 }
 
 .empty-state i {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    opacity: 0.6;
+    opacity: 0.4;
+    color: #ccc;
 }
 
 .empty-state p {
     margin: 0;
     font-size: 0.9rem;
+    color: #777;
 }
 
-/* Melhorias no formulário de pesquisa */
+/* Formulário de pesquisa */
 .search-form {
-    background: #f8f9fa;
+    background-color: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
     margin-bottom: 1.5rem;
 }
 
-/* Responsividade melhorada */
+/* Badges e indicadores limpos */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.7em;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Cores minimalistas */
+.text-success { color: #198754 !important; }
+.text-primary { color: #0d6efd !important; }
+.text-warning { color: #fd7e14 !important; }
+
+.bg-success {
+    background-color: #198754 !important;
+    color: white !important;
+}
+
+.bg-primary {
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+
+.bg-warning {
+    background-color: #fd7e14 !important;
+    color: white !important;
+}
+
+/* Responsividade */
+@media (max-width: 1400px) {
+    .horizontal-grid .col-xl-3 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (max-width: 992px) {
+    .horizontal-grid .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .service-content {
+        padding: 1rem;
+    }
+    
+    .horizontal-grid .row {
+        gap: 0.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .form-wrapper {
         max-width: 100%;
@@ -122,16 +242,37 @@
     }
     
     .scrollable-content {
-        max-height: 70vh;
-        padding-right: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+        /* Removido padding-right para mobile */
+    }
+    
+    .service-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .service-content {
+        padding: 1rem;
+    }
+    
+    .horizontal-grid .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .horizontal-grid .row {
+        gap: 1rem;
     }
     
     .result-card .card-body {
-        padding: 0.5rem;
+        padding: 0.875rem;
     }
     
     .empty-state {
-        padding: 1.5rem 0.5rem;
+        padding: 2rem 1rem;
     }
     
     .empty-state i {
@@ -139,60 +280,32 @@
     }
 }
 
-/* Badge personalizada */
-.badge {
-    font-size: 0.75rem;
-    padding: 0.35em 0.6em;
+@media (max-width: 576px) {
+    :host {
+        padding: 1rem;
+    }
+    
+    .search-form {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .service-section {
+        margin-bottom: 2rem;
+    }
+    
+    .service-header h5 {
+        font-size: 1rem;
+    }
+    
+    .result-card .card-title {
+        font-size: 0.9rem;
+    }
 }
 
-/* Spinner personalizado */
-.spinner-border-sm {
-    width: 1rem;
-    height: 1rem;
-}
-
-/* Melhorias nos cards principais */
-.card {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem;
-}
-
-.card-header h5 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* Cores dos ícones por categoria */
-.text-success {
-    color: #28a745 !important;
-}
-
-.text-primary {
-    color: #007bff !important;
-}
-
-.text-warning {
-    color: #ffc107 !important;
-}
-
-/* Ajustes para badges por categoria */
-.bg-success {
-    background-color: #28a745 !important;
-}
-
-.bg-primary {
-    background-color: #007bff !important;
-}
-
-.bg-warning {
-    background-color: #ffc107 !important;
-    color: #212529 !important;
+/* Melhorias de acessibilidade simples */
+.service-header:focus-within,
+.result-card:focus-within {
+    outline: 2px solid #0d6efd;
+    outline-offset: 1px;
 }

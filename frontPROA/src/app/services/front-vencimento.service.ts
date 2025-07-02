@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cliente } from '../model/cliente';
 import { Embarcacao } from '../model/embarcacao';
+import { AppConfig } from '../config/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VencimentoService {
   
-  private readonly apiUrl = 'http://localhost:8080/cvencimento';
+  private readonly apiUrl = `${AppConfig.API_BASE_URL}/cvencimento`;
 
   constructor(private http: HttpClient) { }
 

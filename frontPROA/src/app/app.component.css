@@ -26,7 +26,7 @@ html, body {
 
 /* Paleta náutica minimalista */
 .bg-navy {
-  background-color: #1e3a5f; /* azul naval sóbrio */
+  background-color: #002c66; /* azul naval sóbrio */
   border-bottom: 1px solid #e1e8ed;
 }
 
@@ -108,7 +108,7 @@ html, body {
   min-height: 30px;
   padding: 0.4rem 0;
   box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
-  background-color: #1e3a5f;
+  background-color: #002c66;
   border-top: 1px solid #e1e8ed;
 }
 

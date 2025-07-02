@@ -17,9 +17,11 @@ com\proa\repository\EscolaNauticaRepository.class
 com\proa\controller\ClienteController.class
 com\proa\model\NotaFiscal.class
 com\proa\model\EscolaNautica.class
+com\proa\service\VencimentoService.class
 com\proa\model\OrgMilitar.class
 com\proa\controller\PrestadorController.class
 com\proa\controller\EscolaNauticaController.class
+com\proa\controller\VencimentoController.class
 com\proa\exception\ResourceNotFoundException.class
 com\proa\service\EmailService.class
 com\proa\repository\MotorRepository.class

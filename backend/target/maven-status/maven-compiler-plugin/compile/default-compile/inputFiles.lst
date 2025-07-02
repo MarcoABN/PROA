@@ -9,11 +9,13 @@ D:\Proa\backend\src\main\java\com\proa\repository\ClienteRepository.java
 D:\Proa\backend\src\main\java\com\proa\model\NotaFiscal.java
 D:\Proa\backend\src\main\java\com\proa\model\Cliente.java
 D:\Proa\backend\src\main\java\com\proa\repository\MotorRepository.java
+D:\Proa\backend\src\main\java\com\proa\controller\VencimentoController.java
 D:\Proa\backend\src\main\java\com\proa\exception\GlobalExceptionHandler.java
 D:\Proa\backend\src\main\java\com\proa\BackendApplication.java
 D:\Proa\backend\src\main\java\com\proa\controller\ClienteController.java
 D:\Proa\backend\src\main\java\com\proa\model\Embarcacao.java
 D:\Proa\backend\src\main\java\com\proa\controller\PrestadorController.java
+D:\Proa\backend\src\main\java\com\proa\service\VencimentoService.java
 D:\Proa\backend\src\main\java\com\proa\model\Prestador.java
 D:\Proa\backend\src\main\java\com\proa\model\Motor.java
 D:\Proa\backend\src\main\java\com\proa\repository\EscolaNauticaRepository.java

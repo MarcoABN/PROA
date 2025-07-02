@@ -142,28 +142,21 @@ export class AnexosComponent implements AfterViewInit {
 
     }
 
-    carregarOrgMilitares() {
-        this.orgMilitarService.listar().subscribe(
-            (orgMilitares) => {
-                this.orgMilitares = orgMilitares;
-            },
-            (error) => {
-                console.error('Erro ao carregar organizações militares', error);
+    onCheckboxChange(event: Event) {
+        const checkbox = event.target as HTMLInputElement;
+        const value = checkbox.value;
+
+        if (checkbox.checked) {
+            if (!this.opcao.includes(value)) {
+                this.opcao += this.opcao ? `,${value}` : value;
             }
-        );
+        } else {
+            const values = this.opcao.split(',').filter(v => v !== value);
+            this.opcao = values.join(',');
+        }
     }
 
-    carregarInstrutores() {
-        //Desenvolver lógica para listar instrutores aqui
-        this.escolaService.listarEscolaNautica().subscribe({
-            next: (escolas => {
-                this.listaEscolas = escolas;
-            }),
-            error: (erro) => {
-                console.error('Erro ao listar escolas', erro);
-            }
-        })
-    }
+    
 
     ngAfterViewInit() {
         const modalAnexo2DElement = document.getElementById('modalAnexo2D');
@@ -246,6 +239,29 @@ export class AnexosComponent implements AfterViewInit {
         if (modalAnexo3BElement) {
             this.modalAnexo3B = new Modal(modalAnexo3BElement);
         }
+    }
+
+    carregarOrgMilitares() {
+        this.orgMilitarService.listar().subscribe(
+            (orgMilitares) => {
+                this.orgMilitares = orgMilitares;
+            },
+            (error) => {
+                console.error('Erro ao carregar organizações militares', error);
+            }
+        );
+    }
+
+    carregarInstrutores() {
+        //Desenvolver lógica para listar instrutores aqui
+        this.escolaService.listarEscolaNautica().subscribe({
+            next: (escolas => {
+                this.listaEscolas = escolas;
+            }),
+            error: (erro) => {
+                console.error('Erro ao listar escolas', erro);
+            }
+        })
     }
 
     consultarAnexo() {
@@ -590,7 +606,7 @@ export class AnexosComponent implements AfterViewInit {
             this.gerarAnexo2F(this.proprietarioanterior);
             this.modalAnexo2F.hide();
         }
-        this.limparDados2K2F();
+        this.limparDados();
     }
 
     confirmarAnexo2B() {
@@ -662,7 +678,7 @@ export class AnexosComponent implements AfterViewInit {
             this.gerarAnexo2K(this.proprietarioanterior);
             this.modalAnexo2K.hide();
         }
-        this.limparDados2K2F();
+        this.limparDados();
     }
 
 
@@ -772,7 +788,7 @@ export class AnexosComponent implements AfterViewInit {
                 propanterior.nome,
                 (propanterior.celular ?? ''),
                 (propanterior.email ?? ''),
-                this.campovalor);
+            );
         } else {
             console.error('Embarcação selecionada não encontrada.');
         }
@@ -894,7 +910,7 @@ export class AnexosComponent implements AfterViewInit {
             console.error('Cliente ou instrutor não encontrado');
         }
     }
-
+    
     limparDados(form?: NgForm) {
         if (form) { form.resetForm(); }; //Reseta o formulário inteiro
         this.cpfcnpjCliente = '';
@@ -907,20 +923,6 @@ export class AnexosComponent implements AfterViewInit {
         setTimeout(() => {
             this.clienteInput.nativeElement.focus();//Coloca o foco no campo de texto "Cliente (CPF ou CNPJ)"
         }, 0);
-    }
-
-    onCheckboxChange(event: Event) {
-        const checkbox = event.target as HTMLInputElement;
-        const value = checkbox.value;
-
-        if (checkbox.checked) {
-            if (!this.opcao.includes(value)) {
-                this.opcao += this.opcao ? `,${value}` : value;
-            }
-        } else {
-            const values = this.opcao.split(',').filter(v => v !== value);
-            this.opcao = values.join(',');
-        }
     }
 
     limparSelecoes() {

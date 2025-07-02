@@ -18,15 +18,16 @@ registerLocaleData(localePt);
   styleUrls: ['./vencimento.component.css']
 })
 export class VencimentosComponent implements OnInit {
-  
+
   vencimentoForm!: FormGroup;
   loading = false;
-  
+
   // Dados dos resultados
   clientesCha: Cliente[] = [];
   embarcacoesTie: Embarcacao[] = [];
   embarcacoesSeguro: Embarcacao[] = [];
-  
+  carregando: boolean = false;
+
   // Estados de carregamento para cada bloco
   loadingCha = false;
   loadingTie = false;
@@ -41,6 +42,7 @@ export class VencimentosComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDefaultDates();
+    this.buscarVencimentos();
   }
 
   /**
@@ -60,7 +62,7 @@ export class VencimentosComponent implements OnInit {
     const hoje = new Date();
     const umMesDepois = new Date();
     umMesDepois.setMonth(hoje.getMonth() + 1);
-    
+
     this.vencimentoForm.patchValue({
       dataInicio: hoje.toISOString().split('T')[0],
       dataFim: umMesDepois.toISOString().split('T')[0]
@@ -71,12 +73,16 @@ export class VencimentosComponent implements OnInit {
    * Método principal para buscar todos os tipos de vencimentos
    */
   buscarVencimentos(): void {
+    this.carregando = true;
+
     if (this.vencimentoForm.valid) {
       const { dataInicio, dataFim } = this.vencimentoForm.value;
-      
+
       this.limparResultados();
       this.executarBuscasVencimentos(dataInicio, dataFim);
     }
+
+    this.carregando = false;
   }
 
   /**
@@ -93,7 +99,7 @@ export class VencimentosComponent implements OnInit {
    */
   private buscarVencimentoCha(dataInicio: string, dataFim: string): void {
     this.loadingCha = true;
-    
+
     this.vencimentoService.buscarVencimentoCha(dataInicio, dataFim)
       .subscribe({
         next: (clientes) => {
@@ -112,7 +118,7 @@ export class VencimentosComponent implements OnInit {
    */
   private buscarVencimentoTie(dataInicio: string, dataFim: string): void {
     this.loadingTie = true;
-    
+
     this.vencimentoService.buscarVencimentoTie(dataInicio, dataFim)
       .subscribe({
         next: (embarcacoes) => {
@@ -131,7 +137,7 @@ export class VencimentosComponent implements OnInit {
    */
   private buscarVencimentoSeguro(dataInicio: string, dataFim: string): void {
     this.loadingSeguro = true;
-    
+
     this.vencimentoService.buscarVencimentoSeguro(dataInicio, dataFim)
       .subscribe({
         next: (embarcacoes) => {
@@ -150,7 +156,7 @@ export class VencimentosComponent implements OnInit {
    */
   formatarData(data: Date | string | undefined): string {
     if (!data) return 'Não informado';
-    
+
     const dataFormatada = typeof data === 'string' ? new Date(data) : data;
     return dataFormatada.toLocaleDateString('pt-BR');
   }
@@ -162,5 +168,18 @@ export class VencimentosComponent implements OnInit {
     this.clientesCha = [];
     this.embarcacoesTie = [];
     this.embarcacoesSeguro = [];
+  }
+
+  formatarDataVencimento(dataInscricao: any, tipo?: number) {
+    if (!dataInscricao) return '';
+    const data = new Date(dataInscricao);
+
+    if (tipo) {
+      data.setFullYear(data.getFullYear() + 1); // Adiciona 5 anos
+    }else {
+      data.setFullYear(data.getFullYear() + 5); // Adiciona 5 anos
+    }
+    // Retorna no mesmo formato da sua função formatarData
+    return data.toLocaleDateString('pt-BR'); // ou o formato que você usa
   }
 }

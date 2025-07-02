@@ -24,7 +24,6 @@ export class Anexo2MService {
                   campotexto2: string, 
                   campotexto3: string, 
                   opcao: string,
-                  valor:number,
                   servico?: string): Promise<void | Uint8Array>{
 
 

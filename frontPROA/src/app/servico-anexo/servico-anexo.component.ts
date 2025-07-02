@@ -43,6 +43,8 @@ export class ServicoAnexoComponent {
   modalAnexo2M: any;
   selecao!: number;
 
+  carregando: boolean = false;
+
 
   constructor(
     private anexosService: AnexosService,
@@ -228,6 +230,8 @@ export class ServicoAnexoComponent {
   }
 
   async ServicoInscEmbTela() {
+    this.carregando = true;
+
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
 
@@ -284,6 +288,7 @@ export class ServicoAnexoComponent {
         await this.concatenarEExibirPDFs(pdfs);
       }
     }
+    this.carregando = false;
   }
 
 
@@ -355,6 +360,8 @@ export class ServicoAnexoComponent {
   
   //Alteração de Embarcação: Anexos 3D e 2D
   async ServicoAltcEmbTela() {
+    this.carregando = true;
+
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
     if (selectedEmbarcacao) {
@@ -377,7 +384,7 @@ export class ServicoAnexoComponent {
       const anexo2DPdf = await this.anexosService.anexo2D(
         selectedEmbarcacao,
         this.cliente,
-        this.natureza,
+        'atualizacaodados',
         'OK'
       );
       // Verificar se os PDFs foram gerados corretamente
@@ -408,6 +415,8 @@ export class ServicoAnexoComponent {
       }
 
     }
+
+    this.carregando = false;
   }
 
   //Comentando dutante mudança pra python. Posteriormente avaliar como fica
@@ -474,6 +483,8 @@ export class ServicoAnexoComponent {
 
   //Transferencia de Embarcação: Anexos 3C e 2M
   async ServicoTransfEmbTela() {
+    this.carregando = true;
+
     const selectedEmbarcacao = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
 
     if (selectedEmbarcacao) {
@@ -491,7 +502,7 @@ export class ServicoAnexoComponent {
       );
 
       const anexo2Pdf = await this.anexo2Mservice.anexo2M(
-        selectedEmbarcacao, this.campotexto1, this.campotexto2, this.campotexto3, this.opcao, this.campovalor, 'OK'
+        selectedEmbarcacao, this.campotexto1, this.campotexto2, this.campotexto3, this.opcao, 'OK'
       );
 
       // Verificar se os PDFs foram gerados corretamente
@@ -523,6 +534,7 @@ export class ServicoAnexoComponent {
       }
 
     }
+    this.carregando = false;
   }
 
   //Transferencia de Embarcação: Anexos 3C e 2M
@@ -538,7 +550,6 @@ export class ServicoAnexoComponent {
                                                           this.campotexto2, 
                                                           this.campotexto3, 
                                                           this.opcao, 
-                                                          this.campovalor, 
                                                           'OK');
       if (anexoPdf && anexo2Pdf) {
         const pdfs: Uint8Array[] = [anexoPdf, anexo2Pdf];

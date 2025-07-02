@@ -72,7 +72,7 @@
                   <button 
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
-                    class="btn btn-outline-primary btn-sm" 
+                    class="btn btn-primary btn-sm w-100" 
                     (click)="ServicoInscEmbTela()">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
@@ -101,7 +101,7 @@
                   <button 
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
-                    class="btn btn-outline-primary btn-sm" 
+                    class="btn btn-primary btn-sm btn-sm w-100" 
                     (click)="ServicoAltcEmbTela()">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
@@ -131,7 +131,7 @@
                   <button 
                     [disabled]="!cliente || !embarcacoes.length" 
                     type="button" 
-                    class="btn btn-outline-primary btn-sm" 
+                    class="btn btn-primary btn-sm btn-sm w-100" 
                     (click)="openModal2M(1)">
                     <i class="fas fa-eye me-1"></i>Visualizar
                   </button>
@@ -170,11 +170,6 @@
                    [(ngModel)]="campotexto1" name="campotexto1" required>
             <small class="text-muted">O comprador informado deve estar cadastrado na plataforma.</small>
           </div>
-          <div class="mb-3">
-            <label for="campotexto2" class="form-label small">Valor da Transferência*</label>
-            <input type="text" id="campotexto2" class="form-control form-control-sm" 
-                   [(ngModel)]="campotexto2" name="campotexto2" required>
-          </div>
         </form>
         
       </div>
@@ -188,5 +183,13 @@
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal de Carregamento -->
+<div *ngIf="carregando" class="loading-overlay">
+  <div class="loading-content">
+    <img src="assets/gifbarco.gif" alt="Carregando..." class="loading-gif">
+    <p class="text-muted mt-2">Gerando documento, aguarde...</p>
   </div>
 </div>
