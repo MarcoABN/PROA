@@ -57,7 +57,7 @@ export class Anexo2KService {
       form.getTextField('dtexpedicaonovoproprietario').setText(embarcacao.cliente.dtEmissao?.toString() ?? '');
       form.getTextField('cpfcnpjnovoproprietario').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente.cpfcnpj) ?? '');
       form.getTextField('endereconovoproprietario').setText(embarcacao.cliente.logradouro ?? '');
-      form.getTextField('numeronovoproprietario').setText(embarcacao.cliente.numero.toString() ?? '');
+      form.getTextField('numeronovoproprietario').setText(embarcacao.cliente.numero?.toString() ?? '');
       form.getTextField('complementonovoproprietario').setText(embarcacao.cliente.complemento ?? '');
       form.getTextField('bairronovoproprietario').setText(embarcacao.cliente.bairro ?? '');
       form.getTextField('cidadenovoproprietario').setText(embarcacao.cliente.cidade ?? '');

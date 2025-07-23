@@ -35,9 +35,9 @@
           <div class="row g-2 g-md-3">
             <!-- 1ª Linha -->
             <div class="col-md-6">
-              <label for="nomeEmbarcacao" class="form-label small">Nome da Embarcação*</label>
+              <label for="nomeEmbarcacao" class="form-label small">Nome da Embarcação</label>
               <input type="text" id="nomeEmbarcacao" class="form-control form-control-sm"
-                     [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" appUppercase required>
+                     [(ngModel)]="embarcacao.nomeEmbarcacao" name="nomeEmbarcacao" appUppercase>
             </div>
 
             <div class="col-md-6">
@@ -54,7 +54,7 @@
                 placeholder="Selecione ou digite um tipo" autocomplete="off">
 
               <datalist id="tipoEmbarcacaoOptions">
-                <option value="MOTO AQUÁTICA">
+                <option value="MOTOAQUÁTICA">
                 <option value="CANOA">
                 <option value="LANCHA">
                 <option value="FLUTUANTE">
@@ -318,9 +318,9 @@
                      [(ngModel)]="embarcacao.logradouro" name="logradouro" appUppercase required>
             </div>
             <div class="col-md-6">
-              <label for="numero" class="form-label small">Número*</label>
+              <label for="numero" class="form-label small">Número</label>
               <input type="number" class="form-control form-control-sm" id="numero" 
-                     [(ngModel)]="embarcacao.numero" name="numero" required>
+                     [(ngModel)]="embarcacao.numero" name="numero">
             </div>
             <div class="col-md-6">
               <label for="bairro" class="form-label small">Bairro*</label>

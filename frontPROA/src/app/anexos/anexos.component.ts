@@ -76,7 +76,6 @@ export class AnexosComponent implements AfterViewInit {
     modalAnexo3B: any;
     orgMilitares: OrgMilitar[] = [];
     selectedOrgMilitar: OrgMilitar | null = null;
-    isMotoAquatica: boolean = false;
     listaEscolas: Escolanautica[] = [];
     escolaSelecionada: Escolanautica | null = null;
 
@@ -297,10 +296,6 @@ export class AnexosComponent implements AfterViewInit {
                 this.idEmbarcacao = this.embarcacoes[0].id;
             }
 
-            //Validação para verificar se é moto aquatica. Se sim, habilita botões da Normam 212
-            if (this.embarcacoes[0].tipoEmbarcacao == 'MOTO AQUÁTICA') {
-                this.isMotoAquatica = true;
-            }
         });
 
     }
@@ -309,13 +304,6 @@ export class AnexosComponent implements AfterViewInit {
         const selectElement = event.target as HTMLSelectElement;
         this.idEmbarcacao = Number(selectElement.value);
 
-        //validação ao alterar embarcação selecionada e habilitar normam212 caso seja moto aquatica
-        const embarcacaoSelecionada = this.embarcacoes.find(e => e.id === this.idEmbarcacao);
-        if (embarcacaoSelecionada) {
-            this.isMotoAquatica = embarcacaoSelecionada.tipoEmbarcacao === 'MOTO AQUÁTICA';
-        } else {
-            this.isMotoAquatica = false;
-        }
 
     }
 

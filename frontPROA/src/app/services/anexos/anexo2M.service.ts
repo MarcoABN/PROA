@@ -51,7 +51,7 @@ export class Anexo2MService {
       form.getTextField('logradourocomprador').setText(embarcacao.cliente.logradouro ?? '');
       form.getTextField('bairrocomprador').setText(embarcacao.cliente.bairro ?? '');
       form.getTextField('cidadecomprador').setText(embarcacao.cliente.cidade ?? '');
-      form.getTextField('numerocomprador').setText(embarcacao.cliente.numero.toString() ?? '');
+      form.getTextField('numerocomprador').setText(embarcacao.cliente.numero?.toString() ?? '');
       form.getTextField('complementocomprador').setText(embarcacao.cliente.complemento ?? '');
       form.getTextField('cepcomprador').setText(embarcacao.cliente.cep ?? '');
       form.getTextField('emailcomprador').setText(embarcacao.cliente.email ?? '');

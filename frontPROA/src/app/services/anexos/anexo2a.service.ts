@@ -82,13 +82,13 @@ export class Anexo2aService {
 
       form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
       form.getTextField('logradouro').setText((embarcacao.cliente?.logradouro ?? '') + ', ' + (embarcacao.cliente?.complemento ?? ''));
-      form.getTextField('numero').setText(embarcacao.cliente?.numero.toString() ?? '');
+      form.getTextField('numero').setText(embarcacao?.cliente?.numero != null ? embarcacao.cliente.numero.toString() : '');
       form.getTextField('cidade').setText(embarcacao.cliente?.cidade ?? '');
       form.getTextField('uf').setText(embarcacao.cliente?.uf ?? '');
       form.getTextField('rg').setText(embarcacao.cliente?.rg ?? '');
       form.getTextField('orgexpedidor').setText(embarcacao.cliente?.orgEmissor ?? '');
       form.getTextField('cep').setText(embarcacao.cliente?.cep ?? '');
-      form.getTextField('telefone').setText(embarcacao.cliente?.telefone ?? '');
+      form.getTextField('telefone').setText(embarcacao.cliente.telefone ?? '');
       form.getTextField('cpfcnpj').setText(this.maskcpf.mascararCpfCnpj(embarcacao.cliente?.cpfcnpj) ?? '');
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');

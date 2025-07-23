@@ -40,9 +40,11 @@
                         <select class="form-select form-select-sm" id="embarcacao" [(ngModel)]="idEmbarcacao"
                             name="embarcacao" (change)="onEmbarcacaoChange($event)" required>
                             <option *ngFor="let embarcacao of embarcacoes" [value]="embarcacao.id">
-                                {{ embarcacao.nomeEmbarcacao }}
+                                {{ embarcacao.nomeEmbarcacao || "[Embarcação sem Nome]" }} - {{ embarcacao.tipoEmbarcacao }}
                             </option>
                         </select>
+
+                        
                     </div>
                 </div>
             </form>
@@ -183,7 +185,7 @@
                                             Requerimento
                                         </h5>
                                         <p class="card-subtitle small text-muted mb-2">Anexo 2A</p>
-                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                        <button [disabled]="!cliente || !embarcacoes.length"
                                             type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2A()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
                                         </button>
@@ -200,7 +202,7 @@
                                             BDMOTO - Moto Aquatíca
                                         </h5>
                                         <p class="card-subtitle small text-muted mb-2">Anexo 2B</p>
-                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                        <button [disabled]="!cliente || !embarcacoes.length"
                                             type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2B()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
                                         </button>
@@ -217,7 +219,7 @@
                                             Declaração de Perda ou Roubo
                                         </h5>
                                         <p class="card-subtitle small text-muted mb-2">Anexo 2D</p>
-                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                        <button [disabled]="!cliente || !embarcacoes.length"
                                             type="button" class="btn btn-primary btn-sm w-100"
                                             (click)="gerarAnexo2D212()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
@@ -235,7 +237,7 @@
                                             Autorização de Transferência
                                         </h5>
                                         <p class="card-subtitle small text-muted mb-2">Anexo 2E</p>
-                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                        <button [disabled]="!cliente || !embarcacoes.length"
                                             type="button" class="btn btn-primary btn-sm w-100"
                                             (click)="openModal2E212()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
@@ -253,7 +255,7 @@
                                             Comun. Transf. Moto Aquática
                                         </h5>
                                         <p class="card-subtitle small text-muted mb-2">Anexo 2F</p>
-                                        <button [disabled]="!cliente || !embarcacoes.length || !isMotoAquatica"
+                                        <button [disabled]="!cliente || !embarcacoes.length"
                                             type="button" class="btn btn-primary btn-sm w-100" (click)="openModal2F()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
                                         </button>
@@ -427,8 +429,8 @@
                                             <i class="fas fa-stamp text-primary me-1"></i>
                                             Procuração 01
                                         </h5>
-                                        <button [disabled]="!cliente" type="button"
-                                            class="btn btn-primary btn-sm w-100" (click)="gerarProcuracao01()">
+                                        <button [disabled]="!cliente" type="button" class="btn btn-primary btn-sm w-100"
+                                            (click)="gerarProcuracao01()">
                                             <i class="fas fa-eye me-1"></i>Visualizar
                                         </button>
                                     </div>
@@ -1798,8 +1800,8 @@
 
 <!-- Modal de Carregamento -->
 <div *ngIf="carregando" class="loading-overlay">
-  <div class="loading-content">
-    <img src="assets/gifbarco.gif" alt="Carregando..." class="loading-gif">
-    <p class="text-muted mt-2">Gerando documento, aguarde...</p>
-  </div>
+    <div class="loading-content">
+        <img src="assets/gifbarco.gif" alt="Carregando..." class="loading-gif">
+        <p class="text-muted mt-2">Gerando documento, aguarde...</p>
+    </div>
 </div>
