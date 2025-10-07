@@ -12,7 +12,7 @@ export class Anexo2FService {
 
   constructor(private clienteService: FrontClienteService, private maskcpf: ValidadorcpfcnpjService) { }
 
-  
+
   async anexo2F(embarcacao: Embarcacao, clienteNovo: Cliente, campotexto2: string, servico?: string): Promise<void | Uint8Array> {
 
 
@@ -92,7 +92,13 @@ export class Anexo2FService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

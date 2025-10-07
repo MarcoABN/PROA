@@ -18,7 +18,7 @@ export class Anexo2JService {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2J-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
-      const formattedDtEmissao = this.datePipe.transform((embarcacao.cliente.dtEmissao?? ''), 'dd/MM/yyyy') || '';
+      const formattedDtEmissao = this.datePipe.transform((embarcacao.cliente.dtEmissao ?? ''), 'dd/MM/yyyy') || '';
 
       const form = pdfDoc.getForm();
 
@@ -35,7 +35,7 @@ export class Anexo2JService {
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
 
-      switch (solicitacao){
+      switch (solicitacao) {
         case "tie":
           form.getCheckBox('check_tie').check();
           break;
@@ -59,7 +59,13 @@ export class Anexo2JService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

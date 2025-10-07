@@ -13,18 +13,18 @@ import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 })
 export class Anexo2MService {
 
-  constructor(private motorService: FrontMotorService, private maskcpf: ValidadorcpfcnpjService ) { }
+  constructor(private motorService: FrontMotorService, private maskcpf: ValidadorcpfcnpjService) { }
 
   motores: Motor[] = [];
   qtdmotores!: number;
-  
-  
-  async anexo2M ( embarcacao: Embarcacao, 
-                  campotexto1: string, 
-                  campotexto2: string, 
-                  campotexto3: string, 
-                  opcao: string,
-                  servico?: string): Promise<void | Uint8Array>{
+
+
+  async anexo2M(embarcacao: Embarcacao,
+    campotexto1: string,
+    campotexto2: string,
+    campotexto3: string,
+    opcao: string,
+    servico?: string): Promise<void | Uint8Array> {
 
 
     try {
@@ -36,12 +36,12 @@ export class Anexo2MService {
 
       const form = pdfDoc.getForm();
 
-      
+
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('inscricao').setText(embarcacao.numInscricao ?? '');
 
       form.getTextField('cpfcnpjproprietario').setText(this.maskcpf.mascararCpfCnpj(campotexto1) ?? '');
-      form.getTextField('nomeproprietario').setText(campotexto2?? '');
+      form.getTextField('nomeproprietario').setText(campotexto2 ?? '');
       form.getTextField('telefoneproprietario').setText(campotexto3 ?? '');
       form.getTextField('emailproprietario').setText(opcao ?? '');
 
@@ -65,7 +65,7 @@ export class Anexo2MService {
 
 
 
-      switch (this.qtdmotores){
+      switch (this.qtdmotores) {
         case 1:
           form.getCheckBox('motor1_sim').check();
           form.getCheckBox('motor2_nao').check();
@@ -91,26 +91,24 @@ export class Anexo2MService {
           form.getCheckBox('motor4_sim').check();
           break;
       };
-      if (this.qtdmotores >= 1 && this.motores.length >= 1){
-        form.getTextField('marcamotor1').setText(this.motores[0]?.marca ?? '');
-        form.getTextField('potenciamotor1').setText(this.motores[0]?.potencia?.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0]?.numSerie ?? '');
-      };
-      if (this.qtdmotores >= 2 && this.motores.length >= 2){
-        form.getTextField('marcamotor2').setText(this.motores[1]?.marca ?? '');
-        form.getTextField('potenciamotor2').setText(this.motores[1]?.potencia?.toString() ?? '');
-        form.getTextField('numseriemotor2').setText(this.motores[1]?.numSerie ?? '');
-      };
-      if (this.qtdmotores >= 3 && this.motores.length >= 3){
-        form.getTextField('marcamotor3').setText(this.motores[2]?.marca ?? '');
-        form.getTextField('potenciamotor3').setText(this.motores[2]?.potencia?.toString() ?? '');
-        form.getTextField('numseriemotor3').setText(this.motores[2]?.numSerie ?? '');
+      // Substitua todo o bloco 'if' dos motores por este loop
+      for (let i = 0; i < this.qtdmotores && i < 4; i++) {
+        const motorIndex = i + 1; // Para corresponder aos nomes dos campos (motor1, motor2...)
+        const motor = this.motores[i];
+
+        form.getTextField(`marcamotor${motorIndex}`).setText(motor?.marca ?? '');
+        form.getTextField(`potenciamotor${motorIndex}`).setText(motor?.potencia?.toString() ?? '');
+        form.getTextField(`numseriemotor${motorIndex}`).setText(motor?.numSerie ?? '');
       }
-      if (this.qtdmotores >= 4 && this.motores.length >= 4){
-        form.getTextField('marcamotor4').setText(this.motores[3]?.marca ?? '');
-        form.getTextField('potenciamotor4').setText(this.motores[3]?.potencia?.toString() ?? '');
-        form.getTextField('numseriemotor4').setText(this.motores[3]?.numSerie ?? '');
-      };
+
+      // Lógica para marcar os checkboxes 'sim'/'nao'
+      for (let i = 1; i <= 4; i++) {
+        if (i <= this.qtdmotores) {
+          form.getCheckBox(`motor${i}_sim`).check();
+        } else {
+          form.getCheckBox(`motor${i}_nao`).check();
+        }
+      }
 
 
       const hoje = new Date();
@@ -124,20 +122,26 @@ export class Anexo2MService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      if (!servico){
+      if (!servico) {
         this.abrirPDFemJanela(modifiedPdfBytes);
         console.log('PDF Criado!');
       } else {
         return modifiedPdfBytes;
       }
-    }catch (err){
+    } catch (err) {
       console.log(err);
     }
 
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

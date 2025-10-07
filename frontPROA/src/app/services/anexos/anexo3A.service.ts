@@ -80,7 +80,7 @@ export class Anexo3AService {
       if (cliente) {
         form.getTextField('nome').setText(cliente.nome ?? '');
         form.getTextField('cpf1').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj) ?? '');
-        form.getTextField('cpf2').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj)?? '');
+        form.getTextField('cpf2').setText(this.maskcpf.mascararCpfCnpj(cliente.cpfcnpj) ?? '');
         form.getTextField('rg').setText(cliente.rg ?? '');
         form.getTextField('orgexpedidor').setText(cliente.orgEmissor ?? '');
         form.getTextField('logradouro').setText(cliente.logradouro ?? '');
@@ -132,7 +132,13 @@ export class Anexo3AService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

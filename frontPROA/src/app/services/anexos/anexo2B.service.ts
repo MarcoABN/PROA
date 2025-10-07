@@ -8,12 +8,13 @@ import { FrontMotorService } from '../front-motor.service';
 import { Notafiscal } from 'src/app/model/notafiscal';
 import { FrontNotafiscalService } from '../front-notafiscal.service';
 import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Anexo2BService {
-  motores: Motor[] = [];
+  //motores: Motor[] = [];
   notaFiscal!: Notafiscal;
 
   constructor(private datePipe: DatePipe, private motorService: FrontMotorService, private notaFiscalService: FrontNotafiscalService, private maskcpf: ValidadorcpfcnpjService) { }
@@ -22,9 +23,7 @@ export class Anexo2BService {
   //Se for uma chamada do serviço-anexo é necessário passar algo no último parâmetro. Isso irá sinalizar que é um serviço e retornar o arquivo de forma dinâmica.
   async anexo2B(embarcacao: Embarcacao, cliente: Cliente, natureza: string, servico?: string): Promise<void | Uint8Array> {
 
-    this.motorService.listarMotorPorEmbarcacao(embarcacao.id).subscribe(motores => {
-      this.motores = motores;
-    });
+    const motores = await lastValueFrom(this.motorService.listarMotorPorEmbarcacao(embarcacao.id));
 
     this.notaFiscalService.listarNotaFiscalPorEmbarcacao(embarcacao.id).subscribe(notasFiscais => {
       this.notaFiscal = notasFiscais[0];
@@ -75,11 +74,12 @@ export class Anexo2BService {
       form.getTextField('celular').setText(cliente.celular ?? '');
       form.getTextField('email').setText(cliente.email ?? '');
 
-      if (this.motores.length === 1) {
-        form.getTextField('marcamotor1').setText(this.motores[0].marca.toString() ?? '');
-        form.getTextField('potmotor1').setText(this.motores[0].potencia.toString() ?? '');
-        form.getTextField('numseriemotor1').setText(this.motores[0].numSerie.toString() ?? '');
-      }
+      motores.slice(0, 3).forEach((motor, i) => {
+        const idx = i + 1;
+        form.getTextField(`marcamotor${idx}`).setText(motor.marca?.toString() ?? '');
+        form.getTextField(`potmotor${idx}`).setText(motor.potencia?.toString() ?? '');
+        form.getTextField(`numseriemotor${idx}`).setText(motor.numSerie?.toString() ?? '');
+      });
       
       if (this.notaFiscal) {
         const formattedDtvenda = this.datePipe.transform(this.notaFiscal.dtVenda, 'dd/MM/yyyy') || '';
@@ -113,23 +113,16 @@ export class Anexo2BService {
     }
   }
 
-  private downloadPdf(data: Uint8Array, filename: string): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style.display = 'none';
-    a.href = url;
-    a.download = filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-  }
-
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url, '_blank');
-  }
+  // CRIA UMA CÓPIA SEGURA DO Uint8Array
+  // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+  // e não no SharedArrayBuffer original.
+  const safeData = new Uint8Array(data);
+
+  // Agora, o construtor do Blob recebe um tipo compatível
+  const blob = new Blob([safeData], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
 
 }

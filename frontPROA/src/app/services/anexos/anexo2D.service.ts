@@ -131,23 +131,16 @@ export class AnexosService {
     }
   }
 
-  private downloadPdf(data: Uint8Array, filename: string): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style.display = 'none';
-    a.href = url;
-    a.download = filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-  }
-
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url, '_blank');
-  }
+  // CRIA UMA CÓPIA SEGURA DO Uint8Array
+  // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+  // e não no SharedArrayBuffer original.
+  const safeData = new Uint8Array(data);
+
+  // Agora, o construtor do Blob recebe um tipo compatível
+  const blob = new Blob([safeData], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
 
 }

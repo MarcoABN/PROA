@@ -26,10 +26,10 @@ export class Anexo3DService {
       form.getTextField('areanavegacao').setText(embarcacao?.areaNavegacao ?? '');
 
       //medidas
-      form.getTextField('comprimentototal').setText(embarcacao?.compTotal ? embarcacao.compTotal.toString()+"m" : '');
-      form.getTextField('comprimentoperpend').setText(embarcacao?.compPerpendicular ? embarcacao.compPerpendicular.toString()+"m" : '');
-      form.getTextField('bocamoldada').setText(embarcacao?.bocaMoldada ? embarcacao.bocaMoldada.toString()+"m" : '');
-      form.getTextField('pontalmoldado').setText(embarcacao?.pontalMoldado ? embarcacao.pontalMoldado.toString()+"m" : '');
+      form.getTextField('comprimentototal').setText(embarcacao?.compTotal ? embarcacao.compTotal.toString() + "m" : '');
+      form.getTextField('comprimentoperpend').setText(embarcacao?.compPerpendicular ? embarcacao.compPerpendicular.toString() + "m" : '');
+      form.getTextField('bocamoldada').setText(embarcacao?.bocaMoldada ? embarcacao.bocaMoldada.toString() + "m" : '');
+      form.getTextField('pontalmoldado').setText(embarcacao?.pontalMoldado ? embarcacao.pontalMoldado.toString() + "m" : '');
       //medidas
 
       const hoje = new Date();
@@ -95,7 +95,13 @@ export class Anexo3DService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

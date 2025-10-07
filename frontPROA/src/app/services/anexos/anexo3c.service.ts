@@ -10,9 +10,9 @@ export class Anexo3CService {
 
   constructor(private maskcpf: ValidadorcpfcnpjService) { }
 
-  async anexo3C (embarcacao: Embarcacao, campotexto2: string, servico?: string): Promise<void | Uint8Array>{
+  async anexo3C(embarcacao: Embarcacao, campotexto2: string, servico?: string): Promise<void | Uint8Array> {
 
-    try{
+    try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo3C-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
@@ -55,16 +55,16 @@ export class Anexo3CService {
 
       form.getTextField('capitania').setText(campotexto2 ?? '');
       form.getTextField('capitania2').setText(campotexto2 ?? '');
-      
+
       const hoje = new Date();
       const dia = hoje.getDate().toString().padStart(2, '0');
       const mes = (hoje.getMonth() + 1).toString().padStart(2, '0'); //Os meses são baseados em zero, então é necessário adicionar 1.
       const ano = hoje.getFullYear().toString();
       form.getTextField('dia').setText(dia);
       form.getTextField('ano').setText(ano);
-     // form.getTextField('mesextenso').setText(mes);
+      // form.getTextField('mesextenso').setText(mes);
 
-      switch (mes){
+      switch (mes) {
         case '01':
           form.getTextField('mesextenso').setText('Janeiro');
           break;
@@ -103,25 +103,31 @@ export class Anexo3CService {
           break;
       }
 
-      
+
 
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      if (!servico){
+      if (!servico) {
         this.abrirPDFemJanela(modifiedPdfBytes);
         console.log('PDF Criado!');
       } else {
         return modifiedPdfBytes;
       }
-    }catch (err){
+    } catch (err) {
       console.log(err);
     }
 
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
@@ -138,7 +144,7 @@ export class Anexo3CService {
         breakPoint = limit; // Nenhum espaço encontrado, quebra no limite
       }
       part1 = input?.substring(0, breakPoint) ?? '';
-      
+
       part2 = (input?.substring(breakPoint) ?? '').trim();
       if ((part2?.length ?? 0) > limit) {
         part2 = part2?.substring(0, limit) ?? '';

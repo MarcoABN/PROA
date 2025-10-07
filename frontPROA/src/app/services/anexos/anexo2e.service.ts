@@ -11,15 +11,15 @@ export class Anexo2EService {
 
   constructor(private datePipe: DatePipe, private maskcpf: ValidadorcpfcnpjService) { }
 
-  async anexo2E (embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array>{
+  async anexo2E(embarcacao: Embarcacao, solicitacao: string, campotexto1: string, campotexto2: string, campotexto3: string, servico?: string): Promise<void | Uint8Array> {
 
-    try{
+    try {
       const pdfBytes = await fetch('assets/pdfanexos/Anexo2E-N211.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfBytes);
 
-      const form = pdfDoc.getForm(); 
+      const form = pdfDoc.getForm();
 
-      switch (solicitacao){
+      switch (solicitacao) {
         case "inscricao":
           form.getCheckBox('check_inscricao').check();
           break;
@@ -27,86 +27,86 @@ export class Anexo2EService {
           form.getCheckBox('check_cancelamento').check();
           break;
         case "licencaconstrucao":
-            form.getCheckBox('check_licencaconstrucao').check();
+          form.getCheckBox('check_licencaconstrucao').check();
           break;
         case "licencaalteracao":
           form.getCheckBox('check_licencaalteracao').check();
-        break;
+          break;
         case "licencareclassificacao":
           form.getCheckBox('check_licencareclassificacao').check();
-        break;
+          break;
         case "transfpropriedade":
           form.getCheckBox('check_transfpropriedade').check();
-        break;
+          break;
         case "transfjurisdicao":
           form.getCheckBox('check_transfjurisdicao').check();
-        break;
+          break;
         case "transfpropjurisdicao":
           form.getCheckBox('check_transfpropjurisdicao').check();
-        break;
+          break;
         case "mudancanome":
           form.getCheckBox('check_mudancanome').check();
           form.getTextField('nomeembarcacao1').setText(campotexto1?.toUpperCase() ?? '');
           form.getTextField('nomeembarcacao2').setText(campotexto2?.toUpperCase() ?? '');
           form.getTextField('nomeembarcacao3').setText(campotexto3?.toUpperCase() ?? '');
-        break;
+          break;
         case "renovacaotie_sim":
           form.getCheckBox('check_renovacaotie').check();
           form.getCheckBox('check_renovacaotie_sim').check();
-        break;
+          break;
         case "renovacaotie_nao":
           form.getCheckBox('check_renovacaotie').check();
           form.getCheckBox('check_renovacaotie_nao').check();
-        break;
+          break;
         case "segviatie_perda":
           form.getCheckBox('check_segviatie').check();
           form.getCheckBox('check_segviatie_perda').check();
-        break;
+          break;
         case "segviatie_roubo":
           form.getCheckBox('check_segviatie').check();
           form.getCheckBox('check_segviatie_roubo').check();
-        break;
+          break;
         case "segviatie_extravio":
           form.getCheckBox('check_segviatie').check();
           form.getCheckBox('check_segviatie_extravio').check();
-        break;
+          break;
         case "segviatie_mauestado":
           form.getCheckBox('check_segviatie').check();
           form.getCheckBox('check_segviatie_mauestado').check();
-        break;
+          break;
         case "alteracaodadosembarcacao":
           form.getCheckBox('check_alteracaodadosembarcacao').check();
-        break;
+          break;
         case "alteracaodadosproprietario":
           form.getCheckBox('check_alteracaodadosproprietario').check();
-        break;
+          break;
         case "trocamotor":
           form.getCheckBox('check_trocamotor').check();
-        break;
+          break;
         case "certidaoembarcacao":
           form.getCheckBox('check_certidaoembarcacao').check();
-        break;
+          break;
         case "registroaverbacao":
           form.getCheckBox('check_registroaverbacao').check();
-        break;
+          break;
         case "cancaverbacao":
           form.getCheckBox('check_cancaverbacao').check();
-        break;
+          break;
         case "vistoriaarqueacao":
           form.getCheckBox('check_vistoriaarqueacao').check();
-        break;
+          break;
         case "vistoriarearqueacao":
           form.getCheckBox('check_vistoriarearqueacao').check();
-        break;
+          break;
         case "vistoriaclassificacao":
           form.getCheckBox('check_vistoriaclassificacao').check();
-        break;
+          break;
         case "outrosservicos":
           form.getCheckBox('check_outrosservicos').check();
           const [part1, part2] = this.divideString(campotexto1 ?? '', 70);
           form.getTextField('outrosservicos1').setText(part1?.toUpperCase() ?? '');
           form.getTextField('outrosservicos2').setText(part2?.toUpperCase() ?? '');
-        break;
+          break;
       }
 
       form.getTextField('nome').setText(embarcacao.cliente?.nome ?? '');
@@ -122,7 +122,7 @@ export class Anexo2EService {
 
       form.getTextField('nomeembarcacao').setText(embarcacao.nomeEmbarcacao ?? '');
       form.getTextField('numinscricao').setText(embarcacao.numInscricao ?? '');
-      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString()+"m" : '');
+      form.getTextField('comprimento').setText(embarcacao.compTotal ? embarcacao.compTotal.toString() + "m" : '');
       form.getTextField('numcasco').setText(embarcacao.numCasco ?? '');
       form.getTextField('classificacao').setText(embarcacao.tipoEmbarcacao ?? '');
 
@@ -134,7 +134,7 @@ export class Anexo2EService {
 
       form.flatten();
       const modifiedPdfBytes = await pdfDoc.save();
-      if (!servico){
+      if (!servico) {
         this.abrirPDFemJanela(modifiedPdfBytes);
         console.log('PDF Criado!');
       } else {
@@ -147,7 +147,13 @@ export class Anexo2EService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }

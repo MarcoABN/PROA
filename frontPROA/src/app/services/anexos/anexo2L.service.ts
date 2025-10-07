@@ -9,7 +9,7 @@ import { ValidadorcpfcnpjService } from '../validacao/validadorcpfcnpj.service';
 })
 export class Anexo2LService {
 
-  constructor(private maskcpf: ValidadorcpfcnpjService) {}
+  constructor(private maskcpf: ValidadorcpfcnpjService) { }
 
   async anexo2L(cliente?: Cliente, servico?: string): Promise<void | Uint8Array> {
     try {
@@ -37,11 +37,11 @@ export class Anexo2LService {
         form.getTextField('endereco1').setText(part1.toUpperCase());
         form.getTextField('endereco2').setText(part2.toUpperCase());
 
-      const hoje = new Date();
-      const dia = hoje.getDate().toString().padStart(2, '0');
-      const mes = (hoje.getMonth() + 1).toString().padStart(2, '0');
-      const ano = hoje.getFullYear().toString();
-      form.getTextField('localdata').setText((cliente.cidade ?? '') + ', ' + dia + '/' + mes + '/' + ano);
+        const hoje = new Date();
+        const dia = hoje.getDate().toString().padStart(2, '0');
+        const mes = (hoje.getMonth() + 1).toString().padStart(2, '0');
+        const ano = hoje.getFullYear().toString();
+        form.getTextField('localdata').setText((cliente.cidade ?? '') + ', ' + dia + '/' + mes + '/' + ano);
 
       }
 
@@ -61,7 +61,13 @@ export class Anexo2LService {
   }
 
   private abrirPDFemJanela(data: Uint8Array): void {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    // CRIA UMA CÓPIA SEGURA DO Uint8Array
+    // Isso garante que o novo array seja baseado em um ArrayBuffer padrão, 
+    // e não no SharedArrayBuffer original.
+    const safeData = new Uint8Array(data);
+
+    // Agora, o construtor do Blob recebe um tipo compatível
+    const blob = new Blob([safeData], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     window.open(url, '_blank');
   }
